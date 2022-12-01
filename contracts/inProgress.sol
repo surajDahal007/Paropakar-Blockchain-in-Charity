@@ -24,6 +24,7 @@ contract tenderFactory is AccessControl{
     
     constructor(){
         admin=msg.sender;
+        roles[msg.sender]="admin";
           _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -40,6 +41,7 @@ contract tenderFactory is AccessControl{
         uint target;
     }
     mapping(address => protocol )public protocols;
+mapping (address => string) public roles;
 
     struct authority{
         string protocolUrl;
@@ -97,19 +99,25 @@ _;
    function grantAuthorityRole(address _account)public onlyAdmin{
     require(!hasRole(AUTHORIZER_ROLE, _account), "this address is already an authorizer");
        grantRole(AUTHORIZER_ROLE, _account);
+       roles[_account] = "authorizer";
     
    }
 
     function revokeAuthorityRole(address _account)public onlyAdmin{
          require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't  the authorizer");
        revokeRole(AUTHORIZER_ROLE, _account);
+       roles[_account]="";
    }
 
    
+   function getYourRole()public view returns(string memory){
+       return roles[msg.sender];
+   }
     function getDeployedTenders() public view returns ( address[] memory ) {
         return deployedAuthorizedTenders;
     }
 }
+
 
 
 
@@ -162,9 +170,6 @@ event donorEvent(address indexed donor,uint amount,uint time);
         numofregisteredTender++;
     }
 
-    function getreqNo() public view returns (uint256) {
-        return numRequests;
-    }
 
     function donate() public payable {
           require(raisedtarget < target);
@@ -219,7 +224,23 @@ event donorEvent(address indexed donor,uint amount,uint time);
         
       }
 
-    // function readTenderStatus()public returns()
+
+/// @dev returns state of the tender 
+    function readTenderStatus()public returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+return(
+    category,
+    pdfUrl,
+    target,
+    deadline,
+    minimumContribution,
+    raisedtarget,
+    noOfdonors,
+    numRequests,
+    owner,
+    destroyed
+
+);
+    }
 
 
 
@@ -268,5 +289,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
         payable(msg.sender).transfer(msg.value);
     }
 
-  
+   
+
+    
 }
