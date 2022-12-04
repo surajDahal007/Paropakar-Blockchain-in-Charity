@@ -172,7 +172,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
 
 
     function donate() public payable {
-          require(raisedtarget < target);
+          require(block.timestamp < deadline,"you cant donate");
           require(!(owner==msg.sender),"owner can't donate self");
         require(msg.value <= target, "donation greater than target");
         require(numRequests == 0, "raised target has already mey target");
@@ -214,7 +214,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
     }
 
       function refund() public onlydonor shouldnotDestroy{
-        require(block.timestamp >=  deadline && raisedtarget < target,"You are not eligible for refund");
+        require(block.timestamp <  deadline && raisedtarget < target,"You are not eligible for refund");
         payable(msg.sender).transfer(donors[msg.sender]);
         donors[msg.sender]=0;
         if(address(this).balance==0){
