@@ -7,10 +7,11 @@
     color:white;
     border-radius: 8px;
     border:1px solid whitesmoke;
-    margin-left: 690px;
+    margin-left: 680px;
 }
 
 .button:hover{
     background: rgb(88, 8, 8);
     color:white;
+    cursor: pointer;
 }

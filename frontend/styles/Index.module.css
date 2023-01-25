@@ -1,0 +1,27 @@
+.div1{
+    /* background: lightblue; */
+    /* margin-top: 50px; */
+    padding: 100px;
+    font-size: 1.5em;
+    color:black;
+}
+
+.div2{
+    background: darkslategrey;
+    padding:100px;
+    /* font-size: ; */
+    color:white;
+}
+
+.div3{
+    padding: 200px;
+    background: grey;
+    color: white;
+    
+}
+
+.div4{
+    margin-bottom: -100%;
+    border: 1px solid black;
+    padding: 40px;
+}

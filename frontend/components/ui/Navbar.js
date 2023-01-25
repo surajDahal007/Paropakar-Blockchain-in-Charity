@@ -6,7 +6,7 @@ const Navbar = () => {
   return( 
     <div className={styles.main}>
       <Link href="/" className={styles.link}>
-          Paropakar : <i> Blockchain in Charity </i>
+        <font style={{fontFamily:"Monaco"}}> Paropakar </font> : <i> Blockchain in Charity </i>
       </Link>  
       <Wallet />
       
