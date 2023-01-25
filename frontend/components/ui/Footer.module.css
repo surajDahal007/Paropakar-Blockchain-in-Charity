@@ -1,0 +1,18 @@
+.main{
+    background: #333399;
+    color:whitesmoke;
+    padding: 20px;
+}
+
+.recommend{
+    display:list-item;
+    text-decoration: none;
+    color:white;
+    list-style-type: none;
+    margin-left: 85%;
+
+}
+
+.recommend:hover{
+    font-weight: bold;
+}

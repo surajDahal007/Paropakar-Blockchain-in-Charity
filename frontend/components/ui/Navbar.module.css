@@ -1,0 +1,12 @@
+.main{
+    font-size: 30px;
+    border-bottom-left-radius: 1px solid red;
+    font-family: 'Times New Roman', Times, serif;
+    padding:20px;
+    display: flex;
+}
+
+.link{
+    text-decoration: none;
+    color: black;
+}
