@@ -8,8 +8,8 @@ async function main() {
   console.log(`campaign factory deployed to ${factoryContract.address}`);
 }
 
-main().catch((error) => {
-  console.error(error);
+main().catch((e) => {
+  console.error(e);
   process.exitCode = 1;
 });
 
