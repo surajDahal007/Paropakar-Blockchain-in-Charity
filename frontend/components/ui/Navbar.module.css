@@ -1,16 +1,23 @@
-.main{
-    position: fixed;
-    font-size: 30px;
-    /* border-bottom-left-radius: 1px solid red; */
-    font-family: 'Times New Roman', Times, serif;
-    padding: 20px;
-    display: flex;
-    background: white;
-    width: 100%;
-    /* align-items: ; */
+.main {
+  position: fixed;
+  font-size: 30px;
+  /* border-bottom-left-radius: 1px solid red; */
+  font-family: "Times New Roman", Times, serif;
+  padding: 20px;
+  display: flex;
+  background: white;
+  width: 100%;
+  /* align-items: ; */
 }
 
-.link{
-    text-decoration: none;
-    color: black;
+.link {
+  text-decoration: none;
+  color: black;
+}
+.connectButton {
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: white;
+  float: right;
+  top: 10px;
 }
