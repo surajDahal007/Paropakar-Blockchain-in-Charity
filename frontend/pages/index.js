@@ -11,6 +11,7 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>paropakar.com</title>
+        <link rel="icon" href="/ico.svg" />
       </Head>
       <div className={styles.div1}>
         <Image src={logo} alt="logo" width={550} height={650} />
