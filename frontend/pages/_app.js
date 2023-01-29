@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import {
   EthereumClient,
   modalConnectors,
@@ -9,13 +8,13 @@ import { Web3Modal } from "@web3modal/react";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 
-import { goerli, polygon } from "wagmi/chains";
+import { goerli, polygonMumbai } from "wagmi/chains";
 
 //import  navbar component here
 import Navbar from "../components/ui/Navbar";
 import Footer from "../components/ui/Footer";
 
-const chainSupport = [goerli, polygon];
+const chainSupport = [goerli, polygonMumbai];
 
 // create wagmi client to configure chains to get connected
 /**
@@ -39,12 +38,9 @@ const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Navbar />
       <WagmiConfig client={wagmiClient}>
         <Component {...pageProps} />
       </WagmiConfig>
-
-      <Footer />
 
       <Web3Modal
         projectId="1feab24f8df3e7c942161253e25657ce"
