@@ -13,7 +13,7 @@ export default function Home() {
         <title>paropakar.com</title>
       </Head>
       <div className={styles.div1}>
-        <Image src={logo} alt="logo" width={500} height={650} />
+        <Image src={logo} alt="logo" width={550} height={650} />
       </div>
       <div className={styles.div2}>
         <Web3Button />

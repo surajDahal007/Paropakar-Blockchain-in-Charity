@@ -12,11 +12,11 @@
 }
 
 .div2 {
+  width: 50%;
   background-image: url("../public/bg.png");
   background-size: cover;
-  margin-left: -10%;
+  margin-left: -2%;
   position: relative;
   z-index: 1;
-  padding-right: 950px;
-  padding-left: 100px;
+  padding-right: 800px;
 }
