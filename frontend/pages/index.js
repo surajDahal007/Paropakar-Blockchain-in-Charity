@@ -17,9 +17,11 @@ export default function Home() {
         <Image src={logo} alt="logo" width={550} height={650} />
       </div>
       <div className={styles.div2}>
-        <Web3Button />
+        <div className={styles.button}>
+          <Web3Button />
+        </div>
         <div>
-          <h1>Welcome!</h1>
+          <h1 className={styles.h1}>Welcome!</h1>
         </div>
       </div>
     </div>

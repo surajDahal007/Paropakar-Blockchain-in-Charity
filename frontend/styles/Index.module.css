@@ -20,3 +20,16 @@
   z-index: 1;
   padding-right: 800px;
 }
+.h1 {
+  font-size: 80pt;
+  padding-left: 30px;
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.h1:hover {
+  color: black;
+}
+
+.button {
+  padding: 0;
+}
