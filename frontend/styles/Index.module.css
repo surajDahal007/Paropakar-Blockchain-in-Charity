@@ -7,8 +7,7 @@
 }
 
 .div1 {
-  width: 50%;
-
+  width: 40%;
   background-color: #9c62be;
 }
 
@@ -19,5 +18,5 @@
   position: relative;
   z-index: 1;
   padding-right: 950px;
-  padding-left: 200px;
+  padding-left: 100px;
 }
