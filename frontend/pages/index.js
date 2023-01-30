@@ -3,10 +3,33 @@ import Head from "next/head";
 import { Web3Button } from "@web3modal/react";
 import logo from "../public/logo.png";
 import Image from "next/image";
+import { useAccount } from "wagmi";
+import { useRouter } from "next/router";
+import { getFactoryContract } from "../hooks/useContract";
+import { useEffect } from "react";
 
 //frontend\styles\Index.module.css
 
 export default function Home() {
+  const { address, isConnected } = useAccount();
+  const router = useRouter();
+  const FactoryContract = getFactoryContract();
+
+  async function getRole() {
+    try {
+      if (isConnected && address) {
+        const role = await FactoryContract.roles(`${address}`);
+        router.push(`/${role}`);
+      }
+    } catch {
+      // alert("Proceed to connecting your wallet....");
+    }
+  }
+
+  useEffect(() => {
+    getRole();
+  }, [address, isConnected]);
+
   return (
     <div className={styles.container}>
       <Head>
