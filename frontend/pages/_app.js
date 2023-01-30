@@ -11,8 +11,9 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { polygonMumbai } from "wagmi/chains";
 
 //import  navbar component here
-import Navbar from "../components/ui/Navbar";
-import Footer from "../components/ui/Footer";
+
+import "../styles/globals.css";
+//frontend\styles\globals.css
 
 const chainSupport = [polygonMumbai];
 

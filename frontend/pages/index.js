@@ -21,8 +21,9 @@ export default function Home() {
         const role = await FactoryContract.roles(`${address}`);
         router.push(`/${role}`);
       }
-    } catch {
+    } catch(error) {
       // alert("Proceed to connecting your wallet....");
+      console.log(error);
     }
   }
 
@@ -40,11 +41,13 @@ export default function Home() {
         <Image src={logo} alt="logo" width={550} height={650} />
       </div>
       <div className={styles.div2}>
-        <div className={styles.button}>
-          <Web3Button />
-        </div>
+     
         <div>
           <h1 className={styles.h1}>Welcome!</h1>
+        </div>
+
+        <div className={styles.button}>
+          <Web3Button />
         </div>
       </div>
     </div>
