@@ -8,13 +8,13 @@ import { Web3Modal } from "@web3modal/react";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 
-import { goerli, polygonMumbai } from "wagmi/chains";
+import { polygonMumbai } from "wagmi/chains";
 
 //import  navbar component here
 import Navbar from "../components/ui/Navbar";
 import Footer from "../components/ui/Footer";
 
-const chainSupport = [goerli, polygonMumbai];
+const chainSupport = [polygonMumbai];
 
 // create wagmi client to configure chains to get connected
 /**
