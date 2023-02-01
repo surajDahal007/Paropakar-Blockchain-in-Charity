@@ -54,7 +54,7 @@ require(admin == msg.sender, "caller is not an admin");
 _;
 }
 
-/// @dev thsi function registers the protocol for validation of a specific benefiicary
+/// @dev this function registers the protocol for validation of a specific benefiicary
    function registerProtocol(uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category)public {
        require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "caller is an Admin");
        require(!hasRole(AUTHORIZER_ROLE, msg.sender), "caller is an Authorizer");
@@ -119,8 +119,6 @@ _;
 }
 
 
-
-
 contract tender{
    
     string public category;
@@ -174,8 +172,8 @@ event donorEvent(address indexed donor,uint amount,uint time);
     function donate() public payable {
           require(block.timestamp < deadline,"you cant donate");
           require(!(owner==msg.sender),"owner can't donate self");
-        require(msg.value <= target, "donation greater than target");
-        require(numRequests == 0, "raised target has already mey target");
+            require(msg.value <= target, "donation greater than target");
+            require(numRequests == 0, "raised target has already mey target");
 
         require(
             msg.value >= minimumContribution,
@@ -203,7 +201,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
 
     modifier onlydonor() {
         require(!destroyed,"contract is not available");
-        require(donors[msg.sender] > 0, "Only donors can calll this function");
+        require(donors[msg.sender] > 0, "Only donors can call this function");
         _;
     }
 
@@ -226,23 +224,21 @@ event donorEvent(address indexed donor,uint amount,uint time);
 
 
 /// @dev returns state of the tender 
-    function readTenderStatus()public returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
-return(
-    category,
-    pdfUrl,
-    target,
-    deadline,
-    minimumContribution,
-    raisedtarget,
-    noOfdonors,
-    numRequests,
-    owner,
-    destroyed
 
-);
+        function readTenderStatus()public returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+            return(
+            category,
+            pdfUrl,
+            target,
+            deadline,
+            minimumContribution,
+            raisedtarget,
+            noOfdonors,
+            numRequests,
+            owner,
+            destroyed
+        );
     }
-
-
 
 
     function createRequests( string memory _description,address payable _recipient,uint256 _value) public payable onlyowner shouldnotDestroy {
@@ -287,9 +283,5 @@ return(
 
     fallback()external payable{
         payable(msg.sender).transfer(msg.value);
-    }
-
-   
-
-    
+    }    
 }
