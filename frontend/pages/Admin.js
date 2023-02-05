@@ -10,7 +10,7 @@ const Admin = () => {
   return (
     <>
      <div>
-            <Navbar height={200}>
+            {/* <Navbar height={200}> */}
                 <div style={{
                     marginLeft:"-15%"
                 }}>
@@ -18,7 +18,7 @@ const Admin = () => {
                 </div>
             <font className={styles.heading}> ADMIN PAGE</font> 
                 <Web3Button /> 
-            </Navbar>
+            {/* </Navbar> */}
         </div>
 
         <p style={{
