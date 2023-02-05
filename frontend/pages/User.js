@@ -1,9 +1,9 @@
-
+import Navbar from "./Navbar"
 
 const User = () => {
   return (
     <div>
-      <h1>Hello from user landing Page</h1>
+      <Navbar />
     </div>
   )
 }

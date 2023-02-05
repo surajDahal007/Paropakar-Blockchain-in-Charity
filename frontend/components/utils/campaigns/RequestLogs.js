@@ -1,7 +1,7 @@
 import React from "react";
 
 const RequestLogs = () => {
-  return <div>RequestLogs</div>;
+  return <h1>RequestLogs</h1>;
 };
 
 export default RequestLogs;

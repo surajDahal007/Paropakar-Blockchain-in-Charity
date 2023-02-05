@@ -13,7 +13,8 @@ import { polygonMumbai } from "wagmi/chains";
 //import  navbar component here
 
 import "../styles/globals.css";
-//frontend\styles\globals.css
+// import { NextUIProvider } from '@nextui-org/react';
+
 
 const chainSupport = [polygonMumbai];
 
@@ -39,9 +40,13 @@ const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 function MyApp({ Component, pageProps }) {
   return (
     <>
+    
       <WagmiConfig client={wagmiClient}>
+      {/* <NextUIProvider> */}
         <Component {...pageProps} />
+      {/* </NextUIProvider> */}
       </WagmiConfig>
+    
 
       <Web3Modal
         projectId="1feab24f8df3e7c942161253e25657ce"

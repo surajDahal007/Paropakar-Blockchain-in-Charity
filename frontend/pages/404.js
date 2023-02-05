@@ -7,10 +7,20 @@ const Error = () => {
   return (
     <>
       <div className="main">
+      <font style={{
+          fontSize:"100px",
+          marginLeft:"45%"
+          }}>&#128528; 
+        </font>
+        <br />
+        <br />
+    
         <div className="heading">
+      
           <div className="error">404</div>
         </div>
-        <p>Page not found ! </p>
+    
+        <p className="error"><b> Page not found ! </b> </p>
         <p>
           We can't seem to find the page you're looking for. Try going back to
           the previous page or check out our navigation bar or return to{" "}
@@ -23,11 +33,12 @@ const Error = () => {
             textDecoration: "none",
             border: "1px solid blue",
             borderRadius: "15px",
-            padding: "10px",
+            padding: "20px",
             background: "blue",
             color: "white",
-            fontSize: "18px",
-            marginLeft: "500px",
+            fontSize: "22px",
+            fontWeight:"bold",
+            marginLeft: "47%",
           }}
           onClick={() => {
             disconnect();
@@ -54,7 +65,7 @@ const Error = () => {
             }
 
             .error {
-              margin-left: 450px;
+              margin-left: 45%;
             }
 
             p {

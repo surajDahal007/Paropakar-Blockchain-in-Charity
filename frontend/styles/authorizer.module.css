@@ -1,25 +1,14 @@
-.main{
-    padding-left: 10px;
-}
-
 .head{
-    display: flex;
-    /* padding-left: 10px; */
+    display:flex;
 }
 
 .heading{
-    color:red;
+    font-size:48px;
+    font-weight:bold;
+    margin-top:1%;
 }
 
-.details{
-    height: 40%;
-}
-
-.grantRole{
-    height:30%;
-}
-
-.removeRole{
-    height: 30%;
+.body{
+    padding:10px;
 }
 
