@@ -1,10 +1,15 @@
-import Navbar from "./Navbar"
+import Navbar from "./Navbar/Navbar";
+import styles from "../styles/User.module.css";
+
 
 const User = () => {
   return (
-    <div>
+    <>
       <Navbar />
-    </div>
+      <div className={styles.main}>
+        <font className={styles.heading} >USER GUIDELINES</font>
+      </div>
+    </>
   )
 }
 

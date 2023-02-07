@@ -5,7 +5,6 @@
     background: rgb(241, 221, 218);
     display:flex;
     justify-content:space-between;
-
 }
 
 .heading{
@@ -15,16 +14,19 @@
 }
 
 .heading:hover{
-    color:blue;
+    color:white;
 }
 
-.options{
-    margin-top: 7%;
+.option{
+    margin-top: 6%;
     font-size: 18px;
     text-decoration: none;
+    display: flex; 
+    justify-content: space-around; 
+    padding-left: 10px; 
 }
 
-.options:hover{
+.option:hover{
     font-weight: bold;
     color:blue;
     text-decoration: underline;

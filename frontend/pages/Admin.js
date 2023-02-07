@@ -10,30 +10,31 @@ const Admin = () => {
   return (
     <>
      <div>
-            {/* <Navbar height={200}> */}
+            <Navbar height={200}>
                 <div style={{
                     marginLeft:"-15%"
                 }}>
-                    <Image src={"/navBarLogo.png"} height={200} width={400} quality={100}></Image>
+                    <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"logo"}></Image>
                 </div>
             <font className={styles.heading}> ADMIN PAGE</font> 
                 <Web3Button /> 
-            {/* </Navbar> */}
+            </Navbar>
         </div>
 
         <p style={{
-            padding:"30px"
+            padding:"30px",
+            fontSize:"26px"
         }}>
-            <h1>ABOUT MANAGERS</h1>
+            ABOUT AUTHORIZER
             <hr />
 
-            <h1>GRANT ROLE</h1>
+            GRANT ROLE &nbsp; <br />
                 <input type={"text"} placeholder={"Address"}></input>
                 <br />
                 <button className={styles.button}>SUBMIT</button>
             <hr />
 
-            <h1>REVOKE ROLE</h1>
+            REVOKE ROLE &nbsp; <br />
             <input type={"text"} placeholder={"Address"}></input>
                 <br />
                 <button className={styles.button}>SUBMIT</button>

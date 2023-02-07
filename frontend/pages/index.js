@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { getFactoryContract } from "../hooks/useContract";
 import { useEffect } from "react";
 
-//frontend\styles\Index.module.css
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -19,7 +18,12 @@ export default function Home() {
     try {
       if (isConnected && address) {
         const role = await FactoryContract.roles(`${address}`);
-        router.push(`/${role}`);
+        if(role=="authorizer"){
+          router.push(`/Authorizer`);
+        } else{
+          router.push(`/User`);
+        }
+        
       }
     } catch(error) {
       // alert("Proceed to connecting your wallet....");
@@ -29,6 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     getRole();
+
   }, [address, isConnected]);
 
   return (

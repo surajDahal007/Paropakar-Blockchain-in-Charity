@@ -26,6 +26,7 @@ const Error = () => {
           the previous page or check out our navigation bar or return to{" "}
           <big>Home Page</big> by clicking here.
         </p>
+        <br />
 
         <Link
           href="/"
