@@ -1,0 +1,32 @@
+.main{
+    height: 200px;
+    background: rgb(241, 221, 218);
+    display:flex;
+    justify-content:space-between;
+}
+
+.heading{
+    font-size:48px;
+    font-weight:bold;
+    margin-top:5%;
+}
+
+.option{
+    margin-top: 6%;
+    font-size: 18px;
+    display: flex; 
+    justify-content: space-around; 
+    padding-left: 10px; 
+}
+
+.option:hover{
+    font-weight: bold;
+    color:blue;
+    text-decoration: underline;
+    font-size: 18px;
+} 
+
+.button{
+    margin-top: 6%;
+    margin-right:1%;
+}
