@@ -23,7 +23,9 @@ export default function Home() {
         } else{
           router.push(`/User`);
         }
-        
+        // else home page display
+      // } else{
+      //   router.push("/");
       }
     } catch(error) {
       // alert("Proceed to connecting your wallet....");

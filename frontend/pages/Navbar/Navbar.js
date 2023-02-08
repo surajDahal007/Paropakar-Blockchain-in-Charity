@@ -6,18 +6,48 @@ import Link from "next/Link";
 const Navbar = () => {
   return (
       <div className={styles.main}>
-        <Image src={"/navBarLogo.png"} height={200} width={310} quality={100} alt={'logo'}></Image>
+        <Image src={"/navBarLogo.png"} height={200} width={320} quality={100} alt={'logo'} priority ></Image>
         
         <font className={styles.heading}>
           <i>
             WELCOME USER
           </i>
         </font>
-              <Link href={"/User"} className={styles.option}>User Guidelines</Link>
-              <Link href={"/Navbar/Create"} className={styles.option}>CREATE</Link>       
-              <Link href={"/Navbar/DonationLog"} className={styles.option}>DonationLogs</Link>
-              <Link href={"/Navbar/RequestLog"} className={styles.option}>RequestLogs</Link>
-        <div className={styles.button}><Web3Button /></div>
+        
+          <div className={styles.option}>
+              <Link 
+                href={"/User"}
+                style={{textDecoration:"none"}} 
+                >User Guidelines</Link> 
+          </div>
+
+          <div className={styles.option}>
+            <Link 
+              href={"/Navbar/Create"} 
+              className={styles.option}
+              style={{textDecoration:"none"}}
+              >CREATE</Link>   
+          </div>  
+
+          <div className={styles.option}>    
+            <Link 
+            href={"/Navbar/DonationLog"} 
+            className={styles.option}
+            style={{textDecoration:"none"}}
+            >DONATE</Link>
+          </div>
+
+          <div className={styles.option}>
+            <Link 
+              href={"/Navbar/RequestLog"}
+              className={styles.option}
+              style={{textDecoration:"none"}}
+             >RequestLogs</Link>
+          </div>
+
+          <div className={styles.button}>
+            <Web3Button />
+          </div>
       </div>
   
   )

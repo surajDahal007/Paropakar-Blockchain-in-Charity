@@ -10,10 +10,15 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 
 import { polygonMumbai } from "wagmi/chains";
 
+
+
+
 //import  navbar component here
 
 import "../styles/globals.css";
 // import { NextUIProvider } from '@nextui-org/react';
+
+// const {address,isConnected} = useAccount();
 
 
 const chainSupport = [polygonMumbai];
@@ -37,7 +42,16 @@ const wagmiClient = createClient({
 // Web3Modal Ethereum Client
 const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 
+
+
+
 function MyApp({ Component, pageProps }) {
+
+  
+
+
+
+
   return (
     <>
     

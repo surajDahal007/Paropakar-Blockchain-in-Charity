@@ -1,5 +1,3 @@
-
-import { Navbar } from '@nextui-org/react';
 import { Web3Button } from '@web3modal/react';
 import Image from "next/Image";
 import styles from "../styles/Authorizer.module.css";
@@ -8,27 +6,37 @@ import Link from "next/Link";
 const Authorizer = () => {
   return (
     <>
-      <div>
-        <Navbar height={200}>
+      <div className={styles.navbar}>
+        
         <div style={{
-                    marginLeft:"-15%"
-                }}>
-                    <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"image "}></Image>
-                </div>
-                
+          marginLeft:"-4.5%"
+        }}>
+              <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"image "} ></Image>
+        </div>
+        
             <font className={styles.heading}> Authorizer PAGE</font> 
-            <Link href="/Admin">Verification Request</Link>
-            <Link href="/Admin">About Admin</Link>
-               <Web3Button /> 
-            </Navbar>
+           <div className={styles.option} > 
+               <Link href="/Admin" style={{textDecoration:"none"}} >
+                Verification Request
+                </Link>
+            </div>
+           <div className={styles.option}>
+              <Link href="/Admin" style={{textDecoration:"none"}}>
+                About Admin
+              </Link>
+            </div>
+            <div className={styles.option}><Web3Button /> </div> 
+          
       </div>
 
-      <p style={{
+      <div style={{
             padding:"30px",
-            fontSize:"30px"
+            fontSize:"30px",
+            background:"whitesmoke",
+            height:"500px"
         }}>
         ALL CONTRACTS
-      </p>
+      </div>
   
     </>
       )
