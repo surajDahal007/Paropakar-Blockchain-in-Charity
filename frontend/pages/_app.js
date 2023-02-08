@@ -25,7 +25,7 @@ const chainSupport = [polygonMumbai];
 const { provider } = configureChains(chainSupport, [
   walletConnectProvider({ projectId: "1feab24f8df3e7c942161253e25657ce" }),
 ]);
-
+console.log("provider", provider(chainSupport));
 const wagmiClient = createClient({
   autoConnect: true,
   connectors: modalConnectors({ appName: "Paropakar", chainSupport }),
