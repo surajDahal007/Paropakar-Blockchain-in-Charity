@@ -1,0 +1,32 @@
+.head{
+    display:flex;
+}
+
+.heading{
+    font-size:48px;
+    font-weight:bold;
+    margin-top:4%;
+}
+
+.navbar{
+    height: 200px;
+    background: pink;
+    display: flex;
+    justify-content: space-around;
+}
+
+.option{
+    margin-top: 6%;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.option:hover{
+    font-weight: bold;
+    color:blue;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+
+

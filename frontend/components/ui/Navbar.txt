@@ -10,7 +10,7 @@ const Navbar = () => {
       {/**apply css for logo as in left section of the navbar */}
       <span className={styles.navbar_logo}>
         <Link href="/">
-          <Image src={bg} alt="navbarLogo.png" />
+          <Image src={"/navbarLogo.png"} width={'200'} height={150} alt="navbarLogo.png" />
         </Link>
       </span>
 

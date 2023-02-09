@@ -8,8 +8,6 @@ import { useRouter } from "next/router";
 import { getFactoryContract } from "../hooks/useContract";
 import { useEffect } from "react";
 
-//frontend\styles\Index.module.css
-
 export default function Home() {
   const { address, isConnected } = useAccount();
   const router = useRouter();
@@ -19,10 +17,20 @@ export default function Home() {
     try {
       if (isConnected && address) {
         const role = await FactoryContract.roles(`${address}`);
-        router.push(`/${role}`);
+        if (role == "authorizer") {
+          router.push(`/Authorizer`);
+        } else if (role == "admin") {
+          router.push("/Admin");
+        } else {
+          router.push(`/User`);
+        }
+        // else home page display
+        // } else{
+        //   router.push("/");
       }
-    } catch {
+    } catch (error) {
       // alert("Proceed to connecting your wallet....");
+      console.log(error);
     }
   }
 
@@ -40,11 +48,12 @@ export default function Home() {
         <Image src={logo} alt="logo" width={550} height={650} />
       </div>
       <div className={styles.div2}>
-        <div className={styles.button}>
-          <Web3Button />
-        </div>
         <div>
           <h1 className={styles.h1}>Welcome!</h1>
+        </div>
+
+        <div className={styles.button}>
+          <Web3Button />
         </div>
       </div>
     </div>

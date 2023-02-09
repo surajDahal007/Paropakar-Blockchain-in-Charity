@@ -5,14 +5,19 @@ import {
 } from "@web3modal/ethereum";
 
 import { Web3Modal } from "@web3modal/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { configureChains, createClient, useAccount, WagmiConfig } from "wagmi";
 
 import { polygonMumbai } from "wagmi/chains";
 
 //import  navbar component here
-import Navbar from "../components/ui/Navbar";
-import Footer from "../components/ui/Footer";
+
+import "../styles/globals.css";
+// import { NextUIProvider } from '@nextui-org/react';
+
+// const {address,isConnected} = useAccount();
 
 const chainSupport = [polygonMumbai];
 
@@ -25,7 +30,8 @@ const chainSupport = [polygonMumbai];
 const { provider } = configureChains(chainSupport, [
   walletConnectProvider({ projectId: "1feab24f8df3e7c942161253e25657ce" }),
 ]);
-console.log("provider", provider(chainSupport));
+const providers = provider(chainSupport);
+console.log("providers", providers);
 const wagmiClient = createClient({
   autoConnect: true,
   connectors: modalConnectors({ appName: "Paropakar", chainSupport }),
@@ -36,9 +42,20 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 
 function MyApp({ Component, pageProps }) {
+  const { address, isConnected } = useAccount();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isConnected && address == undefined) {
+      console.log("address", address, "isConnected", isConnected);
+      router.push("/");
+    }
+  }, [address, isConnected]);
+
   return (
     <>
       <WagmiConfig client={wagmiClient}>
+        {/* <NextUIProvider> */}
         <Component {...pageProps} />
       </WagmiConfig>
 

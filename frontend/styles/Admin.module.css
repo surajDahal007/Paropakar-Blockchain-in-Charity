@@ -1,0 +1,25 @@
+.head{
+    display:flex;
+}
+
+.heading{
+    font-size:48px;
+    font-weight:bold;
+    margin-top:1%;
+}
+
+.body{
+    padding:10px;
+}
+
+.button{
+    padding:8px;
+    color: white;
+    background: blue;
+    margin-top:2px;
+    border: 1px solid white;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius:8px;
+
+}
