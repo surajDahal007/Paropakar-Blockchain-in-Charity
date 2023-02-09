@@ -231,7 +231,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
 
 /// @dev returns state of the tender 
 
-        function readTenderStatus()public  view returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+        function readTenderStatus()public returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
             return(
             category,
             pdfUrl,
@@ -329,7 +329,6 @@ event donorEvent(address indexed donor,uint amount,uint time);
     fallback()external payable nonReentrant{
         payable(msg.sender).transfer(msg.value);
     }    
-    
     receive() external payable nonReentrant {
          payable(msg.sender).transfer(msg.value);
     }
