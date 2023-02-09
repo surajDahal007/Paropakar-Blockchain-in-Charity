@@ -20,12 +20,12 @@ export default function Home() {
         const role = await FactoryContract.roles(`${address}`);
         if(role=="authorizer"){
           router.push(`/Authorizer`);
-        } else{
+        }else if(role=="admin"){
+            router.push(`/Admin`);
+        } 
+        else{
           router.push(`/User`);
         }
-        // else home page display
-      // } else{
-      //   router.push("/");
       }
     } catch(error) {
       // alert("Proceed to connecting your wallet....");
