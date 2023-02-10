@@ -329,7 +329,10 @@ event donorEvent(address indexed donor,uint amount,uint time);
     fallback()external payable nonReentrant{
         payable(msg.sender).transfer(msg.value);
     }    
+<<<<<<< HEAD
     
+=======
+>>>>>>> 1ffd1275448c642ee85ba6b727f07418b49f0b62
     receive() external payable nonReentrant {
          payable(msg.sender).transfer(msg.value);
     }
