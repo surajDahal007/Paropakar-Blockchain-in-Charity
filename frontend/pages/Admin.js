@@ -1,25 +1,23 @@
-
-// import Image from "next/Image";
-import { Navbar } from "@nextui-org/react";
 import Image from "next/Image";
 import { Web3Button } from "@web3modal/react";
 import styles from "../styles/Admin.module.css";
 
-
 const Admin = () => {
   return (
     <>
-     <div>
-            <Navbar height={200}>
-                <div style={{
-                    marginLeft:"-15%"
-                }}>
-                    <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"logo"}></Image>
-                </div>
-            <font className={styles.heading}> ADMIN PAGE</font> 
-                <Web3Button /> 
-            </Navbar>
-        </div>
+     <div className={styles.navbar}>
+            <div style={{
+                marginLeft:"-12%"
+            }}>
+                <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"logo"}></Image>
+            </div>
+
+            <font className={styles.heading}>ADMIN PAGE</font> 
+
+            <div className={styles.option}>
+                <Web3Button />
+            </div> 
+     </div>
 
         <p style={{
             padding:"30px",

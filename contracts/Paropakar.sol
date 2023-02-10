@@ -231,7 +231,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
 
 /// @dev returns state of the tender 
 
-        function readTenderStatus()public returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+        function readTenderStatus() public view returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
             return(
             category,
             pdfUrl,
