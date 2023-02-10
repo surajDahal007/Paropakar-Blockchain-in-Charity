@@ -6,7 +6,7 @@ import {
 
 import { Web3Modal } from "@web3modal/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { configureChains, createClient, useAccount, WagmiConfig } from "wagmi";
 
@@ -44,11 +44,14 @@ const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 function MyApp({ Component, pageProps }) {
   const { address, isConnected } = useAccount();
   const router = useRouter();
+  const addressRef = useRef();
+  const [rerender, setRender] = useState(false);
 
   useEffect(() => {
-    if (!isConnected && address == undefined) {
-      console.log("address", address, "isConnected", isConnected);
+    setRender(true);
+    if (rerender) {
       router.push("/");
+      setRender(false);
     }
   }, [address, isConnected]);
 

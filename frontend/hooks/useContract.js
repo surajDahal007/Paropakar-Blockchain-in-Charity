@@ -1,40 +1,26 @@
 import { useContract, useProvider, useSigner } from "wagmi";
 import { campaignAbi, factoryAbi, factoryAddress } from "../constants";
+import { ethers, Contract } from "ethers";
 
 /**
  * @description applied for both custom hook
  * @param {*} isSigner by default false
- * @dev isSigner = true ---> provider
+ * @argument{*} obj--> signer or provider
  * @returns contract instance with type of obj: signer or provider
  */
 
-export const getFactoryContract = (isSigner = false) => {
-  const provider = useProvider();
-  const { data: signer } = useSigner();
-
+export const getFactoryContract = (obj) => {
   try {
-    const contract = useContract({
-      address: factoryAddress,
-      abi: factoryAbi,
-      signerOrProvider: isSigner ? signer : provider,
-    });
-
+    const contract = new Contract(factoryAddress, factoryAbi, obj);
     return contract;
   } catch (e) {
     console.log("unable to create contract instance", e);
   }
 };
 
-export const getCampaignContract = (isSigner = false, deployedAddress) => {
-  const provider = useProvider();
-  const { data: signer } = useSigner();
-
+export const getCampaignContract = (deployedAddress, obj) => {
   try {
-    const contract = useContract({
-      address: deployedAddress,
-      abi: campaignAbi,
-      signerOrProvider: isSigner ? signer : provider,
-    });
+    const contract = new Contract(deployedAddress, campaignAbi, obj);
 
     return contract;
   } catch (e) {
