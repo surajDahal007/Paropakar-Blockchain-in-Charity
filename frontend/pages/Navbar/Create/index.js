@@ -5,6 +5,14 @@ import styles from "./Create.module.css";
 
 
 const Create = () => {
+
+  const handleClick = ()=>{
+    confirm("Are you sure to deploy your donation request ?");
+    // if(confirm(text)==true){
+    
+    // }
+  }
+
   return (
     <div>
       <Navbar />
@@ -22,10 +30,6 @@ const Create = () => {
         <br />
           <input type="number" placeholder="AMOUNT (ETH) " className={styles.box} ></input>
           <br /><br />
-          {/* style={{
-            width:"250px",
-            height:"20px"
-            }} */}
 
         <label >Minimum Contribution(ETH)</label>
         <br />
@@ -43,8 +47,11 @@ const Create = () => {
           <br /><br />
           <input type="reset" className={styles.reset}></input>
           <br /><br />
-          <button className={styles.create}>Create Tender</button>
+          <button className={styles.create} onClick={handleClick}>Create Tender</button>
+          <br />
         </form>
+        <br />
+        <br />
       </div>
     </div>
   )

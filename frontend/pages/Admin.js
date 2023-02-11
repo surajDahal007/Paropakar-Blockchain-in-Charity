@@ -8,7 +8,8 @@ const Admin = () => {
      <div className={styles.navbar}>
             <div style={{
                 marginLeft:"-12%"
-            }}>
+            }} > 
+            
                 <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"logo"}></Image>
             </div>
 
@@ -19,24 +20,24 @@ const Admin = () => {
             </div> 
      </div>
 
-        <p style={{
+        <div style={{
             padding:"30px",
-            fontSize:"26px"
+            fontSize:"24px"
         }}>
-            ABOUT AUTHORIZER
+            <h4>ABOUT AUTHORIZER </h4>
             <hr />
 
-            GRANT ROLE &nbsp; <br />
+            <b>GRANT ROLE </b>  &nbsp; <br />
                 <input type={"text"} placeholder={"Address"}></input>
                 <br />
                 <button className={styles.button}>SUBMIT</button>
             <hr />
 
-            REVOKE ROLE &nbsp; <br />
+            <b>REVOKE ROLE </b> <br /> 
             <input type={"text"} placeholder={"Address"}></input>
-                <br />
+            <br />
                 <button className={styles.button}>SUBMIT</button>
-        </p>
+        </div>
 
     </>
   )
