@@ -26,6 +26,12 @@
     /* margin-right: -6%; */
 }
 
+.input{
+    height: 25px;
+    width: 25%;
+    font-size: 16px;
+}
+
 .button{
     padding:8px;
     color: white;

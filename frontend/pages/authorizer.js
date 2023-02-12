@@ -8,13 +8,13 @@ const Authorizer = () => {
     <>
       <div className={styles.navbar}>
         <div style={{
-          marginLeft:"-4.5%"
+          marginLeft:"-5%"
         }}>
               <Image src={"/navBarLogo.png"} height={200} width={400} quality={100} alt={"image"} ></Image>
         </div>
         
            <font className={styles.heading}> 
-              Authorizer PAGE
+              AUTHORIZER
            </font>
 
            <div className={styles.option} > 
@@ -28,18 +28,18 @@ const Authorizer = () => {
                 About Admin
               </Link>
             </div>
-
-            <div className={styles.option}><Web3Button /> </div> 
+            <div className={styles.option}>
+              <Web3Button />
+             </div> 
           </div>
 
       <div className={styles.body}>
-        <h1>
-          Pending Request
+        <h1 className={styles.bodyHead}>
+          PENDING REQUEST
         </h1>
       </div>
-  
     </>
-      )
+    )
 }
 
 export default Authorizer

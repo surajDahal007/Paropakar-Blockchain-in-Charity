@@ -16,7 +16,7 @@
 }
 
 .option{
-    margin-top: 6%;
+    margin-top: 5.5%;
     text-decoration: none;
     font-size: 18px;
 }
@@ -29,7 +29,11 @@
 }
 
 .body{
-    padding: 30px;
+    padding: 10px;
+}
+
+.bodyHead{
+    margin-left:45%;
 }
 
 

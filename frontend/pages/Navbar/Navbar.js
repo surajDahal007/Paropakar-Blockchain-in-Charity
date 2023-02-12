@@ -7,7 +7,6 @@ const Navbar = () => {
   return (
       <div className={styles.main}>
         <Image src={"/navBarLogo.png"} height={200} width={320} quality={100} alt={'logo'} priority ></Image>
-        
         <font className={styles.heading}>
           <i>
             WELCOME USER
@@ -18,13 +17,13 @@ const Navbar = () => {
               <Link 
                 href={"/User"}
                 style={{textDecoration:"none"}} 
-                >User Guidelines</Link> 
+                >USER GUIDELINES</Link> 
           </div>
 
           <div className={styles.option}>
             <Link 
               href={"/Navbar/Create"} 
-              className={styles.option}
+              
               style={{textDecoration:"none"}}
               >CREATE</Link>   
           </div>  
@@ -32,17 +31,15 @@ const Navbar = () => {
           <div className={styles.option}>    
             <Link 
             href={"/Navbar/DonationLog"} 
-            className={styles.option}
             style={{textDecoration:"none"}}
             >DONATE</Link>
           </div>
 
           <div className={styles.option}>
             <Link 
-              href={"/Navbar/RequestLog"}
-              className={styles.option}
+              href={"/Navbar/RequestLog"} 
               style={{textDecoration:"none"}}
-             >RequestLogs</Link>
+             >REQUESTLOG</Link>
           </div>
 
           <div className={styles.button}>
