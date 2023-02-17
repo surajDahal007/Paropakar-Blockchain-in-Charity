@@ -3,6 +3,7 @@ import Image from "next/Image";
 import styles from "../styles/Authorizer.module.css";
 import Link from "next/Link";
 
+
 const Authorizer = () => {
   return (
     <>

@@ -6,7 +6,13 @@ import Link from "next/Link";
 const Navbar = () => {
   return (
       <div className={styles.main}>
-        <Image src={"/navBarLogo.png"} height={200} width={320} quality={100} alt={'logo'} priority ></Image>
+        <Image src={"/navBarLogo.png"}
+         height={200} 
+         width={320} 
+         quality={100}
+         alt={'logo'}
+         priority
+         ></Image>
         <font className={styles.heading}>
           <i>
             WELCOME USER
@@ -22,7 +28,7 @@ const Navbar = () => {
 
           <div className={styles.option}>
             <Link 
-              href={"/Navbar/Create"} 
+              href={"/Navbar/Create/Create"} 
               
               style={{textDecoration:"none"}}
               >CREATE</Link>   
@@ -30,7 +36,7 @@ const Navbar = () => {
 
           <div className={styles.option}>    
             <Link 
-            href={"/Navbar/DonationLog"} 
+            href={"/Navbar/DonationLog/Donate"} 
             style={{textDecoration:"none"}}
             >DONATE</Link>
           </div>
