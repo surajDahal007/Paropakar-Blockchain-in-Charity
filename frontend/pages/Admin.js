@@ -16,6 +16,8 @@ const Admin = () => {
             // const role3= await FactoryContract.getYourRole();
             console.log(`Admin :- ${role}`);
             console.log(`Authorizer :- ${role2}`);
+            let x= document.getElementById("authorizer");
+            x.innerText=role2;
             // console.log(role3);
 
           }
@@ -76,7 +78,7 @@ const Admin = () => {
                 width={400} 
                 quality={100} 
                 alt={"logo"}
-                // priority
+                priority
                 ></Image>
             </div>
 
@@ -95,7 +97,7 @@ const Admin = () => {
         }}>
             <h4>ABOUT AUTHORIZER </h4>
             <div id="authorizer">
-    <button onClick={getAuthorizer}>console</button>
+    <button onClick={getAuthorizer}>CONSOLE</button>
             </div>
             <hr />
 

@@ -20,7 +20,8 @@ export default function Home() {
         const role = await FactoryContract.roles(`${address}`);
         if(role=="authorizer"){
           router.push(`/Authorizer`);
-        }else if(role=="admin"){
+        }
+        else if(role=="admin"){
             router.push(`/Admin`);
         } 
         else{
