@@ -42,3 +42,13 @@
     font-size: 18px;
     border-radius:8px;
 }
+
+.reset{
+    color:white;
+    background: grey;
+    padding:6px;
+    cursor: pointer;
+    font-size:18px;
+    border:1px solid white;
+    border-radius:5px;
+}

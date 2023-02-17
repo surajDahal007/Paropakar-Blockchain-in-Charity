@@ -11,17 +11,14 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 contract tenderFactory is AccessControl{
     /** encrypt based on the roles */
     bytes32  public constant AUTHORIZER_ROLE = keccak256("AUTHORIZER_ROLE");
- 
-
     address public admin;
 
     // only contains registered tender addresees after deployed
     address[] deployedAuthorizedTenders;
     uint public protocolIndex;
 
-     event createdTender(address indexed owner,address  deployedTender);
-     event registeredProtocol(address client,string url);
-    
+    event createdTender(address indexed owner,address deployedTender);
+    event registeredProtocol(address client,string url);
     
     constructor(){
         admin=msg.sender;
@@ -42,22 +39,29 @@ contract tenderFactory is AccessControl{
         uint target;
     }
 
-    mapping(address => protocol )public protocols;
+    mapping (address => protocol) public protocols;
     mapping (address => string) public roles;
 
     struct authority{
         string protocolUrl;
         address client;
     }
+
     mapping(address => authority) public authorities;
 
+    //    function getAuthorizer() public view returns(address[] memory){
+    //     return(authorities[]);
+    // }
+    
     modifier onlyAdmin{
         require(admin == msg.sender, "caller is not an admin");
         _;
     }
 
 /// @dev this function registers the protocol for validation of a specific benefiicary
-   function registerProtocol(uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category)public {
+   function registerProtocol(
+    uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category
+    )public {
        require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "caller is an Admin");
        require(!hasRole(AUTHORIZER_ROLE, msg.sender), "caller is an Authorizer");
        require(!protocols[msg.sender].validated,"protocol is already registered");
@@ -75,15 +79,23 @@ contract tenderFactory is AccessControl{
 
 
 //@dev internal function to create tender after te validation of protocol by authorizer
-   function createTender(address creator,uint _deadline1,uint _target,uint _minimum,string memory _PdfUrl,string memory category) internal {
-         tender tenderPointer=new tender();
-         tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,category);
-         deployedAuthorizedTenders.push(address(tenderPointer));
+   function createTender(
+    address creator,
+    uint _deadline1,
+    uint _target,
+    uint _minimum,
+    string memory _PdfUrl,
+    string memory category
+    ) internal {
+        tender tenderPointer=new tender();
+        tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,category);
+        deployedAuthorizedTenders.push(address(tenderPointer));
         emit createdTender(creator,address(tenderPointer));
     }
 
 /// @dev authorizer uses this function to validate the protocols
 /// @dev creates tender after authorizing the protocol of a givan client 
+
    function validateProtocol(address _client) public {
 
        require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Admin is not allowed");
@@ -108,7 +120,7 @@ contract tenderFactory is AccessControl{
    }
 
     function revokeAuthorityRole(address _account)public onlyAdmin{
-       require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't  the authorizer");
+       require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't the authorizer");
        revokeRole(AUTHORIZER_ROLE, _account);
        roles[_account]="";
    }
@@ -116,14 +128,15 @@ contract tenderFactory is AccessControl{
    function getYourRole()public view returns(string memory){
        return roles[msg.sender];
    }
+
+//    function getRoleAuthorizer() public view returns(address){
+
+//    }
    
     function getDeployedTenders() public view returns ( address[] memory ) {
         return deployedAuthorizedTenders;
     }
 }
-
-
-
 
 contract tender is ReentrancyGuard{
     string public category;
@@ -225,7 +238,8 @@ contract tender is ReentrancyGuard{
 
 /// @dev returns state of the tender 
 
-        function readTenderStatus()public view returns(string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+    function readTenderStatus()public view returns
+        (string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
             return(
             category,
             pdfUrl,
@@ -243,7 +257,6 @@ contract tender is ReentrancyGuard{
 
     function createRequest( string memory _description,address payable _recipient,uint256 _value) public payable onlyowner shouldnotDestroy {
         Request storage newRequest = requests[numRequests];
-       
         newRequest.description = _description;
         newRequest.recipient = _recipient;
         newRequest.value = _value;
