@@ -80,12 +80,12 @@ contract tenderFactory is AccessControl{
 
 //@dev internal function to create tender after te validation of protocol by authorizer
    function createTender(
-    address creator,
-    uint _deadline1,
-    uint _target,
-    uint _minimum,
-    string memory _PdfUrl,
-    string memory category
+        address creator,
+        uint _deadline1,
+        uint _target,
+        uint _minimum,
+        string memory _PdfUrl,
+        string memory category
     ) internal {
         tender tenderPointer=new tender();
         tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,category);
@@ -119,7 +119,7 @@ contract tenderFactory is AccessControl{
        roles[_account] = "authorizer";
    }
 
-    function revokeAuthorityRole(address _account)public onlyAdmin{
+    function revokeAuthorityRole(address _account) public onlyAdmin{
        require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't the authorizer");
        revokeRole(AUTHORIZER_ROLE, _account);
        roles[_account]="";
@@ -128,10 +128,6 @@ contract tenderFactory is AccessControl{
    function getYourRole()public view returns(string memory){
        return roles[msg.sender];
    }
-
-//    function getRoleAuthorizer() public view returns(address){
-
-//    }
    
     function getDeployedTenders() public view returns ( address[] memory ) {
         return deployedAuthorizedTenders;

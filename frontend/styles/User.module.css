@@ -7,3 +7,13 @@
     font-weight: bold;
     font-size: 40px;
 }
+
+.body{
+   margin-left: 10%; 
+   font-size: x-large;
+}
+
+.image{
+    border:1px solid black;
+    
+}
