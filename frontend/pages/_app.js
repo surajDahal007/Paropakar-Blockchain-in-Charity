@@ -8,16 +8,14 @@ import { Web3Modal } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { configureChains, createClient, useAccount, WagmiConfig } from "wagmi";
+import { NextUIProvider } from "@nextui-org/react";
+
+import { configureChains, createClient, WagmiConfig } from "wagmi";
 
 import { polygonMumbai } from "wagmi/chains";
 
-//import  navbar component here
-
 import "../styles/globals.css";
-// import { NextUIProvider } from '@nextui-org/react';
-
-// const {address,isConnected} = useAccount();
+import { FactoryProvider } from "../context/CampaignFactory";
 
 const chainSupport = [polygonMumbai];
 
@@ -39,7 +37,6 @@ const wagmiClient = createClient({
 
 // Web3Modal Ethereum Client
 const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
-console.log(ethereumClient);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -54,9 +51,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <WagmiConfig client={wagmiClient}>
-        {/* <NextUIProvider> */}
-        <Component {...pageProps} />
-        {/* </NextUIProvider> */}
+        <NextUIProvider>
+          <FactoryProvider>
+            <Component {...pageProps} />
+          </FactoryProvider>
+        </NextUIProvider>
       </WagmiConfig>
 
       <Web3Modal

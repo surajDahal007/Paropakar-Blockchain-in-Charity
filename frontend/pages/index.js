@@ -29,7 +29,7 @@ export default function Home() {
         }
       }
     } catch (error) {
-      // alert("Proceed to connecting your wallet....");
+      alert("Proceed to connecting your wallet....");
       console.log(error);
     }
   }

@@ -1,6 +1,6 @@
 import { Web3Button } from "@web3modal/react";
 import Image from "next/image";
-import styles from "../styles/Authorizer.module.css";
+import styles from "../styles/authorizer.module.css";
 import Link from "next/link";
 
 const Authorizer = () => {
@@ -13,7 +13,7 @@ const Authorizer = () => {
           }}
         >
           <Image
-            src={"/navBarLogo.png"}
+            src={"/navbarlogo.png"}
             height={200}
             width={400}
             quality={100}

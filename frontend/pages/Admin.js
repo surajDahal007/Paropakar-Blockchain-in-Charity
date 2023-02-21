@@ -1,65 +1,30 @@
 import Image from "next/image";
 import { Web3Button } from "@web3modal/react";
+import { useRef } from "react";
 import styles from "../styles/Admin.module.css";
-import { getFactoryContract } from "../hooks/useContract";
+import { useFactory } from "../context/CampaignFactory";
+import { Button, Input, Spacer, Text, Table, Grid } from "@nextui-org/react";
 
 const Admin = () => {
-  const FactoryContract = getFactoryContract();
+  console.log("useFactory", useFactory());
+  const { grantRole, revokeRole } = useFactory();
+  const inputRef = useRef();
 
-  async function getAuthorizer() {
+  async function grantRoleFor() {
     try {
-      {
-        const role = await FactoryContract.admin();
-        const role2 = await FactoryContract.AUTHORIZER_ROLE();
-        // const role3= await FactoryContract.getYourRole();
-        console.log(`Admin :- ${role}`);
-        console.log(`Authorizer :- ${role2}`);
-        let x = document.getElementById("authorizer");
-        x.innerText = role2;
-        // console.log(role3);
-      }
-    } catch (error) {
-      console.log(error);
+      await grantRole(inputRef.current.value);
+    } catch {
+      alert("unable to grant the role");
     }
   }
 
-  const grantRole = () => {
-    var x = document.getElementById("addressGrant");
-    // console.log(x.value.length);
+  async function revokeRoleFor() {
     try {
-      if (x.value.length <= 0) {
-        console.log("No address given");
-        alert("No address given");
-      } else {
-        let text = `Do you want to make ${x.value} account an Authorizer ?`;
-        if (confirm(text) == true) {
-          alert(`Authorizer Grant request send`);
-          // let x1= await FactoryContract.grantAuthorityRole(x);
-          // console.log(`${x1}`);
-        } else {
-          alert(`Authorizer Grant request denied`);
-        }
-      }
-    } catch (error) {
-      console.log(error);
+      await revokeRole(inputRef.current.value);
+    } catch {
+      alert("unable to grant the role");
     }
-  };
-
-  const revokeRole = () => {
-    var x = document.getElementById("addressRevoke");
-    console.log(x.value.length);
-    if (x.value.length <= 0) {
-      console.log("No address given");
-      alert("No address given");
-    } else {
-      let text = `Do you want to remove ${x.value} account an Authorizer ?`;
-      if (confirm(text) == true) {
-        alert(`Authorizer Revoke request send`);
-      } else {
-        alert(`Authorizer Revoke request denied`);
-      }
-    }
-  };
+  }
 
   return (
     <>
@@ -92,42 +57,101 @@ const Admin = () => {
           fontSize: "24px",
         }}
       >
-        <h4>ABOUT AUTHORIZER </h4>
-        <div id="authorizer">
-          <button onClick={getAuthorizer}>CONSOLE</button>
-        </div>
-        <hr />
-        <b>GRANT ROLE </b> &nbsp; <br />
-        <form>
-          <input
-            type={"text"}
-            className={styles.input}
-            id="addressGrant"
-            placeholder={"Address"}
-          ></input>
-          <br />
-          <button className={styles.button} onClick={grantRole}>
-            SUBMIT
-          </button>{" "}
-          &nbsp;
-          <input type="reset" className={styles.reset}></input>
-        </form>
-        <hr />
-        <b>REVOKE ROLE </b> <br />
-        <form>
-          <input
-            type={"text"}
-            className={styles.input}
-            id="addressRevoke"
-            placeholder={"Address"}
-          ></input>
-          <br />
-          <button className={styles.button} onClick={revokeRole}>
-            SUBMIT
-          </button>{" "}
-          &nbsp;
-          <input type="reset" className={styles.reset}></input>
-        </form>
+        <Grid.Container
+          gap={2}
+          css={{
+            backgroundColor: "AliceBlue",
+            padding: "$20",
+          }}
+          justify="space-around"
+        >
+          <Grid>
+            <Text b>ROLE ACCESS CONTROL</Text>
+            <Spacer y="0.5" />
+            <Input
+              rounded
+              bordered
+              label="Account Address"
+              placeholder="0x00...."
+              color="secondary"
+              ref={inputRef}
+            />
+
+            <br />
+
+            <Button.Group color="gradient" ghost size="xl">
+              <Button onPress={grantRoleFor}>Grant</Button>
+              <Button onPress={revokeRoleFor}>Revoke</Button>
+            </Button.Group>
+          </Grid>
+
+          <Grid sm={6}>
+            <Table
+              bordered
+              shadow={false}
+              color="secondary"
+              aria-label="Example pagination  table"
+              css={{
+                height: "auto",
+                width: "stretch",
+              }}
+            >
+              <Table.Header>
+                <Table.Column>Address</Table.Column>
+                <Table.Column>Role</Table.Column>
+                <Table.Column>Status</Table.Column>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row key="1">
+                  <Table.Cell>Tony Reichert</Table.Cell>
+                  <Table.Cell>CEO</Table.Cell>
+                  <Table.Cell>Active</Table.Cell>
+                </Table.Row>
+                <Table.Row key="2">
+                  <Table.Cell>Zoey Lang</Table.Cell>
+                  <Table.Cell>Technical Lead</Table.Cell>
+                  <Table.Cell>Paused</Table.Cell>
+                </Table.Row>
+                <Table.Row key="3">
+                  <Table.Cell>Jane Fisher</Table.Cell>
+                  <Table.Cell>Senior Developer</Table.Cell>
+                  <Table.Cell>Active</Table.Cell>
+                </Table.Row>
+                <Table.Row key="4">
+                  <Table.Cell>William Howard</Table.Cell>
+                  <Table.Cell>Community Manager</Table.Cell>
+                  <Table.Cell>Vacation</Table.Cell>
+                </Table.Row>
+                <Table.Row key="5">
+                  <Table.Cell>Jane Fisher</Table.Cell>
+                  <Table.Cell>Senior Developer</Table.Cell>
+                  <Table.Cell>Active</Table.Cell>
+                </Table.Row>
+                <Table.Row key="6">
+                  <Table.Cell>Zoey Lang</Table.Cell>
+                  <Table.Cell>Technical Lead</Table.Cell>
+                  <Table.Cell>Paused</Table.Cell>
+                </Table.Row>
+                <Table.Row key="7">
+                  <Table.Cell>Jane Fisher</Table.Cell>
+                  <Table.Cell>Senior Developer</Table.Cell>
+                  <Table.Cell>Active</Table.Cell>
+                </Table.Row>
+                <Table.Row key="8">
+                  <Table.Cell>William Howard</Table.Cell>
+                  <Table.Cell>Community Manager</Table.Cell>
+                  <Table.Cell>Vacation</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+              <Table.Pagination
+                shadow
+                align="center"
+                rowsPerPage={3}
+                onPageChange={(page) => console.log({ page })}
+              />
+            </Table>
+          </Grid>
+        </Grid.Container>
       </div>
     </>
   );
