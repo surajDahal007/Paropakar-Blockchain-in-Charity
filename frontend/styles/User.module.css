@@ -1,10 +1,19 @@
 .main{
-    padding:20px;
+    padding:10px;
 }
 
 .heading{
-    margin-left: 45%;
+    margin-left: 43%;
+    font-weight: bold;
     font-size: 40px;
-    font-family: 'Times New Roman', Times, serif;
-    text-decoration: underline;
+}
+
+.body{
+   margin-left: 10%; 
+   font-size: x-large;
+}
+
+.image{
+    border:1px solid black;
+    
 }
