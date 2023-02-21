@@ -1,6 +1,9 @@
 import { createContext, useContext } from "react";
-import { useAccount, useProvider, useSigner } from "wagmi";
+
 import { getFactoryContract } from "../hooks/useContract";
+
+//external imports
+import { useAccount, useProvider, useSigner } from "wagmi";
 import Swal from "sweetalert2";
 
 const factoryContext = createContext();
@@ -40,6 +43,27 @@ export const FactoryProvider = ({ children }) => {
         });
       });
     });
+  };
+
+  const registerYourProtocol = async (
+    deadline,
+    target,
+    category,
+    pdf,
+    minContribution
+  ) => {
+    //check the input format
+    try {
+    } catch (e) {}
+  };
+
+  const getDeployedCampaignsAddress = async () => {
+    try {
+      const addresses = await providerContract.getDeployedTenders();
+      return addresses;
+    } catch (e) {
+      alert("unable to get deployed campaigns");
+    }
   };
 
   return (
