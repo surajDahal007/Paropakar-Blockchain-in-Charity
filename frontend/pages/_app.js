@@ -43,13 +43,10 @@ console.log(ethereumClient);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [targetNetwork, setNetwork] = useState("polygon");
-  const [account, setAccount] = useState(null);
 
   useEffect(() => {
     ethereumClient.watchAccount((acc) => {
       {
-        setAccount(acc.address);
         router.push("/");
       }
     });
