@@ -1,18 +1,30 @@
 import Image from "next/image";
 import { Web3Button } from "@web3modal/react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import styles from "../styles/Admin.module.css";
 import { useFactory } from "../context/CampaignFactory";
-import { Button, Input, Spacer, Text, Table, Grid } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Spacer,
+  Text,
+  Table,
+  Grid,
+  Loading,
+} from "@nextui-org/react";
 
 const Admin = () => {
-  console.log("useFactory", useFactory());
-  const { grantRole, revokeRole } = useFactory();
+  const { grantRole, revokeRole, getAuthorizers } = useFactory();
   const inputRef = useRef();
+
+  //array form
+  const [authorizers, setAuthorizers] = useState([]);
+  const [reRender, setRender] = useState(false);
 
   async function grantRoleFor() {
     try {
       await grantRole(inputRef.current.value);
+      setRender(true);
     } catch {
       alert("unable to grant the role");
     }
@@ -21,10 +33,18 @@ const Admin = () => {
   async function revokeRoleFor() {
     try {
       await revokeRole(inputRef.current.value);
+      setRender(true);
     } catch {
       alert("unable to grant the role");
     }
   }
+
+  useEffect(() => {
+    async function read() {
+      setAuthorizers(await getAuthorizers());
+    }
+    read();
+  }, [reRender]);
 
   return (
     <>
@@ -87,8 +107,9 @@ const Admin = () => {
 
           <Grid sm={6}>
             <Table
+              title="Current Authorizers In The System"
               bordered
-              shadow={false}
+              shadow
               color="secondary"
               aria-label="Example pagination  table"
               css={{
@@ -98,51 +119,23 @@ const Admin = () => {
             >
               <Table.Header>
                 <Table.Column>Address</Table.Column>
-                <Table.Column>Role</Table.Column>
-                <Table.Column>Status</Table.Column>
               </Table.Header>
-              <Table.Body>
-                <Table.Row key="1">
-                  <Table.Cell>Tony Reichert</Table.Cell>
-                  <Table.Cell>CEO</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                </Table.Row>
-                <Table.Row key="2">
-                  <Table.Cell>Zoey Lang</Table.Cell>
-                  <Table.Cell>Technical Lead</Table.Cell>
-                  <Table.Cell>Paused</Table.Cell>
-                </Table.Row>
-                <Table.Row key="3">
-                  <Table.Cell>Jane Fisher</Table.Cell>
-                  <Table.Cell>Senior Developer</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                </Table.Row>
-                <Table.Row key="4">
-                  <Table.Cell>William Howard</Table.Cell>
-                  <Table.Cell>Community Manager</Table.Cell>
-                  <Table.Cell>Vacation</Table.Cell>
-                </Table.Row>
-                <Table.Row key="5">
-                  <Table.Cell>Jane Fisher</Table.Cell>
-                  <Table.Cell>Senior Developer</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                </Table.Row>
-                <Table.Row key="6">
-                  <Table.Cell>Zoey Lang</Table.Cell>
-                  <Table.Cell>Technical Lead</Table.Cell>
-                  <Table.Cell>Paused</Table.Cell>
-                </Table.Row>
-                <Table.Row key="7">
-                  <Table.Cell>Jane Fisher</Table.Cell>
-                  <Table.Cell>Senior Developer</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                </Table.Row>
-                <Table.Row key="8">
-                  <Table.Cell>William Howard</Table.Cell>
-                  <Table.Cell>Community Manager</Table.Cell>
-                  <Table.Cell>Vacation</Table.Cell>
-                </Table.Row>
-              </Table.Body>
+
+              {authorizers != undefined ? (
+                <Table.Body>
+                  {authorizers.map((acc, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>
+                        {acc != "0x0000000000000000000000000000000000000000" &&
+                          acc}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              ) : (
+                <Loading type="points" />
+              )}
+
               <Table.Pagination
                 shadow
                 align="center"

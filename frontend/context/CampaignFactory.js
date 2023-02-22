@@ -17,7 +17,7 @@ export const FactoryProvider = ({ children }) => {
   const signerContract = getFactoryContract(signer);
   const providerContract = getFactoryContract(provider);
 
-  const grantRole = async (account) => {
+  const grantRole = (account) => {
     signerContract.grantAuthorityRole(account).then(async (tx) => {
       tx.wait(1).then(() => {
         Swal.fire({
@@ -31,7 +31,7 @@ export const FactoryProvider = ({ children }) => {
     });
   };
 
-  const revokeRole = async (account) => {
+  const revokeRole = (account) => {
     signerContract.revokeAuthorityRole(account).then(async (tx) => {
       tx.wait(1).then(() => {
         Swal.fire({
@@ -66,8 +66,39 @@ export const FactoryProvider = ({ children }) => {
     }
   };
 
+  /**
+   *
+   * @param {@} client  address of the campaign verification request applicants
+   */
+  const validateProtocolOf = (client) => {
+    try {
+      providerContract.validateProtocol(client).then(async (tx) => {
+        tx.wait(1).then(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Authorized!",
+            showConfirmButton: false,
+            timer: 2500,
+          });
+        });
+      });
+    } catch (e) {
+      console.error(e);
+      alert("Unable to validate!");
+    }
+  };
+
+  const getAuthorizers = async () => {
+    try {
+      const authorizers = await providerContract.getCurrentAuthorizers();
+
+      return authorizers;
+    } catch (e) {}
+  };
+
   return (
-    <factoryContext.Provider value={{ grantRole, revokeRole }}>
+    <factoryContext.Provider value={{ grantRole, revokeRole, getAuthorizers }}>
       {children}
     </factoryContext.Provider>
   );

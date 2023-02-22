@@ -94,6 +94,18 @@ const factoryAbi = [
         name: "deployedTender",
         type: "address",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "createdTime",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "string",
+        name: "category",
+        type: "string",
+      },
     ],
     name: "createdTender",
     type: "event",
@@ -112,6 +124,12 @@ const factoryAbi = [
         internalType: "string",
         name: "url",
         type: "string",
+      },
+      {
+        indexed: true,
+        internalType: "bool",
+        name: "verfied",
+        type: "bool",
       },
     ],
     name: "registeredProtocol",
@@ -159,22 +177,30 @@ const factoryAbi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "authorizers",
+    outputs: [
+      {
         internalType: "address",
         name: "",
         type: "address",
       },
     ],
-    name: "authorities",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getCurrentAuthorizers",
     outputs: [
       {
-        internalType: "string",
-        name: "protocolUrl",
-        type: "string",
-      },
-      {
-        internalType: "address",
-        name: "client",
-        type: "address",
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
       },
     ],
     stateMutability: "view",
@@ -310,6 +336,11 @@ const factoryAbi = [
       },
       {
         internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
         name: "category",
         type: "string",
       },
@@ -326,11 +357,6 @@ const factoryAbi = [
       {
         internalType: "address",
         name: "beneficiary",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "authorizer",
         type: "address",
       },
       {
@@ -382,6 +408,11 @@ const factoryAbi = [
       {
         internalType: "string",
         name: "category",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_image",
         type: "string",
       },
     ],
@@ -492,7 +523,7 @@ const factoryAbi = [
   },
 ];
 
-const factoryAddress = "0x7df67F587621eeAA1a5Ac96bb4Ad7B18aD3a10Ec";
+const factoryAddress = "0xcD8463E946842115883aeb6B3Ba3dd0cDC456947";
 
 const campaignAbi = [
   {
@@ -531,12 +562,12 @@ const campaignAbi = [
   },
   {
     inputs: [],
-    name: "category",
+    name: "authorizer",
     outputs: [
       {
-        internalType: "string",
+        internalType: "address",
         name: "",
-        type: "string",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -560,7 +591,7 @@ const campaignAbi = [
         type: "uint256",
       },
     ],
-    name: "createRequests",
+    name: "createRequest",
     outputs: [],
     stateMutability: "payable",
     type: "function",
@@ -625,6 +656,73 @@ const campaignAbi = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_i",
+        type: "uint256",
+      },
+    ],
+    name: "getRequeststatus",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "image",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -726,6 +824,11 @@ const campaignAbi = [
     name: "readTenderStatus",
     outputs: [
       {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
         internalType: "string",
         name: "",
         type: "string",
@@ -776,7 +879,7 @@ const campaignAbi = [
         type: "bool",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -810,13 +913,18 @@ const campaignAbi = [
       },
       {
         internalType: "string",
-        name: "category",
+        name: "_image",
         type: "string",
+      },
+      {
+        internalType: "address",
+        name: "_authorizer",
+        type: "address",
       },
     ],
     name: "registerTender",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -896,6 +1004,10 @@ const campaignAbi = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];
 
