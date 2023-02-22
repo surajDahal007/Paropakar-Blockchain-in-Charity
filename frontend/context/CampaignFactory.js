@@ -72,7 +72,7 @@ export const FactoryProvider = ({ children }) => {
    */
   const validateProtocolOf = (client) => {
     try {
-      providerContract.validateProtocol(client).then(async (tx) => {
+      signerContract.validateProtocol(client).then(async (tx) => {
         tx.wait(1).then(() => {
           Swal.fire({
             position: "top-end",
@@ -98,7 +98,9 @@ export const FactoryProvider = ({ children }) => {
   };
 
   return (
-    <factoryContext.Provider value={{ grantRole, revokeRole, getAuthorizers }}>
+    <factoryContext.Provider
+      value={{ grantRole, revokeRole, getAuthorizers, validateProtocolOf }}
+    >
       {children}
     </factoryContext.Provider>
   );

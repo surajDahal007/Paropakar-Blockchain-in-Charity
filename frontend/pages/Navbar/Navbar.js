@@ -2,6 +2,7 @@ import styles from "./Navbar.module.css";
 import { Web3Button } from "@web3modal/react";
 import Image from "next/image";
 import Link from "next/link";
+import { Dropdown } from "@nextui-org/react";
 
 const Navbar = () => {
   return (
@@ -18,16 +19,14 @@ const Navbar = () => {
         <i>WELCOME USER</i>
       </font>
 
-      <div className={styles.option}>
-        <Link href={"/User"} style={{ textDecoration: "none" }}>
-          USER GUIDELINES
-        </Link>
-      </div>
-
-      <div className={styles.option}>
-        <Link href={"/Navbar/Create/Create"} style={{ textDecoration: "none" }}>
-          CREATE
-        </Link>
+      <div className={styles.trigger}>
+        <Dropdown>
+          <Dropdown.Button flat>Portal</Dropdown.Button>
+          <Dropdown.Menu aria-label="Static Actions">
+            <Dropdown.Item key="new">Registration Form</Dropdown.Item>
+            <Dropdown.Item key="copy">Your History</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
 
       <div className={styles.option}>
@@ -36,12 +35,6 @@ const Navbar = () => {
           style={{ textDecoration: "none" }}
         >
           DONATE
-        </Link>
-      </div>
-
-      <div className={styles.option}>
-        <Link href={"/Navbar/RequestLog"} style={{ textDecoration: "none" }}>
-          REQUESTLOG
         </Link>
       </div>
 

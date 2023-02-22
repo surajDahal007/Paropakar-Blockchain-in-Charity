@@ -1,7 +1,7 @@
 import { Web3Button } from "@web3modal/react";
 import Image from "next/image";
 import styles from "../styles/authorizer.module.css";
-import Link from "next/link";
+import RegistrationLogs from "../components/logs/RegistrationLogs";
 
 const Authorizer = () => {
   return (
@@ -24,24 +24,14 @@ const Authorizer = () => {
         <font className={styles.heading}>AUTHORIZER</font>
 
         <div className={styles.option}>
-          <Link href="/Admin" style={{ textDecoration: "none" }}>
-            All Contracts
-          </Link>
-        </div>
-
-        <div className={styles.option}>
-          <Link href="/Admin" style={{ textDecoration: "none" }}>
-            About Admin
-          </Link>
-        </div>
-        <div className={styles.option}>
           <Web3Button />
         </div>
       </div>
 
       <div className={styles.body}>
-        <h1 className={styles.bodyHead}>PENDING REQUEST</h1>
+        <h1 className={styles.bodyHead}>Campaigns Verifications</h1>
       </div>
+      <RegistrationLogs />
     </>
   );
 };

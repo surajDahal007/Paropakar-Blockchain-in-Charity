@@ -41,13 +41,13 @@ const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  useEffect(() => {
-    ethereumClient.watchAccount((acc) => {
-      {
-        router.push("/");
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   ethereumClient.watchAccount((acc) => {
+  //     {
+  //       router.push("/");
+  //     }
+  //   });
+  // }, []);
   return (
     <>
       <WagmiConfig client={wagmiClient}>
