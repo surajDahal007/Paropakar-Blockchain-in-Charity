@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.11;
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
 
 
 /// @title factory for tender
@@ -11,14 +11,18 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 contract tenderFactory is AccessControl{
     /** encrypt based on the roles */
     bytes32  public constant AUTHORIZER_ROLE = keccak256("AUTHORIZER_ROLE");
+ 
+
     address public admin;
 
     // only contains registered tender addresees after deployed
     address[] deployedAuthorizedTenders;
     uint public protocolIndex;
 
-    event createdTender(address indexed owner,address deployedTender);
-    event registeredProtocol(address client,string url);
+     event createdTender(address indexed owner,address  deployedTender,uint createdTime,string indexed category);
+     event registeredProtocol(address client,string url, bool indexed verfied);
+    
+    
     
     constructor(){
         admin=msg.sender;
@@ -29,43 +33,32 @@ contract tenderFactory is AccessControl{
 /// @dev for  a single protocol with different informations
     struct protocol{
         string url;
+        string image;
         string category;
         uint citizenShipNum;
-        bool validated;
+        bool  validated;
         address beneficiary;
-        address authorizer;
         uint deadline;
         uint minimumContribution;
         uint target;
     }
+    mapping(address => protocol )public protocols;
+mapping (address => string) public roles;
 
-    mapping (address => protocol) public protocols;
-    mapping (address => string) public roles;
+address[] public authorizers;
 
-    struct authority{
-        string protocolUrl;
-        address client;
-    }
 
-    mapping(address => authority) public authorities;
 
-    //    function getAuthorizer() public view returns(address[] memory){
-    //     return(authorities[]);
-    // }
-    
-    modifier onlyAdmin{
-        require(admin == msg.sender, "caller is not an admin");
-        _;
-    }
+modifier onlyAdmin{
+require(admin == msg.sender, "caller is not an admin");
+_;
+}
 
 /// @dev this function registers the protocol for validation of a specific benefiicary
-   function registerProtocol(
-    uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category
-    )public {
+   function registerProtocol(uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category,string memory _image)public {
        require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "caller is an Admin");
        require(!hasRole(AUTHORIZER_ROLE, msg.sender), "caller is an Authorizer");
-       require(!protocols[msg.sender].validated,"protocol is already registered");
-
+       require(!protocols[msg.sender].validated,"protocol is already regstered");
        protocols[msg.sender].url=_url;
        protocols[msg.sender].beneficiary=msg.sender;
        protocols[msg.sender].validated=false;
@@ -74,69 +67,89 @@ contract tenderFactory is AccessControl{
        protocols[msg.sender].target=_target;
        protocols[msg.sender].deadline=_deadline;
        protocols[msg.sender].category=category;
-       emit registeredProtocol(msg.sender,_url);
+       protocols[msg.sender].image=_image;
+       emit registeredProtocol(msg.sender,_url,false);
    }
 
 
 //@dev internal function to create tender after te validation of protocol by authorizer
-   function createTender(
-        address creator,
-        uint _deadline1,
-        uint _target,
-        uint _minimum,
-        string memory _PdfUrl,
-        string memory category
-    ) internal {
-        tender tenderPointer=new tender();
-        tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,category);
-        deployedAuthorizedTenders.push(address(tenderPointer));
-        emit createdTender(creator,address(tenderPointer));
+   function createTender(address creator,uint _deadline1,uint _target,uint _minimum,string memory _PdfUrl,string memory category,string memory image) internal {
+         tender tenderPointer=new tender();
+         tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,image,msg.sender);
+         deployedAuthorizedTenders.push(address(tenderPointer));
+        emit createdTender(creator,address(tenderPointer),block.timestamp,category);
+        emit registeredProtocol(msg.sender,_PdfUrl,true);
     }
 
 /// @dev authorizer uses this function to validate the protocols
 /// @dev creates tender after authorizing the protocol of a givan client 
-
-   function validateProtocol(address _client) public {
-
-       require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Admin is not allowed");
-       require(hasRole(AUTHORIZER_ROLE, msg.sender), "caller must be an Authorizer");
+   function validateProtocol(address _client)public {
+         require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Admin is not allowed");
+       require(hasRole(AUTHORIZER_ROLE, msg.sender), "caller must be  an Authorizer");
        require( !(protocols[_client].validated),"this protocol is already validated" );
        protocols[_client].validated=true;
-       protocols[_client].authorizer=msg.sender;
        uint deadline = protocols[_client].deadline;
        uint target = protocols[_client].target;
        uint mc = protocols[_client].minimumContribution;
        string  memory link = protocols[_client].url;
        string  memory category = protocols[_client].category;
-       createTender(_client,deadline,target,mc,link,category);
+       string memory _image = protocols[_client].image;
+       createTender(_client,deadline,target,mc,link,category,_image);
+
    }
+
+
+  
 
 
 /// @dev admin can grant role to other accouts for the role of authorizer
-   function grantAuthorityRole(address _account) public onlyAdmin {
-       require(!hasRole(AUTHORIZER_ROLE, _account), "this address is already an authorizer");
+   function grantAuthorityRole(address _account)public onlyAdmin{
+    require(!hasRole(AUTHORIZER_ROLE, _account), "this address is already an authorizer");
        grantRole(AUTHORIZER_ROLE, _account);
        roles[_account] = "authorizer";
+       authorizers.push(_account);
+    
    }
 
-    function revokeAuthorityRole(address _account) public onlyAdmin{
-       require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't the authorizer");
+
+
+    function revokeAuthorityRole(address _account)public onlyAdmin{
+         require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't  the authorizer");
        revokeRole(AUTHORIZER_ROLE, _account);
        roles[_account]="";
-   }
+       for (uint i = 0; i < authorizers.length; i++){
+            if (authorizers[i] == _account) {
+                delete authorizers[i];
+                break;
+            }
+       }
+    }
 
+
+    function getCurrentAuthorizers() public view returns(address[] memory){
+return authorizers;
+        
+    }
+
+    
+
+   
    function getYourRole()public view returns(string memory){
        return roles[msg.sender];
    }
-   
     function getDeployedTenders() public view returns ( address[] memory ) {
         return deployedAuthorizedTenders;
     }
 }
 
-contract tender is ReentrancyGuard{
-    string public category;
+
+
+
+contract tender{
+   
+    string public image;
     address public owner;
+    address public authorizer;
     string public pdfUrl;
     uint256 public minimumContribution;
     uint public deadline;
@@ -146,12 +159,18 @@ contract tender is ReentrancyGuard{
     uint256 public numRequests;
     uint256 public numofregisteredTender;
     bool public destroyed;
+
+
  
-    event donorEvent(address indexed donor,uint amount,uint time);
-  
+event donorEvent(address indexed donor,uint amount,uint time);
+
+     
+
     constructor(){
+    
       destroyed=false;
     }
+
 
     struct Request {
         string description;
@@ -163,44 +182,46 @@ contract tender is ReentrancyGuard{
     }
 
     mapping(uint256 => Request) public requests;
-    mapping(address => uint256) public donors;
+    
+     mapping(address => uint256) public donors;
 
-    function registerTender(
-        uint256 _target,uint256 _minimum, string memory _url,uint _deadline,string memory _category
-        ) external {
-            require(numofregisteredTender == 0, "only one tender");
-            owner=payable(msg.sender);
-            target = _target;
-            minimumContribution = _minimum;
-            pdfUrl = _url;
-            owner = msg.sender;
-            deadline=block.timestamp+ _deadline*60;
-            category = _category;
-            numofregisteredTender++;
+    function registerTender(uint256 _target,uint256 _minimum,  string memory _url,uint _deadline,string memory _image,address _authorizer) external  {
+         require(numofregisteredTender == 0, "only one tender");
+          owner=payable(msg.sender);
+        target = _target;
+        minimumContribution = _minimum;
+        pdfUrl = _url;
+        owner = msg.sender;
+        deadline=block.timestamp+ _deadline*60;
+        image = _image;
+        authorizer=_authorizer;
+        numofregisteredTender++;
     }
 
+
     function donate() public payable {
-        require(block.timestamp < deadline,"you cant donate");
-        require(!(owner==msg.sender),"owner can't donate self");
-        require(msg.value <= target, "donation greater than target");
-        require(numRequests == 0, "raised target has already mey target");
+          require(block.timestamp < deadline,"you cant donate");
+          require(!(owner==msg.sender),"owner can't donate self");
+            require(msg.value <= target, "donation greater than target");
+            require(numRequests == 0, "raised target has already mey target");
 
         require(
             msg.value >= minimumContribution,
             "Minimum donation is not met"
         );
-        
         if (donors[msg.sender] == 0) {
             noOfdonors++;
         }
-
         donors[msg.sender] = msg.value + donors[msg.sender];
         raisedtarget += msg.value;
         emit donorEvent(msg.sender,msg.value,block.timestamp);
     }
 
+
+     
+
     modifier onlyowner() {
-        require(!destroyed,"contract is not available");
+         require(!destroyed,"contract is not available");
         require(
             msg.sender == owner,
             "Only owner can calll this function"
@@ -234,10 +255,10 @@ contract tender is ReentrancyGuard{
 
 /// @dev returns state of the tender 
 
-    function readTenderStatus()public view returns
-        (string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
+        function readTenderStatus()public view returns(address,string memory,string memory,uint,uint,uint,uint,uint,uint,address,bool){
             return(
-            category,
+                authorizer,
+                image,
             pdfUrl,
             target,
             deadline,
@@ -253,6 +274,7 @@ contract tender is ReentrancyGuard{
 
     function createRequest( string memory _description,address payable _recipient,uint256 _value) public payable onlyowner shouldnotDestroy {
         Request storage newRequest = requests[numRequests];
+       
         newRequest.description = _description;
         newRequest.recipient = _recipient;
         newRequest.value = _value;
@@ -272,7 +294,7 @@ contract tender is ReentrancyGuard{
         thisRequest.noOfVoters++;
     }
 
-    function settleRequest(uint256 _requestNo) public onlyowner shouldnotDestroy nonReentrant{
+    function settleRequest(uint256 _requestNo) public onlyowner shouldnotDestroy {
         require(raisedtarget <= target);
         Request storage thisRequest = requests[_requestNo];
         require(
@@ -329,12 +351,15 @@ contract tender is ReentrancyGuard{
         return address(this).balance;
     }
 
-    fallback()external payable nonReentrant{
+    fallback()external payable {
         payable(msg.sender).transfer(msg.value);
-    }   
+    }    
     
-
-    receive() external payable nonReentrant {
+    receive() external payable  {
          payable(msg.sender).transfer(msg.value);
-    } 
+    }
+
+   
+
+    
 }
