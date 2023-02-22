@@ -60,6 +60,7 @@ export const FactoryProvider = ({ children }) => {
   const getDeployedCampaignsAddress = async () => {
     try {
       const addresses = await providerContract.getDeployedTenders();
+      console.log("address", addresses);
       return addresses;
     } catch (e) {
       alert("unable to get deployed campaigns");
@@ -99,7 +100,13 @@ export const FactoryProvider = ({ children }) => {
 
   return (
     <factoryContext.Provider
-      value={{ grantRole, revokeRole, getAuthorizers, validateProtocolOf }}
+      value={{
+        grantRole,
+        revokeRole,
+        getAuthorizers,
+        validateProtocolOf,
+        getDeployedCampaignsAddress,
+      }}
     >
       {children}
     </factoryContext.Provider>

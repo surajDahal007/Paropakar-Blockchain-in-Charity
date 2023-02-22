@@ -16,6 +16,7 @@ import { polygonMumbai } from "wagmi/chains";
 
 import "../styles/globals.css";
 import { FactoryProvider } from "../context/CampaignFactory";
+import { CampaignProvider } from "../context/CampaignContext";
 
 const chainSupport = [polygonMumbai];
 
@@ -53,7 +54,9 @@ function MyApp({ Component, pageProps }) {
       <WagmiConfig client={wagmiClient}>
         <NextUIProvider>
           <FactoryProvider>
-            <Component {...pageProps} />
+            <CampaignProvider>
+              <Component {...pageProps} />
+            </CampaignProvider>
           </FactoryProvider>
         </NextUIProvider>
       </WagmiConfig>

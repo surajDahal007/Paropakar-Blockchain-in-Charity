@@ -30,11 +30,8 @@ const Navbar = () => {
       </div>
 
       <div className={styles.option}>
-        <Link
-          href={"/Navbar/DonationLog/Donate"}
-          style={{ textDecoration: "none" }}
-        >
-          DONATE
+        <Link href={"/campaigns"} style={{ textDecoration: "none" }}>
+          Campaigns
         </Link>
       </div>
 
