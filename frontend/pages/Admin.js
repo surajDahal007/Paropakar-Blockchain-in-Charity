@@ -56,7 +56,7 @@ const Admin = () => {
         >
           <Image
             src={"/navBarLogo.png"}
-            height={200}
+            height={150}
             width={400}
             quality={100}
             alt={"logo"}
@@ -80,7 +80,6 @@ const Admin = () => {
         <Grid.Container
           gap={2}
           css={{
-            backgroundColor: "AliceBlue",
             padding: "$20",
           }}
           justify="space-around"
@@ -98,8 +97,14 @@ const Admin = () => {
             />
 
             <br />
+            <br />
 
-            <Button.Group color="gradient" ghost size="xl">
+            <Button.Group color="gradient" 
+              ghost size="xl"
+              css={{
+                marginLeft:"-6px"
+              }}
+              >
               <Button onPress={grantRoleFor}>Grant</Button>
               <Button onPress={revokeRoleFor}>Revoke</Button>
             </Button.Group>
@@ -118,7 +123,9 @@ const Admin = () => {
               }}
             >
               <Table.Header>
-                <Table.Column>Address</Table.Column>
+                <Table.Column>
+                  <b> Address</b>
+                </Table.Column>
               </Table.Header>
 
               {authorizers != undefined ? (
