@@ -19,7 +19,7 @@ contract tenderFactory is AccessControl{
     address[] deployedAuthorizedTenders;
     uint public protocolIndex;
 
-     event createdTender(address indexed owner,address  deployedTender,uint createdTime,string indexed category);
+     event createdTender(address indexed owner,address  deployedTender,string indexed category,string image);
      event registeredProtocol(address client,string url, bool indexed verfied);
     
     
@@ -35,7 +35,6 @@ contract tenderFactory is AccessControl{
         string url;
         string image;
         string category;
-        uint citizenShipNum;
         bool  validated;
         address beneficiary;
         uint deadline;
@@ -55,29 +54,28 @@ _;
 }
 
 /// @dev this function registers the protocol for validation of a specific benefiicary
-   function registerProtocol(uint _min,uint _deadline,uint _target,uint _czNum,string memory _url,string memory category,string memory _image)public {
+   function registerProtocol(uint _min,uint _deadline,uint _target,string memory _url,string memory _image,string memory _category)public {
        require(!hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "caller is an Admin");
        require(!hasRole(AUTHORIZER_ROLE, msg.sender), "caller is an Authorizer");
        require(!protocols[msg.sender].validated,"protocol is already regstered");
        protocols[msg.sender].url=_url;
        protocols[msg.sender].beneficiary=msg.sender;
+       protocols[msg.sender].category=_category;
        protocols[msg.sender].validated=false;
-       protocols[msg.sender].citizenShipNum=_czNum;
        protocols[msg.sender].minimumContribution=_min;
        protocols[msg.sender].target=_target;
        protocols[msg.sender].deadline=_deadline;
-       protocols[msg.sender].category=category;
        protocols[msg.sender].image=_image;
        emit registeredProtocol(msg.sender,_url,false);
    }
 
 
 //@dev internal function to create tender after te validation of protocol by authorizer
-   function createTender(address creator,uint _deadline1,uint _target,uint _minimum,string memory _PdfUrl,string memory category,string memory image) internal {
+   function createTender(address creator,uint _deadline1,uint _target,uint _minimum,string memory _PdfUrl,string memory image) internal {
          tender tenderPointer=new tender();
-         tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,image,msg.sender);
+         tenderPointer.registerTender(_target,_minimum,_PdfUrl,_deadline1,image,msg.sender,protocols[msg.sender].beneficiary);
          deployedAuthorizedTenders.push(address(tenderPointer));
-        emit createdTender(creator,address(tenderPointer),block.timestamp,category);
+        emit createdTender(creator,address(tenderPointer),protocols[msg.sender].category,protocols[msg.sender].image);
         emit registeredProtocol(msg.sender,_PdfUrl,true);
     }
 
@@ -92,9 +90,9 @@ _;
        uint target = protocols[_client].target;
        uint mc = protocols[_client].minimumContribution;
        string  memory link = protocols[_client].url;
-       string  memory category = protocols[_client].category;
+       
        string memory _image = protocols[_client].image;
-       createTender(_client,deadline,target,mc,link,category,_image);
+       createTender(_client,deadline,target,mc,link,_image);
 
    }
 
@@ -111,18 +109,49 @@ _;
     
    }
 
+ function filterAuthorizerArray(address acc) internal {
+// address[] memory refinedArray = new address[](authorizers.length);
 
+// uint count = 0;
+// for(uint i=0;i<authorizers.length;i++){
+// if(authorizers[i] != acc){
+//     refinedArray[count] = authorizers[i];
+// }
+// }
+
+// assembly {
+//     mstore(refinedArray,count)
+// }
+
+// authorizers = refinedArray;
+
+
+
+for(uint i=0;i<authorizers.length;i++){
+    if(authorizers[i] == acc){
+        if(i < (authorizers.length -1)){
+            authorizers[i] = authorizers[authorizers.length -1];
+            
+        }
+        authorizers.pop();
+        break;
+    }
+}
+
+
+
+
+ }
 
     function revokeAuthorityRole(address _account)public onlyAdmin{
          require(hasRole(AUTHORIZER_ROLE, _account), "this address wasn't  the authorizer");
        revokeRole(AUTHORIZER_ROLE, _account);
        roles[_account]="";
-       for (uint i = 0; i < authorizers.length; i++){
-            if (authorizers[i] == _account) {
-                delete authorizers[i];
-                break;
-            }
-       }
+
+       filterAuthorizerArray(_account);
+         
+   
+       
     }
 
 
@@ -161,7 +190,7 @@ contract tender{
     bool public destroyed;
 
 
- 
+
 event donorEvent(address indexed donor,uint amount,uint time);
 
      
@@ -185,9 +214,9 @@ event donorEvent(address indexed donor,uint amount,uint time);
     
      mapping(address => uint256) public donors;
 
-    function registerTender(uint256 _target,uint256 _minimum,  string memory _url,uint _deadline,string memory _image,address _authorizer) external  {
+    function registerTender(uint256 _target,uint256 _minimum,  string memory _url,uint _deadline,string memory _image,address _authorizer,address _benificiary) external  {
          require(numofregisteredTender == 0, "only one tender");
-          owner=payable(msg.sender);
+          owner=payable(_benificiary);
         target = _target;
         minimumContribution = _minimum;
         pdfUrl = _url;
@@ -351,13 +380,7 @@ event donorEvent(address indexed donor,uint amount,uint time);
         return address(this).balance;
     }
 
-    fallback()external payable {
-        payable(msg.sender).transfer(msg.value);
-    }    
-    
-    receive() external payable  {
-         payable(msg.sender).transfer(msg.value);
-    }
+   
 
    
 
