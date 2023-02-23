@@ -9,15 +9,18 @@ const Navbar = () => {
     <div className={styles.main}>
       <Image
         src={"/navBarLogo.png"}
-        height={200}
+        height={150}
         width={320}
         quality={100}
         alt={"logo"}
         priority
       ></Image>
-      <font className={styles.heading}>
-        <i>WELCOME USER</i>
-      </font>
+
+      <div className={styles.option}>
+        <Link href={"/User"} style={{ textDecoration: "none" }}>
+          User Guidelines
+        </Link>
+      </div>
 
       <div className={styles.trigger}>
         <Dropdown>

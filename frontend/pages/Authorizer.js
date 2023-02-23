@@ -14,7 +14,7 @@ const Authorizer = () => {
         >
           <Image
             src={"/navbarlogo.png"}
-            height={200}
+            height={150}
             width={400}
             quality={100}
             alt={"image"}

@@ -6,13 +6,20 @@
   font-weight: bold;
   justify-content: center;
   padding: 10px;
-  margin-left: 20%;
+  margin-left: 40%;
+  margin-top: 20px;
   font-size: large;
+  width:25%;
+  height: 720px;
+  border:1px solid none;
+  border-radius: 20px;
+  box-shadow: 5px 10px 8px 10px #888888;
+  /* background: aliceblue; */
 }
 
 .box {
   width: 250px;
-  height: 20px;
+  height: 30px;
 }
 
 .reset {

@@ -5,18 +5,18 @@
 .heading {
   font-size: 48px;
   font-weight: bold;
-  margin-top: 4%;
+  margin-top: 3%;
 }
 
 .navbar {
-  height: 200px;
+  height: 150px;
   background: pink;
   display: flex;
   justify-content: space-around;
 }
 
 .option {
-  margin-top: 5.5%;
+  margin-top: 4%;
   text-decoration: none;
   font-size: 18px;
   z-index: 111;
