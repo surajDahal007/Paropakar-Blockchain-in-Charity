@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className={styles.main}>
       <Image
         src={"/navBarLogo.png"}
-        height={150}
+        height={130}
         width={320}
         quality={100}
         alt={"logo"}
