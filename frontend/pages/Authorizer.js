@@ -13,7 +13,7 @@ const Authorizer = () => {
           }}
         >
           <Image
-            src={"/navbarlogo.png"}
+            src={"/navbarLogo.png"}
             height={150}
             width={400}
             quality={100}
