@@ -26,7 +26,9 @@ const Navbar = () => {
         <Dropdown>
           <Dropdown.Button flat>Portal</Dropdown.Button>
           <Dropdown.Menu aria-label="Static Actions">
-            <Dropdown.Item key="new">Registration Form</Dropdown.Item>
+            <Dropdown.Item key="new">
+              <Link href="/Navbar/Create/Create">Registration Form</Link>
+            </Dropdown.Item>
             <Dropdown.Item key="copy">Your History</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

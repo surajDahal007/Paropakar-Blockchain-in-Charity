@@ -99,12 +99,14 @@ const Admin = () => {
             <br />
             <br />
 
-            <Button.Group color="gradient" 
-              ghost size="xl"
+            <Button.Group
+              color="gradient"
+              ghost
+              size="xl"
               css={{
-                marginLeft:"-6px"
+                marginLeft: "-6px",
               }}
-              >
+            >
               <Button onPress={grantRoleFor}>Grant</Button>
               <Button onPress={revokeRoleFor}>Revoke</Button>
             </Button.Group>
@@ -124,7 +126,7 @@ const Admin = () => {
             >
               <Table.Header>
                 <Table.Column>
-                  <b> Address</b>
+                  <b> Current Authorizer's Addresses</b>
                 </Table.Column>
               </Table.Header>
 
@@ -132,10 +134,7 @@ const Admin = () => {
                 <Table.Body>
                   {authorizers.map((acc, index) => (
                     <Table.Row key={index}>
-                      <Table.Cell>
-                        {acc != "0x0000000000000000000000000000000000000000" &&
-                          acc}
-                      </Table.Cell>
+                      <Table.Cell>{acc}</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

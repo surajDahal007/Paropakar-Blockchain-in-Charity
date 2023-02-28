@@ -26,7 +26,7 @@ const RegistrationLogs = () => {
       const latestBlock = provider.getBlockNumber();
       const logs = await contract.queryFilter(
         filteredLogs,
-        32282275,
+        latestBlock - 32527903,
         latestBlock
       );
       console.log("logs", logs);
@@ -55,12 +55,11 @@ const RegistrationLogs = () => {
           <Table.Column>Status</Table.Column>
           <Table.Column>Actions</Table.Column>
         </Table.Header>
-
-        {log == undefined && loading == false ? (
-          <Loading type="points" size="xl" />
-        ) : (
-          <Table.Body>
-            {log.map((e, index) => (
+        <Table.Body>
+          {log == undefined && loading == false ? (
+            <Loading type="points" size="xl" />
+          ) : (
+            log.map((e, index) => (
               <Table.Row key={index}>
                 <Table.Cell>{e.args.client}</Table.Cell>
                 <Table.Cell>
@@ -91,9 +90,9 @@ const RegistrationLogs = () => {
                   </Button>
                 </Table.Cell>
               </Table.Row>
-            ))}
-          </Table.Body>
-        )}
+            ))
+          )}
+        </Table.Body>
       </Table>
     </div>
   );

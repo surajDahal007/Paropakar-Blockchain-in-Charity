@@ -12,6 +12,7 @@ const generateContract = async (address, obj) => {
   const contract = new Contract(address, campaignAbi, obj);
   return contract;
 };
+
 export const CampaignProvider = ({ children }) => {
   const provider = useProvider();
   const { data: signer } = useSigner();
@@ -19,6 +20,7 @@ export const CampaignProvider = ({ children }) => {
   const getTenderInfo = async (address) => {
     try {
       const contract = await generateContract(address, provider);
+      console.log("contract", contract);
       const obj = await contract.readTenderStatus();
       return obj;
     } catch (e) {
