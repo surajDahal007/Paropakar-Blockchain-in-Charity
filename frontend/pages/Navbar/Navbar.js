@@ -8,8 +8,8 @@ const Navbar = () => {
   return (
     <div className={styles.main}>
       <Image
-        src={"/navbarLogo.png"}
-        height={150}
+        src={"/navBarLogo.png"}
+        height={130}
         width={320}
         quality={100}
         alt={"logo"}

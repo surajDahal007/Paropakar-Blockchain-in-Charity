@@ -1,105 +1,144 @@
 import React from "react";
-// import Link from "next/link";
+import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
-import { Card, Text, Button,Input } from "@nextui-org/react";
+import { Table, Button} from '@nextui-org/react';
+import Link from "next/link";
 
 const campaign = () => {
 
-  // To handle donation button
-  const handleClick = ()=>{
-    alert("Donation button clicked")
-  }
-
   return (
-    <>
+    <div className={styles.main}>
       <Navbar />
       
-        <h1 className={styles.heading}> CAMPAIGN DETAILS</h1>
-      <div className={styles.main}>
+      {/* CAMPAIGN NAVBAR  */}
 
-      <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-          <b>CATEGORY : </b> 
-          
-        </Text>
-      </Card.Body>
-    </Card>
-    <br />
+    <div className={styles.navbar}>
 
-    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-        <b>TITLE : </b>
-        </Text>
-      </Card.Body>
-    </Card>
-    <br />
+        <span>
+          <Link href="#">
+          <Button color="primary" css={{
+            marginTop:"10px",
+            fontSize:"18px"
+          }}
+          auto 
+          ghost>
+          Campaign detail
+          </Button>
+          </Link> 
+        </span> 
 
-
-    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-        <b> TARGET (ETH) : </b> 
-        </Text>
-      </Card.Body>
-    </Card>
-    <br />
-
-
-    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-        <b> MINIMUM CONTRIBUTION (ETH) : </b> 
-        </Text>
-      </Card.Body>
-    </Card>
-    <br />
-
-
-    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-        <b> DEADLINE : </b>
-        </Text>
-      </Card.Body>
-    </Card>
-    <br />
-
-
-    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
-      <Card.Body>
-        <Text>
-        <b>  PDF : </b> 
-        </Text>
-      </Card.Body>
-    </Card>
-
-      <br />
-      <b>DONATION AMOUNT (ETH)</b>
-      <br />
-      <br />
-      <Input
-        clearable
-        underlined
-        labelPlaceholder=""
-        size="xLarge"
-        //Put Minimum contribution as initial value
-        initialValue="AMOUNT(ETH)" 
-      />
-      <br />
-      <br />
-    <Button shadow color="primary" auto rounded onClick={handleClick}>
-          DONATE
-      </Button>
-
+        <span>
+        <Link href="#">
+          <Button 
+            color="primary"
+            css={{
+              marginTop:"10px",
+              fontSize:"18px"
+            }}
+            auto 
+            ghost>
+          Campaign RequestLog
+          </Button>
+          </Link> 
+        </span>
     </div>
 
-      <br />
-      <br />
+    <br />
 
-    </>
+      <div className={styles.center}>
+        <h1 className={styles.heading}>Campaign Details</h1>
+
+        <div className={styles.sidediv}>
+          <h3>Side Div </h3>
+        </div>
+
+        <hr className={styles.line}/>
+        <br />
+
+        <div className={styles.detail}>
+          <font className={styles.font}>
+            Contract Address :
+          </font> 
+
+          <br /><br />
+
+          <h3>BIRSIYO</h3>
+        
+          <div className={styles.image}>
+            <Image
+              src={"/bluetick.png"}
+              height={30}
+              width={30}
+              quality={100}
+              alt={"logo"}
+              priority
+            ></Image>
+            
+              <span className={styles.target}>
+                TARGET AMOUNT: XXX MATIC
+              </span>
+          </div>
+
+           <br />
+           <font className={styles.font}>
+              Created : // date {/* Date */}
+              <br />
+              Category : {/* Category */}
+              <br />
+              PDF : {/*IPFS review link */}
+           </font>
+           <br />
+           <br />
+           <form>
+            <input 
+              type="number" 
+              placeholder="// Minimum Contribution"
+              ></input>
+              <br />
+              <br />
+              <Button shadow color="primary" auto>
+                 Donate
+              </Button>
+           </form>
+        </div>
+
+        <br />
+
+        <div className={styles.donationlog}>
+            <h3>MY DONORS</h3>
+            <Table
+              aria-label="Example table with dynamic content"
+              css={{
+                height: "auto",
+                minWidth: "80%"
+              }}
+              bordered
+              shadow={true}
+            >
+
+          <Table.Header>
+            <Table.Column>ADDRESS</Table.Column>
+            <Table.Column>DATE</Table.Column>
+            <Table.Column>AMOUNT</Table.Column>
+          </Table.Header>
+            
+        <Table.Body>
+        <Table.Row key="1">
+          <Table.Cell>0x00...</Table.Cell>
+          <Table.Cell>//date</Table.Cell>
+          <Table.Cell>0 MATIC</Table.Cell>
+        </Table.Row>
+
+      </Table.Body>
+
+        </Table>
+        </div>
+
+        <br />
+      </div>
+      <br />
+    </div>
   );
 };
 

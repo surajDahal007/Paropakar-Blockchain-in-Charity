@@ -50,6 +50,7 @@ const index = () => {
     <div>
       <Navbar />
       <h1>Campaign page</h1>
+
       {campaigns == undefined && loading == false ? (
         <p>No any campaigns been created yet ..........!</p>
       ) : (
