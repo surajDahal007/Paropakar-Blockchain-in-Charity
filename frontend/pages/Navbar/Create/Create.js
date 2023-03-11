@@ -45,43 +45,44 @@ const Create = () => {
     </Link>
   );
 
-  const validation = () => {
+  const validation = ()=>{
+
     var title = document.reg_form.title;
     var target = document.reg_form.target;
-    var contribution = document.reg_form.mcontribution;
-    var deadline = document.reg_form.deadline;
+    var contribution= document.reg_form.mcontribution;
+    var deadline= document.reg_form.deadline;
     var file = document.reg_form.file;
 
-    if (title.value.length <= 0) {
+    if(title.value.length <=0){
       alert("title is required");
       title.focus();
       return false;
     }
 
-    if (target.value.length <= 0) {
+    if(target.value.length <=0){
       alert("Target is required");
       target.focus();
       return false;
     }
 
-    if (contribution.value.length <= 0) {
+    if(contribution.value.length <=0 ){
       alert("Minimum Contribution is required");
       contribution.focus();
       return false;
     }
 
-    if (deadline.value.length <= 0) {
+    if(deadline.value.length <=0 ){
       alert("Deadline is required");
       deadline.focus();
       return false;
     }
 
-    if (file.value.length <= 0) {
+    if(file.value.length <=0 ){
       alert("PDF is required");
       file.focus();
       return false;
     }
-  };
+  }
 
   return (
     <div>
@@ -93,16 +94,19 @@ const Create = () => {
         <form name="reg_form" onsubmit={validation}>
           <label>CATEGORY*</label>
           <br />
-          <select id="category" name="category" className={styles.box}>
-            <option value="miscellaneous">Miscellaneous</option>
-            <option value="Education">Education</option>
-            <option value="Health">Health</option>
-            <option value="Sports">Sports</option>
-            <option value="Community support">Community support</option>
-            <option value="Woman">Woman</option>
-          </select>
-          <br />
-          <br />
+
+            <select id="category" name="category" className={styles.box}>
+                <option value="miscellaneous">Miscellaneous</option>
+                <option value="Education">Education</option>
+                <option value="Health">Health</option>
+                <option value="Sports">Sports</option>
+                <option value="Community support">Community support</option>
+                <option value="Woman">Woman</option>
+            </select>
+
+            <br />
+            <br />
+
           <label>TITLE*</label>
           <br />
           <input
@@ -135,7 +139,10 @@ const Create = () => {
           <br />
           <label>Deadline*</label>
           <br />
-          <input type="date" className={styles.box} name="deadline"></input>
+          <input 
+            type="date" 
+            className={styles.box} 
+            name="deadline"></input>
           <br />
           <br />
           PDF UPLOAD*
@@ -148,6 +155,7 @@ const Create = () => {
               setPdf(e.target.files[0]);
             }}
           ></input>
+          
           <br />
           <br />
           {uploaded ? (
@@ -160,6 +168,7 @@ const Create = () => {
             </Button>
           )}
           <br />
+
           <Button shadow auto color="success" onClick={validation}>
             Register
           </Button>
