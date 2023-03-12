@@ -70,7 +70,7 @@ const campaign = () => {
               ghost
               onPress={() => {
                 setReqComp(true);
-                setReqComp(false);
+                setDonorComp(false);
               }}
             >
               Campaign RequestLog
@@ -177,9 +177,9 @@ const campaign = () => {
 
               <br />
               <font className={styles.font}>
-                Refundable Status: {details[10].toString()}
+                Minimum Contribution: {utils.formatEther(details[5])} MATIC
                 <br />
-                Amount Raised : {utils.formatEther(details[6])} matic
+                Amount Raised : {utils.formatEther(details[6])} MATIC
                 <br />
                 Deadline : {new Date(parseInt(details[4] * 1000)).toString()}
                 <br />
@@ -188,6 +188,8 @@ const campaign = () => {
                 No. of Requests: {details[8].toString()}
                 <br />
                 Application : <a href={details[2]}>View Protocol</a>
+                <br />
+                Refundable Status: {details[10].toString()}
               </font>
               <br />
               <br />
