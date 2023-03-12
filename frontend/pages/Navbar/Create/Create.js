@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Navbar from "../Navbar";
 import styles from "./Create.module.css";
 import { useFactory } from "../../../context/CampaignFactory";
-import { useRef } from "react";
 import { Button, Spacer, Loading } from "@nextui-org/react";
 import Link from "next/link";
 import axios from "axios";
@@ -10,16 +9,14 @@ import { utils } from "ethers";
 
 const Create = () => {
   const { registerYourProtocol } = useFactory();
-  const inputRef = useRef();
   const [pdf, setPdf] = useState(null);
-  const [url, setUrl] = useState(null);
   const [uploaded, setUploaded] = useState(false);
 
   const uploadToIpfs = async () => {
     try {
       //create an object that can be used to construct a multipart/form-data request body that includes the PDF file data and any other parameters required by the Pinata API.
       const formData = new FormData();
-      formData.append("file", pdf);
+      formData.append("file", document.getElementById("pdf").files[0]);
 
       //pinata API endpoint for uploading File
       const url = "https://api.pinata.cloud/pinning/pinFileToIPFS";
@@ -32,7 +29,8 @@ const Create = () => {
         },
       });
       const pdfUrl = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
-      setUrl(pdfUrl);
+
+      setPdf(pdfUrl);
       setUploaded(true);
     } catch (e) {
       console.error(e);
@@ -65,15 +63,6 @@ const Create = () => {
     var contribution = document.reg_form.mcontribution;
     var deadline = document.reg_form.deadline;
     var file = document.reg_form.file;
-
-    console.log("accessed value of dom elements", {
-      deadline: deadline.value,
-      target: target.value,
-      file: file.value,
-      title: title.value,
-      category: category.value,
-      image: image.value,
-    });
 
     if (title.value.length <= 0) {
       alert("title is required");
@@ -112,7 +101,7 @@ const Create = () => {
       deadline: formatedDeadline,
       target: formatedTarget,
       contribution: formatedMC,
-      pdf: file.value,
+      pdf: pdf,
       category: category.value,
       image: image.value,
     };
@@ -159,13 +148,14 @@ const Create = () => {
             name="target"
           ></input>
           <br />
-          <label>Image</label>
+          <label>External Image Link</label>
           <br />
           <input
-            type="file"
+            type="text"
             accept="image/*,.jpg,.jpeg,.png,"
             className={styles.box}
             name="image"
+            id="image"
           ></input>
           <br />
           <label>Minimum Contribution(ETH)*</label>
@@ -185,18 +175,11 @@ const Create = () => {
           <br />
           PDF UPLOAD*
           <br />
-          <input
-            type="file"
-            accept=".pdf"
-            name="file"
-            onChange={(e) => {
-              setPdf(e.target.files[0]);
-            }}
-          ></input>
+          <input type="file" accept=".pdf" name="file" id="pdf"></input>
           <br />
           <br />
           {uploaded ? (
-            <ExternalLink href={url}>
+            <ExternalLink href={pdf}>
               <p b>Preview</p>
             </ExternalLink>
           ) : (
