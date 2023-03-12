@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div className={styles.main}>
       <Image
-        src={"/navBarLogo.png"}
+        src={"/navbarLogo.png"}
         height={130}
         width={320}
         quality={100}
@@ -17,7 +17,7 @@ const Navbar = () => {
       ></Image>
 
       <div className={styles.option}>
-        <Link href={"/User"} style={{ textDecoration: "none" }}>
+        <Link href={"/User"} style={{ textDecoration: "none", color: "white" }}>
           User Guidelines
         </Link>
       </div>
@@ -35,7 +35,10 @@ const Navbar = () => {
       </div>
 
       <div className={styles.option}>
-        <Link href={"/campaigns"} style={{ textDecoration: "none" }}>
+        <Link
+          href={"/campaigns"}
+          style={{ textDecoration: "none", color: "white" }}
+        >
           Campaigns
         </Link>
       </div>

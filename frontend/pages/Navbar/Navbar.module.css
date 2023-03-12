@@ -1,6 +1,7 @@
 .main {
   height: 130px;
-  background: rgb(241, 221, 218);
+  background: blue;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
 }

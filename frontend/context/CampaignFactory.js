@@ -47,15 +47,30 @@ export const FactoryProvider = ({ children }) => {
 
   const registerYourProtocol = async ({
     deadline,
+    image,
     target,
     category,
     pdf,
-    minContribution,
+    contribution,
   }) => {
     //check the input format
     try {
-      console.log("inside context", category);
-    } catch (e) {}
+      signerContract
+        .registerProtocol(contribution, deadline, target, pdf, image, category)
+        .then(async (tx) => {
+          tx.wait().then(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Registered Your Application !",
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          });
+        });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const getDeployedCampaignsAddress = async () => {
