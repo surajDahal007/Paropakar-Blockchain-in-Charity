@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { campaignAbi } from "../../constants";
 import Link from "next/link";
 import { Table, Button, Loading, Input } from "@nextui-org/react";
-import { ethers, Contract } from "ethers";
+import { ethers, Contract, utils } from "ethers";
 import { useFactory } from "../../context/CampaignFactory";
 
 const DonationLog = ({ campaignAddress }) => {
@@ -14,11 +14,6 @@ const DonationLog = ({ campaignAddress }) => {
   const contract = new Contract(campaignAddress, campaignAbi, provider);
   const [log, setLog] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const authorize = async (address) => {
-    await validateProtocolOf(address);
-    setLoading(false);
-  };
 
   useEffect(() => {
     async function call() {
@@ -62,33 +57,13 @@ const DonationLog = ({ campaignAddress }) => {
           ) : (
             log.map((e, index) => (
               <Table.Row key={index}>
-                <Table.Cell>{e.args.client}</Table.Cell>
+                <Table.Cell>{e.args.donor}</Table.Cell>
+
                 <Table.Cell>
-                  <Link href={e.args.url} passHref legacyBehavior>
-                    <a target="_blank" rel="noopener noreferrer">
-                      Preview
-                    </a>
-                  </Link>
+                  {utils.formatEther(e.args.amount)} MATIC
                 </Table.Cell>
                 <Table.Cell>
-                  <Loading
-                    type="spinner"
-                    color="currentColor"
-                    size="sm"
-                    title="Pending"
-                  />
-                  Pending
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    onPress={() => {
-                      authorize(e.args.client);
-                    }}
-                    color="success"
-                    rounded
-                  >
-                    Authorize
-                  </Button>
+                  {new Date(parseInt(e.args.time * 1000)).toString()}
                 </Table.Cell>
               </Table.Row>
             ))
