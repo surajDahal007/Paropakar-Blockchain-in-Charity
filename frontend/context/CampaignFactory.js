@@ -45,15 +45,16 @@ export const FactoryProvider = ({ children }) => {
     });
   };
 
-  const registerYourProtocol = async (
+  const registerYourProtocol = async ({
     deadline,
     target,
     category,
     pdf,
-    minContribution
-  ) => {
+    minContribution,
+  }) => {
     //check the input format
     try {
+      console.log("inside context", category);
     } catch (e) {}
   };
 
@@ -106,6 +107,7 @@ export const FactoryProvider = ({ children }) => {
         getAuthorizers,
         validateProtocolOf,
         getDeployedCampaignsAddress,
+        registerYourProtocol,
       }}
     >
       {children}

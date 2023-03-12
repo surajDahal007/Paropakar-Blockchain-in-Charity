@@ -86,7 +86,7 @@ const index = () => {
                         fontSize: "$sm",
                       }}
                     >
-                      {Date(parseFloat(item.deadline))}
+                      {new Date(parseInt(item.deadline * 1000)).toString()}
                     </Text>
                   </Row>
                 </Card.Footer>

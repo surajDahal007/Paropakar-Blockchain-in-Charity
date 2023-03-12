@@ -40,11 +40,14 @@ export const CampaignProvider = ({ children }) => {
   //-----function to donate the campaign
 
   const donateToCampaign = async (contract, amount) => {
+    console.log("contract", contract, "amout", amount);
     try {
+      const contract1 = await generateContract(contract, signer);
       const fund = utils.parseEther(`${amount}`);
-      await contract.donate({ value: fund });
-    } catch {
+      await contract1.donate({ value: fund });
+    } catch (e) {
       alert("unable to donate");
+      console.error(e);
     }
   };
 
@@ -81,7 +84,7 @@ export const CampaignProvider = ({ children }) => {
   const getRequestStatus = async (contract, reqNum) => {};
 
   return (
-    <campaignContext.Provider value={{ getTenderInfo }}>
+    <campaignContext.Provider value={{ getTenderInfo, donateToCampaign }}>
       {children}
     </campaignContext.Provider>
   );
