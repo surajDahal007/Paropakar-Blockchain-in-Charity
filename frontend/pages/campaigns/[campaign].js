@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
-import { Card, Row, Col, Button, Text, Loading } from "@nextui-org/react";
+import { Card, Row, Col, Button, Text, Loading ,Collapse} from "@nextui-org/react";
 import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
 import DonationLog from "../../components/logs/DonationLog";
@@ -23,6 +23,9 @@ const campaign = () => {
 
   const { getTenderInfo, donateToCampaign } = useCampaign();
 
+  // const [requestLog,setRequestLog]= useState(false);
+
+
   useEffect(() => {
     async function getDetails() {
       console.log(await getTenderInfo(`${campaign}`));
@@ -32,7 +35,13 @@ const campaign = () => {
     getDetails();
   }, [campaign]);
 
+  const conRedering = ()=>{
+    console.log('inside function');
+  }
+
+
   return (
+
     <div className={styles.main}>
       <Navbar />
 
@@ -59,7 +68,7 @@ const campaign = () => {
         </span>
 
         <span>
-          <Link href="#">
+          <Link href="/campaigns/requests">
             <Button
               color="primary"
               css={{
@@ -80,6 +89,9 @@ const campaign = () => {
       </div>
 
       <br />
+
+
+  
 
       <div className={styles.center}>
         {(details && campaign) != undefined && loading ? (
@@ -148,8 +160,12 @@ const campaign = () => {
             <hr className={styles.line} />
             <br />
 
-            <div className={styles.detail}>
-              <font className={styles.font}>Contract Address : {campaign}</font>
+            {/* <div className={styles.detail}> */}
+               <font className={styles.font}>
+                Contract Address : {campaign}
+              </font>
+              <br />
+
               <Text i css={{ color: "blue" }}>
                 {" "}
                 Authorizer: {details[0]}
@@ -213,10 +229,14 @@ const campaign = () => {
                   Donate
                 </Button>
               </form>
-            </div>
-            <h3>Log section</h3>
+
+              <br />
+              <br />
+
+            
 
             <div className={styles.log}>
+            <h3>Log section</h3>
               {donorComp && <DonationLog campaignAddress={campaign} />}
               {reqComp && <h1>realllyyyy</h1>}
             </div>
@@ -226,7 +246,8 @@ const campaign = () => {
             loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
           />
         )}
-      </div>
+      
+       </div> 
       <br />
     </div>
   );

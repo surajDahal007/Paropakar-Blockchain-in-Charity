@@ -7,6 +7,7 @@ import { ethers, Contract } from "ethers";
 import { useFactory } from "../../context/CampaignFactory";
 
 const DonationLog = ({ campaignAddress }) => {
+  
   console.log("camoiagnAddress", campaignAddress);
   const { ethereum } = window;
   const { validateProtocolOf } = useFactory();

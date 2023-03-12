@@ -150,16 +150,17 @@ const Create = () => {
           ></input>
           <br />
           <br />
-          <label>Target(ETH)*</label>
+          <label>Target(MATIC)*</label>
           <br />
           <input
             type="number"
-            placeholder="AMOUNT (ETH)"
+            placeholder="AMOUNT (MATIC)"
             className={styles.box}
             name="target"
           ></input>
           <br />
-          <label>Image</label>
+          <br />
+          <label>Image*</label>
           <br />
           <input
             type="file"
@@ -168,11 +169,12 @@ const Create = () => {
             name="image"
           ></input>
           <br />
-          <label>Minimum Contribution(ETH)*</label>
+          <br />
+          <label>Minimum Contribution(MATIC)*</label>
           <br />
           <input
             type="number"
-            placeholder="(ETH)"
+            placeholder="(MATIC)"
             className={styles.box}
             name="mcontribution"
           ></input>
