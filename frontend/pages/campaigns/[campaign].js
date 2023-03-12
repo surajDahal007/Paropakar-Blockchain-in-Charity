@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
-import { Card, Row, Col, Button, Text, Loading ,Collapse} from "@nextui-org/react";
+import {
+  Card,
+  Row,
+  Col,
+  Button,
+  Text,
+  Loading,
+  Collapse,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
 import DonationLog from "../../components/logs/DonationLog";
@@ -25,7 +33,6 @@ const campaign = () => {
 
   // const [requestLog,setRequestLog]= useState(false);
 
-
   useEffect(() => {
     async function getDetails() {
       console.log(await getTenderInfo(`${campaign}`));
@@ -35,13 +42,11 @@ const campaign = () => {
     getDetails();
   }, [campaign]);
 
-  const conRedering = ()=>{
-    console.log('inside function');
-  }
-
+  const conRedering = () => {
+    console.log("inside function");
+  };
 
   return (
-
     <div className={styles.main}>
       <Navbar />
 
@@ -89,9 +94,6 @@ const campaign = () => {
       </div>
 
       <br />
-
-
-  
 
       <div className={styles.center}>
         {(details && campaign) != undefined && loading ? (
@@ -161,84 +163,80 @@ const campaign = () => {
             <br />
 
             {/* <div className={styles.detail}> */}
-               <font className={styles.font}>
-                Contract Address : {campaign}
-              </font>
+            <font className={styles.font}>Contract Address : {campaign}</font>
+            <br />
+
+            <Text i css={{ color: "blue" }}>
+              {" "}
+              Authorizer: {details[0]}
+            </Text>
+
+            <br />
+            <br />
+
+            <h3>Verified</h3>
+
+            <div className={styles.image}>
+              <Image
+                src={"/bluetick.png"}
+                height={30}
+                width={30}
+                quality={100}
+                alt={"logo"}
+                priority
+              ></Image>
+
+              <span className={styles.target}>
+                TARGET AMOUNT: {utils.formatEther(`${details[3]}`)} MATIC
+              </span>
+            </div>
+
+            <br />
+            <font className={styles.font}>
+              Minimum Contribution: {utils.formatEther(details[5])} MATIC
               <br />
-
-              <Text i css={{ color: "blue" }}>
-                {" "}
-                Authorizer: {details[0]}
-              </Text>
-
+              Amount Raised : {utils.formatEther(details[6])} MATIC
               <br />
+              Deadline : {new Date(parseInt(details[4] * 1000)).toString()}
               <br />
-
-              <h3>Verified</h3>
-
-              <div className={styles.image}>
-                <Image
-                  src={"/bluetick.png"}
-                  height={30}
-                  width={30}
-                  quality={100}
-                  alt={"logo"}
-                  priority
-                ></Image>
-
-                <span className={styles.target}>
-                  TARGET AMOUNT: {utils.formatEther(`${details[3]}`)} MATIC
-                </span>
-              </div>
-
+              Donors Count :{details[7].toString()}
               <br />
-              <font className={styles.font}>
-                Minimum Contribution: {utils.formatEther(details[5])} MATIC
-                <br />
-                Amount Raised : {utils.formatEther(details[6])} MATIC
-                <br />
-                Deadline : {new Date(parseInt(details[4] * 1000)).toString()}
-                <br />
-                Donors Count :{details[7].toString()}
-                <br />
-                No. of Requests: {details[8].toString()}
-                <br />
-                Application : <a href={details[2]}>View Protocol</a>
-                <br />
-                Refundable Status: {details[10].toString()}
-              </font>
+              No. of Requests: {details[8].toString()}
               <br />
+              Application : <a href={details[2]}>View Protocol</a>
               <br />
-              <form>
-                <input
-                  type="number"
-                  placeholder="Amount"
-                  onChange={(e) => {
-                    setAmount(e.target.value);
-                  }}
-                ></input>
-                <br />
-                <br />
-                <Button
-                  shadow
-                  color="primary"
-                  onPress={async () => {
-                    console.log("amount", amount);
-                    await donateToCampaign(campaign, amount);
-                  }}
-                  auto
-                >
-                  Donate
-                </Button>
-              </form>
-
+              Refundable Status: {details[10].toString()}
+            </font>
+            <br />
+            <br />
+            <form>
+              <input
+                type="number"
+                placeholder="Amount"
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+              ></input>
               <br />
               <br />
+              <Button
+                shadow
+                color="primary"
+                onPress={async () => {
+                  console.log("amount", amount);
+                  await donateToCampaign(campaign, amount);
+                }}
+                auto
+              >
+                Donate
+              </Button>
+            </form>
 
-            
+            <br />
+            <br />
 
             <div className={styles.log}>
-            <h3>Log section</h3>
+              <h3>Log section</h3>
               {donorComp && <DonationLog campaignAddress={campaign} />}
               {reqComp && <h1>realllyyyy</h1>}
             </div>
@@ -248,8 +246,7 @@ const campaign = () => {
             loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
           />
         )}
-      
-       </div> 
+      </div>
       <br />
     </div>
   );
