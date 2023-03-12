@@ -29,7 +29,9 @@ const Navbar = () => {
             <Dropdown.Item key="new">
               <Link href="/Navbar/Create/Create">Registration Form</Link>
             </Dropdown.Item>
-            <Dropdown.Item key="copy">Your History</Dropdown.Item>
+            <Dropdown.Item key="copy">
+            <Link href="/Navbar/History">Your History</Link>
+              </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>

@@ -9,9 +9,15 @@
   margin-left: 40%;
   margin-top: 20px;
   font-size: large;
+<<<<<<< HEAD
   width: 25%;
   height: 780px;
   border: 1px solid none;
+=======
+  width:25%;
+  height: 850px;
+  border:1px solid none;
+>>>>>>> e1ee6903b8533c254961c675fe86ec6d03607762
   border-radius: 20px;
   box-shadow: 5px 10px 8px 10px #888888;
   /* background: aliceblue; */

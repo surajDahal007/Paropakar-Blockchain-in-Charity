@@ -49,7 +49,12 @@ const index = () => {
   return (
     <div>
       <Navbar />
-      <h1>Campaign page</h1>
+      <h1 style={{
+        marginLeft:"45%"
+      }}>Campaign page</h1>
+
+      <br />
+      <br />
 
       {campaigns == undefined && loading == false ? (
         <p>No any campaigns been created yet ..........!</p>
