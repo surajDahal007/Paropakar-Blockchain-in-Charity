@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar";
 import styles from "./Create.module.css";
+import { useFactory } from "../../../context/CampaignFactory";
 import { useRef } from "react";
-import { Button, Spacer } from "@nextui-org/react";
+import { Button, Spacer, Loading } from "@nextui-org/react";
 import Link from "next/link";
 import axios from "axios";
+import { utils } from "ethers";
 
 const Create = () => {
+  const { registerYourProtocol } = useFactory();
   const inputRef = useRef();
   const [pdf, setPdf] = useState(null);
   const [url, setUrl] = useState(null);
@@ -45,44 +48,77 @@ const Create = () => {
     </Link>
   );
 
-  const validation = ()=>{
+  const epochDateCoverter = (input) => {
+    console.log("input", input);
+    const date = new Date(input);
+    const epochTime = date.getTime();
+    const epochSeconds = epochTime / 1000;
+    return epochSeconds;
+  };
 
+  const validation = async () => {
     var title = document.reg_form.title;
+    var category = document.getElementById("category");
     var target = document.reg_form.target;
-    var contribution= document.reg_form.mcontribution;
-    var deadline= document.reg_form.deadline;
+    var image = document.reg_form.image;
+
+    var contribution = document.reg_form.mcontribution;
+    var deadline = document.reg_form.deadline;
     var file = document.reg_form.file;
 
-    if(title.value.length <=0){
+    console.log("accessed value of dom elements", {
+      deadline: deadline.value,
+      target: target.value,
+      file: file.value,
+      title: title.value,
+      category: category.value,
+      image: image.value,
+    });
+
+    if (title.value.length <= 0) {
       alert("title is required");
       title.focus();
       return false;
     }
 
-    if(target.value.length <=0){
+    if (target.value.length <= 0) {
       alert("Target is required");
       target.focus();
       return false;
     }
 
-    if(contribution.value.length <=0 ){
+    if (contribution.value.length <= 0) {
       alert("Minimum Contribution is required");
       contribution.focus();
       return false;
     }
 
-    if(deadline.value.length <=0 ){
+    if (deadline.value.length <= 0) {
       alert("Deadline is required");
       deadline.focus();
       return false;
     }
 
-    if(file.value.length <=0 ){
+    if (file.value.length <= 0) {
       alert("PDF is required");
       file.focus();
       return false;
     }
-  }
+    const formatedTarget = utils.parseEther(`${target.value}`);
+    const formatedMC = utils.parseEther(`${contribution.value}`);
+    const formatedDeadline = epochDateCoverter(deadline.value);
+
+    const data = {
+      deadline: formatedDeadline,
+      target: formatedTarget,
+      contribution: formatedMC,
+      pdf: file.value,
+      category: category.value,
+      image: image.value,
+    };
+
+    await registerYourProtocol(data);
+  };
 
   return (
     <div>
@@ -94,19 +130,16 @@ const Create = () => {
         <form name="reg_form" onsubmit={validation}>
           <label>CATEGORY*</label>
           <br />
-
-            <select id="category" name="category" className={styles.box}>
-                <option value="miscellaneous">Miscellaneous</option>
-                <option value="Education">Education</option>
-                <option value="Health">Health</option>
-                <option value="Sports">Sports</option>
-                <option value="Community support">Community support</option>
-                <option value="Woman">Woman</option>
-            </select>
-
-            <br />
-            <br />
-
+          <select id="category" name="category" className={styles.box}>
+            <option value="miscellaneous">Miscellaneous</option>
+            <option value="Education">Education</option>
+            <option value="Health">Health</option>
+            <option value="Sports">Sports</option>
+            <option value="Community support">Community support</option>
+            <option value="Woman">Woman</option>
+          </select>
+          <br />
+          <br />
           <label>TITLE*</label>
           <br />
           <input
@@ -126,6 +159,14 @@ const Create = () => {
             name="target"
           ></input>
           <br />
+          <label>Image</label>
+          <br />
+          <input
+            type="file"
+            accept="image/*,.jpg,.jpeg,.png,"
+            className={styles.box}
+            name="image"
+          ></input>
           <br />
           <label>Minimum Contribution(ETH)*</label>
           <br />
@@ -139,10 +180,7 @@ const Create = () => {
           <br />
           <label>Deadline*</label>
           <br />
-          <input 
-            type="date" 
-            className={styles.box} 
-            name="deadline"></input>
+          <input type="date" className={styles.box} name="deadline"></input>
           <br />
           <br />
           PDF UPLOAD*
@@ -155,7 +193,6 @@ const Create = () => {
               setPdf(e.target.files[0]);
             }}
           ></input>
-          
           <br />
           <br />
           {uploaded ? (
@@ -168,7 +205,6 @@ const Create = () => {
             </Button>
           )}
           <br />
-
           <Button shadow auto color="success" onClick={validation}>
             Register
           </Button>

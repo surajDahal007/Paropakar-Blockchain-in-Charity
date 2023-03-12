@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
-import { Table, Button } from "@nextui-org/react";
+import { Card, Row, Col, Button, Text, Loading } from "@nextui-org/react";
 import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
+import DonationLog from "../../components/logs/DonationLog";
 import { useRouter } from "next/router";
 import { utils } from "ethers";
+import requests from "./requests/index";
 
 const campaign = () => {
   const router = useRouter();
@@ -14,9 +16,12 @@ const campaign = () => {
   const { campaign } = query;
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(campaign);
+  const [amount, setAmount] = useState();
 
-  const { getTenderInfo } = useCampaign();
+  const [donorComp, setDonorComp] = useState(false);
+  const [reqComp, setReqComp] = useState(false);
+
+  const { getTenderInfo, donateToCampaign } = useCampaign();
 
   useEffect(() => {
     async function getDetails() {
@@ -32,7 +37,6 @@ const campaign = () => {
       <Navbar />
 
       {/* CAMPAIGN NAVBAR  */}
-
       <div className={styles.navbar}>
         <span>
           <Link href="#">
@@ -44,8 +48,12 @@ const campaign = () => {
               }}
               auto
               ghost
+              onPress={() => {
+                setDonorComp(true);
+                setReqComp(false);
+              }}
             >
-              Campaign detail
+              Campaign Donation Log
             </Button>
           </Link>
         </span>
@@ -60,6 +68,10 @@ const campaign = () => {
               }}
               auto
               ghost
+              onPress={() => {
+                setReqComp(true);
+                setReqComp(false);
+              }}
             >
               Campaign RequestLog
             </Button>
@@ -75,7 +87,62 @@ const campaign = () => {
             <h1 className={styles.heading}>Campaign Details</h1>
 
             <div className={styles.sidediv}>
-              <Image src="/qr.png" height={400} width={600} alt="qr"></Image>
+              <Card css={{ w: "100%", h: "500px" }}>
+                <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+                  <Col>
+                    <Text
+                      h5
+                      weight="bold"
+                      transform="uppercase"
+                      color="#ffffffAA"
+                    >
+                      Transfer From Your Mobile Wallet
+                    </Text>
+                  </Col>
+                </Card.Header>
+                <Card.Body css={{ p: 0 }}>
+                  <Card.Image
+                    src="/bu.jpg"
+                    width="100%"
+                    height="100%"
+                    objectFit="cover"
+                    alt="Card example background"
+                  />
+                </Card.Body>
+                <Card.Footer
+                  isBlurred
+                  css={{
+                    position: "absolute",
+                    bgBlur: "#ffffff66",
+                    borderTop:
+                      "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+                    bottom: 0,
+                    zIndex: 1,
+                  }}
+                >
+                  <Row>
+                    <Col>
+                      <Text color="#000" size={18}>
+                        Available soon.
+                      </Text>
+                    </Col>
+                    <Col>
+                      <Row justify="flex-end">
+                        <Button flat auto rounded color="secondary">
+                          <Text
+                            css={{ color: "inherit" }}
+                            size={12}
+                            weight="bold"
+                            transform="uppercase"
+                          >
+                            Notify Me
+                          </Text>
+                        </Button>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Card.Footer>
+              </Card>
             </div>
 
             <hr className={styles.line} />
@@ -83,6 +150,10 @@ const campaign = () => {
 
             <div className={styles.detail}>
               <font className={styles.font}>Contract Address : {campaign}</font>
+              <Text i css={{ color: "blue" }}>
+                {" "}
+                Authorizer: {details[0]}
+              </Text>
 
               <br />
               <br />
@@ -106,59 +177,55 @@ const campaign = () => {
 
               <br />
               <font className={styles.font}>
-                Deadline : {Date(parseFloat(details[4].toString()))}
+                Refundable Status: {details[10].toString()}
                 <br />
-                Category :
+                Amount Raised : {utils.formatEther(details[6])} matic
                 <br />
-                PDF : <a href={details[2]}>View Protocol</a>
+                Deadline : {new Date(parseInt(details[4] * 1000)).toString()}
+                <br />
+                Donors Count :{details[7].toString()}
+                <br />
+                No. of Requests: {details[8].toString()}
+                <br />
+                Application : <a href={details[2]}>View Protocol</a>
               </font>
               <br />
               <br />
               <form>
-                <input type="number" placeholder="Amount"></input>
+                <input
+                  type="number"
+                  placeholder="Amount"
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}
+                ></input>
                 <br />
                 <br />
-                <Button shadow color="primary" auto>
+                <Button
+                  shadow
+                  color="primary"
+                  onPress={async () => {
+                    console.log("amount", amount);
+                    await donateToCampaign(campaign, amount);
+                  }}
+                  auto
+                >
                   Donate
                 </Button>
               </form>
             </div>
+            <h3>Log section</h3>
+
+            <div className={styles.log}>
+              {donorComp && <DonationLog campaignAddress={campaign} />}
+              {reqComp && <h1>realllyyyy</h1>}
+            </div>
           </>
         ) : (
-          <p>loading......</p>
+          <Loading
+            loadingCss={{ $$loadingSize: "100px", $$loadingBorder: "10px" }}
+          />
         )}
-        <br />
-
-        <div className={styles.donationlog}>
-          <h3>MY DONORS</h3>
-          <Table
-            aria-label="Example table with dynamic content"
-            css={{
-              height: "auto",
-              minWidth: "100%",
-            }}
-            bordered
-            shadow={true}
-          >
-            <Table.Header>
-              <Table.Column>ADDRESS</Table.Column>
-              <Table.Column>DATE</Table.Column>
-              <Table.Column>AMOUNT</Table.Column>
-            </Table.Header>
-
-            <Table.Body>
-              <Table.Row key="1">
-                <Table.Cell>
-                  0x7e4ADc615016A2474cEAAC83345D3650Fb2EF8Fc
-                </Table.Cell>
-                <Table.Cell>Tue Feb 28 2023 14:39:41</Table.Cell>
-                <Table.Cell>0.00234 MATIC</Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
-        </div>
-
-        <br />
       </div>
       <br />
     </div>
