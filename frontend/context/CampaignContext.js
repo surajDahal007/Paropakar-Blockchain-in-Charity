@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { useProvider, useSigner, useContract } from "wagmi";
 import { campaignAbi } from "../constants";
-import { Contract, utils } from "ethers";
+import { Contract, Signer, utils } from "ethers";
 
 const campaignContext = createContext();
 export const useCampaign = () => {
@@ -62,14 +62,17 @@ export const CampaignProvider = ({ children }) => {
   const createRequestToCampaign = async (
     contract,
     description,
-    recipient = address,
+    recipient,
     amount
   ) => {
+    console.log("address", contract);
     try {
+      const contract1 = await generateContract(contract, signer);
       const payment = utils.parseEther(`${amount}`);
-      await contract.createRequest(description, recipient, payment);
-    } catch {
+      await contract1.createRequest(description, recipient, payment);
+    } catch (e) {
       alert("unable to create you request");
+      console.error(e);
     }
   };
 
@@ -84,7 +87,9 @@ export const CampaignProvider = ({ children }) => {
   const getRequestStatus = async (contract, reqNum) => {};
 
   return (
-    <campaignContext.Provider value={{ getTenderInfo, donateToCampaign }}>
+    <campaignContext.Provider
+      value={{ getTenderInfo, donateToCampaign, createRequestToCampaign }}
+    >
       {children}
     </campaignContext.Provider>
   );
