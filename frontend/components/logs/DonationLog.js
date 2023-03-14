@@ -46,26 +46,31 @@ const DonationLog = ({ campaignAddress }) => {
         }}
         selectionMode="single"
       >
+
         <Table.Header>
           <Table.Column>Donor Address</Table.Column>
           <Table.Column>Amount</Table.Column>
           <Table.Column>Time</Table.Column>
         </Table.Header>
+
         <Table.Body>
           {log == undefined && loading == false ? (
             <Loading type="points" size="xl" color="black" />
           ) : (
             log.map((e, index) => (
               <Table.Row key={index}>
-                <Table.Cell>{e.args.donor}</Table.Cell>
+                <Table.Cell>
+                  {e.args.donor}
+                </Table.Cell>
 
                 <Table.Cell>
                   {utils.formatEther(e.args.amount)} MATIC
                 </Table.Cell>
+
                 <Table.Cell>
                   {new Date(parseInt(e.args.time * 1000)).toString()}
                 </Table.Cell>
-              </Table.Row>
+             </Table.Row>
             ))
           )}
         </Table.Body>

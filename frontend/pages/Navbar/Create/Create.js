@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../Navbar";
 import styles from "./Create.module.css";
 import { useFactory } from "../../../context/CampaignFactory";
-import { Button, Spacer, Loading } from "@nextui-org/react";
+import { Button, Spacer, Loading, Card } from "@nextui-org/react";
 import Link from "next/link";
 import axios from "axios";
 import { utils } from "ethers";
@@ -63,6 +63,7 @@ const Create = () => {
     var contribution = document.reg_form.mcontribution;
     var deadline = document.reg_form.deadline;
     var file = document.reg_form.file;
+    var image= document.reg_form.image;   
 
     if (title.value.length <= 0) {
       alert("title is required");
@@ -75,6 +76,12 @@ const Create = () => {
       target.focus();
       return false;
     }
+
+    if (image.value.length <= 0) {
+      alert("image is required");
+      image.focus();
+      return false;
+    } 
 
     if (contribution.value.length <= 0) {
       alert("Minimum Contribution is required");
@@ -93,6 +100,7 @@ const Create = () => {
       file.focus();
       return false;
     }
+
     const formatedTarget = utils.parseEther(`${target.value}`);
     const formatedMC = utils.parseEther(`${contribution.value}`);
     const formatedDeadline = epochDateCoverter(deadline.value);
@@ -112,91 +120,101 @@ const Create = () => {
   return (
     <div>
       <Navbar />
+      <br />
+      <br />
+      {/* <div className={styles.main}> */}
+      <Card css={{ 
+          width: "500px",
+          padding:"40px",
+          height:"80%",
+          fontWeight:"bold",
+          marginLeft:"35%" 
+        }}>
+          <h2>Campaign Registration</h2>
 
-      <div className={styles.main}>
-        <h2>Campaign Registration Form</h2>
-
-        <form name="reg_form" onsubmit={validation}>
-          <label>CATEGORY*</label>
-          <br />
-          <select id="category" name="category" className={styles.box}>
-            <option value="miscellaneous">Miscellaneous</option>
-            <option value="Education">Education</option>
-            <option value="Health">Health</option>
-            <option value="Sports">Sports</option>
-            <option value="Community support">Community support</option>
-            <option value="Woman">Woman</option>
-          </select>
-          <br />
-          <br />
-          <label>TITLE*</label>
-          <br />
-          <input
-            type="text"
-            placeholder="ABOUT DONATION"
-            className={styles.box}
-            name="title"
-          ></input>
-          <br />
-          <br />
-          <label>Target(MATIC)*</label>
-          <br />
-          <input
-            type="number"
-            placeholder="AMOUNT (MATIC)"
-            className={styles.box}
-            name="target"
-          ></input>
-          <br />
-          <label>External Image Link</label>
-          <br />
-          <input
-            type="text"
-            accept="image/*,.jpg,.jpeg,.png,"
-            className={styles.box}
-            name="image"
-            id="image"
-          ></input>
-          <br />
-          <br />
-          <label>Minimum Contribution(MATIC)*</label>
-          <br />
-          <input
-            type="number"
-            placeholder="(MATIC)"
-            className={styles.box}
-            name="mcontribution"
-          ></input>
-          <br />
-          <br />
-          <label>Deadline*</label>
-          <br />
-          <input type="date" className={styles.box} name="deadline"></input>
-          <br />
-          <br />
-          PDF UPLOAD*
-          <br />
-          <input type="file" accept=".pdf" name="file" id="pdf"></input>
-          <br />
-          <br />
-          {uploaded ? (
-            <ExternalLink href={pdf}>
-              <p b>Preview</p>
-            </ExternalLink>
-          ) : (
-            <Button auto onPress={uploadToIpfs} rounded>
-              Upload PDF
-            </Button>
-          )}
-          <br />
-          <Button shadow auto color="success" onClick={validation}>
-            Register
-          </Button>
-          <br />
-        </form>
-        <br />
-        <br />
-      </div>
+          <form name="reg_form" onsubmit={validation}>
+              <label>CATEGORY*</label>
+              <br />
+              <select id="category" name="category" className={styles.box}>
+                <option value="miscellaneous">Miscellaneous</option>
+                <option value="Education">Education</option>
+                <option value="Health">Health</option>
+                <option value="Sports">Sports</option>
+                <option value="Community support">Community support</option>
+                <option value="Woman">Woman</option>
+              </select>
+              <br />
+              <br />
+              <label>TITLE*</label>
+              <br />
+              <input
+                type="text"
+                placeholder="ABOUT DONATION"
+                className={styles.box}
+                name="title"
+              ></input>
+              <br />
+              <br />
+              <label>Target(MATIC)*</label>
+              <br />
+              <input
+                type="number"
+                placeholder="AMOUNT(MATIC)"
+                className={styles.box}
+                name="target"
+              ></input>
+              <br />
+              <br />
+              <label>External Image Link*</label>
+              <br />
+              <input
+                type="text"
+                accept="image/*,.jpg,.jpeg,.png,"
+                className={styles.box}
+                name="image"
+                id="image"
+                placeholder="IMAGE LINK"
+              ></input>
+              <br />
+              <br />
+              <label>Minimum Contribution(MATIC)*</label>
+              <br />
+              <input
+                type="number"
+                placeholder="(MATIC)"
+                className={styles.box}
+                name="mcontribution"
+              ></input>
+              <br />
+              <br />
+              <label>Deadline*</label>
+              <br />
+              <input type="date" className={styles.box} name="deadline"></input>
+              <br />
+              <br />
+              PDF UPLOAD*
+              <br />
+              <input type="file" accept=".pdf" name="file" id="pdf"></input>
+              <br />
+              <br />
+              {uploaded ? (
+                <ExternalLink href={pdf}>
+                  <p b>Preview</p>
+                </ExternalLink>
+              ) : (
+                <Button auto onPress={uploadToIpfs} rounded>
+                  Upload PDF
+                </Button>
+              )}
+              <br />
+              <Button shadow auto color="success" onClick={validation}>
+                Register
+              </Button>
+              <br />
+          </form>
+      </Card>
+      <br />
+      <br />
     </div>
   );
 };

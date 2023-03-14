@@ -29,6 +29,32 @@ const index = () => {
     call();
   }, [loading]);
 
+  const [searchValue,setSearchValue] = useState('');
+
+  const handleChange = (event)=>{
+    console.log(event.target.value);
+    setSearchValue(event.target.value);
+  }
+
+  
+  const filterCampaigns = campaigns.filter((campaign)=>{
+    // console.log( campaign.args.category==searchValue);
+
+    if(campaign.args.category==searchValue){
+      console.log(campaign);
+      return campaign;
+    }
+    else if(campaign.args.category==searchValue){
+      return (campaign.args.category==searchValue);
+    }
+  })
+
+  // const filterCampaigns = campaigns.filter((campaign)=>{
+  //   console.log( campaign.args.category==searchValue);
+  //   return campaign.args.category==searchValue;
+  // })
+
+
   return (
     <div>
       <Navbar />
@@ -42,6 +68,17 @@ const index = () => {
 
       <br />
       <br />
+      <div>
+          <form style={{
+              margin:"1%",
+              fontWeight:"bold"
+            }}>
+              <label>Search By CATEGORY</label>
+              <br />
+                <input type="text" placeholder="CATEGORY" onChange={handleChange} />
+                <br />
+          </form>
+        </div>
 
       {loading == false ? (
         <Loading
@@ -51,8 +88,9 @@ const index = () => {
           }}
         />
       ) : (
+       
         <Grid.Container gap={2} css={{ width: "70%" }} justify="flex-start">
-          {campaigns.map((item, index) => (
+          {filterCampaigns.map((item, index) => (
             <Grid xs={6} sm={3} key={index}>
               <Card
                 isPressable
@@ -64,7 +102,8 @@ const index = () => {
                   });
                 }}
               >
-                <Card.Body css={{ p: 0, maxHeight: "20rem" }}>
+              
+              <Card.Body css={{ p: 0, maxHeight: "20rem" }}>
                   <Card.Image
                     src={item.args.image}
                     objectFit="cover"
@@ -72,7 +111,8 @@ const index = () => {
                     height={300}
                     alt="campaign"
                   />
-                </Card.Body>
+              </Card.Body>
+
                 <Card.Footer css={{ justifyContent: "flex-start" }}>
                   <div>
                     <Row wrap="wrap" justify="space-between" align="center">
