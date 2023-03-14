@@ -16,7 +16,7 @@ import { useCampaign } from "../../context/CampaignContext";
 import DonationLog from "../../components/logs/DonationLog";
 import { useRouter } from "next/router";
 import { utils } from "ethers";
-import requests from "./requests/index";
+import Request from "./requests/Request";
 
 const campaign = () => {
   const router = useRouter();
@@ -51,47 +51,6 @@ const campaign = () => {
       <Navbar />
 
       {/* CAMPAIGN NAVBAR  */}
-      <div className={styles.navbar}>
-        <span>
-          <Link href="#">
-            <Button
-              color="primary"
-              css={{
-                marginTop: "10px",
-                fontSize: "18px",
-              }}
-              auto
-              ghost
-              onPress={() => {
-                setDonorComp(true);
-                setReqComp(false);
-              }}
-            >
-              Campaign Donation Log
-            </Button>
-          </Link>
-        </span>
-
-        <span>
-          <Link href="/campaigns/requests">
-            <Button
-              color="primary"
-              css={{
-                marginTop: "10px",
-                fontSize: "18px",
-              }}
-              auto
-              ghost
-              onPress={() => {
-                setReqComp(true);
-                setDonorComp(false);
-              }}
-            >
-              Campaign RequestLog
-            </Button>
-          </Link>
-        </span>
-      </div>
 
       <br />
 
@@ -170,6 +129,10 @@ const campaign = () => {
               {" "}
               Authorizer: {details[0]}
             </Text>
+            <br />
+            <Text i css={{ color: "blue" }}>
+              Owner: {details[8]}
+            </Text>
 
             <br />
             <br />
@@ -187,25 +150,25 @@ const campaign = () => {
               ></Image>
 
               <span className={styles.target}>
-                TARGET AMOUNT: {utils.formatEther(`${details[3]}`)} MATIC
+                TARGET AMOUNT: {utils.formatEther(`${details[2]}`)} MATIC
               </span>
             </div>
 
             <br />
             <font className={styles.font}>
-              Minimum Contribution: {utils.formatEther(details[5])} MATIC
+              Minimum Contribution: {utils.formatEther(details[4])} MATIC
               <br />
-              Amount Raised : {utils.formatEther(details[6])} MATIC
+              Amount Raised : {utils.formatEther(details[5])} MATIC
               <br />
-              Deadline : {new Date(parseInt(details[4] * 1000)).toString()}
+              Deadline : {new Date(parseInt(details[3] * 1000)).toString()}
               <br />
-              Donors Count :{details[7].toString()}
+              Donors Count :{details[6].toString()}
               <br />
-              No. of Requests: {details[8].toString()}
+              No. of Requests: {details[7].toString()}
               <br />
-              Application : <a href={details[2]}>View Protocol</a>
+              Application : <a href={details[1]}>View Protocol</a>
               <br />
-              Refundable Status: {details[10].toString()}
+              Refundable Status: {details[9].toString()}
             </font>
             <br />
             <br />
@@ -234,11 +197,53 @@ const campaign = () => {
 
             <br />
             <br />
+            <br />
+            <hr />
+            <div className={styles.navbar}>
+              <span>
+                <Link href="#">
+                  <Button
+                    color="primary"
+                    css={{
+                      marginTop: "10px",
+                      fontSize: "18px",
+                    }}
+                    auto
+                    ghost
+                    onPress={() => {
+                      setDonorComp(true);
+                      setReqComp(false);
+                    }}
+                  >
+                    Campaign Donation Log
+                  </Button>
+                </Link>
+              </span>
+
+              <span>
+                <Link href="#">
+                  <Button
+                    color="primary"
+                    css={{
+                      marginTop: "10px",
+                      fontSize: "18px",
+                    }}
+                    auto
+                    ghost
+                    onPress={() => {
+                      setReqComp(true);
+                      setDonorComp(false);
+                    }}
+                  >
+                    Campaign RequestLog
+                  </Button>
+                </Link>
+              </span>
+            </div>
 
             <div className={styles.log}>
-              <h3>Log section</h3>
               {donorComp && <DonationLog campaignAddress={campaign} />}
-              {reqComp && <h1>realllyyyy</h1>}
+              {reqComp && <Request campaignAddress={campaign} />}
             </div>
           </>
         ) : (

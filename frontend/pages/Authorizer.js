@@ -2,8 +2,10 @@ import { Web3Button } from "@web3modal/react";
 import Image from "next/image";
 import styles from "../styles/authorizer.module.css";
 import RegistrationLogs from "../components/logs/RegistrationLogs";
+import { useFactory } from "../context/CampaignFactory";
 
 const Authorizer = () => {
+  const { getProtocols } = useFactory();
   return (
     <>
       <div className={styles.navbar}>
@@ -31,7 +33,7 @@ const Authorizer = () => {
       <div className={styles.body}>
         <h1 className={styles.bodyHead}>Campaigns Verifications</h1>
       </div>
-      <RegistrationLogs />
+      <RegistrationLogs getDatas={getProtocols} />
     </>
   );
 };

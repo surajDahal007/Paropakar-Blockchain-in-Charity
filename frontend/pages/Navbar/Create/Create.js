@@ -148,12 +148,7 @@ const Create = () => {
             name="target"
           ></input>
           <br />
-<<<<<<< HEAD
           <label>External Image Link</label>
-=======
-          <br />
-          <label>Image*</label>
->>>>>>> e1ee6903b8533c254961c675fe86ec6d03607762
           <br />
           <input
             type="text"

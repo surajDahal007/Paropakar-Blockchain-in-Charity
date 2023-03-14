@@ -7,7 +7,6 @@ import { ethers, Contract, utils } from "ethers";
 import { useFactory } from "../../context/CampaignFactory";
 
 const DonationLog = ({ campaignAddress }) => {
-  
   console.log("camoiagnAddress", campaignAddress);
   const { ethereum } = window;
   const { validateProtocolOf } = useFactory();
@@ -54,7 +53,7 @@ const DonationLog = ({ campaignAddress }) => {
         </Table.Header>
         <Table.Body>
           {log == undefined && loading == false ? (
-            <Loading type="points" size="xl" />
+            <Loading type="points" size="xl" color="black" />
           ) : (
             log.map((e, index) => (
               <Table.Row key={index}>

@@ -30,8 +30,8 @@ const Navbar = () => {
               <Link href="/Navbar/Create/Create">Registration Form</Link>
             </Dropdown.Item>
             <Dropdown.Item key="copy">
-            <Link href="/Navbar/History">Your History</Link>
-              </Dropdown.Item>
+              <Link href="/Navbar/History">Application Status</Link>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
