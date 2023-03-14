@@ -64,7 +64,7 @@ export const FactoryProvider = ({ children }) => {
               icon: "success",
               title: "Registered Your Application !",
               showConfirmButton: false,
-              timer: 2500,
+              timer: 4000,
             });
           });
         });
@@ -87,9 +87,13 @@ export const FactoryProvider = ({ children }) => {
    *
    * @param {@} client  address of the campaign verification request applicants
    */
-  const validateProtocolOf = (client) => {
+  const validateProtocolOf = (client, protocolNum) => {
+    console.log("inside validate", {
+      client: client,
+      protocolNum: protocolNum,
+    });
     try {
-      signerContract.validateProtocol(client).then(async (tx) => {
+      signerContract.validateProtocol(client, protocolNum).then(async (tx) => {
         tx.wait(1).then(() => {
           Swal.fire({
             position: "top-end",
@@ -114,6 +118,12 @@ export const FactoryProvider = ({ children }) => {
     } catch (e) {}
   };
 
+  const getProtocols = async () => {
+    const datas = await signerContract.getUnauthorizedProtocols();
+    console.log("datas", datas);
+    return datas;
+  };
+
   return (
     <factoryContext.Provider
       value={{
@@ -123,6 +133,7 @@ export const FactoryProvider = ({ children }) => {
         validateProtocolOf,
         getDeployedCampaignsAddress,
         registerYourProtocol,
+        getProtocols,
       }}
     >
       {children}

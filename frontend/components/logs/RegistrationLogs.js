@@ -3,34 +3,23 @@ import React, { useState, useEffect } from "react";
 import { factoryAddress, factoryAbi } from "../../constants";
 import Link from "next/link";
 import { Table, Button, Loading } from "@nextui-org/react";
-import { ethers, Contract } from "ethers";
+import { ethers, Contract, utils } from "ethers";
 import { useFactory } from "../../context/CampaignFactory";
 
-const RegistrationLogs = () => {
-  const { ethereum } = window;
+const RegistrationLogs = ({ getDatas }) => {
   const { validateProtocolOf } = useFactory();
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const contract = new Contract(factoryAddress, factoryAbi, provider);
-  const [log, setLog] = useState([]);
+
   const [loading, setLoading] = useState(false);
+  const [datas, setDatas] = useState([]);
 
-  const filteredLogs = contract.filters.registeredProtocol(null, null, false);
-
-  const authorize = async (address) => {
-    await validateProtocolOf(address);
-    setLoading(false);
+  const authorize = async (address, protocolNum) => {
+    await validateProtocolOf(address, protocolNum);
+    setLoading(!loading);
   };
 
   useEffect(() => {
     async function call() {
-      const latestBlock = provider.getBlockNumber();
-      const logs = await contract.queryFilter(
-        filteredLogs,
-        latestBlock - 32527903,
-        latestBlock
-      );
-      console.log("logs", logs);
-      setLog(logs);
+      setDatas(await getDatas());
       setLoading(true);
     }
     call();
@@ -51,46 +40,52 @@ const RegistrationLogs = () => {
       >
         <Table.Header>
           <Table.Column>Applicant's Address</Table.Column>
-          <Table.Column>Protocol Link</Table.Column>
+          <Table.Column>Application Number</Table.Column>
+          <Table.Column>Application Link</Table.Column>
           <Table.Column>Status</Table.Column>
           <Table.Column>Actions</Table.Column>
         </Table.Header>
         <Table.Body>
-          {log == undefined && loading == false ? (
+          {loading == false && datas == undefined ? (
             <Loading type="points" size="xl" />
           ) : (
-            log.map((e, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>{e.args.client}</Table.Cell>
-                <Table.Cell>
-                  <Link href={e.args.url} passHref legacyBehavior>
-                    <a target="_blank" rel="noopener noreferrer">
-                      Preview
-                    </a>
-                  </Link>
-                </Table.Cell>
-                <Table.Cell>
-                  <Loading
-                    type="spinner"
-                    color="currentColor"
-                    size="sm"
-                    title="Pending"
-                  />
-                  Pending
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    onPress={() => {
-                      authorize(e.args.client);
-                    }}
-                    color="success"
-                    rounded
-                  >
-                    Authorize
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            ))
+            datas.map((e, index) => {
+              if (e[4] !== "0x0000000000000000000000000000000000000000") {
+                return (
+                  <Table.Row key={index}>
+                    <Table.Cell>{e[4]}</Table.Cell>
+                    <Table.Cell>{e[8].toString()}</Table.Cell>
+                    <Table.Cell>
+                      <Link href={e[0]} passHref legacyBehavior>
+                        <a target="_blank" rel="noopener noreferrer">
+                          Preview
+                        </a>
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Loading
+                        type="spinner"
+                        color="currentColor"
+                        size="sm"
+                        title="Pending"
+                      />
+                      Pending
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        onPress={() => {
+                          authorize(e[4], e[8].toString());
+                        }}
+                        color="success"
+                        rounded
+                      >
+                        Authorize
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              }
+            })
           )}
         </Table.Body>
       </Table>
