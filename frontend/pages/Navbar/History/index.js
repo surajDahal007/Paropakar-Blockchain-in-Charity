@@ -30,7 +30,12 @@ const History = () => {
         null
       );
 
-      const filter2 = contract.filters.registeredProtocol(address, null, null);
+      const filter2 = contract.filters.registeredProtocol(
+        null,
+        address,
+        null,
+        null
+      );
       const logs = await contract.queryFilter(
         filter,
         latestBlock - 32527903,
@@ -76,7 +81,7 @@ const History = () => {
             <Table.Body>
               {RegLog.map((e, index) => (
                 <Table.Row key={index}>
-                  <Table.Cell>0</Table.Cell>
+                  <Table.Cell>{e.args.regNumber.toString()}</Table.Cell>
                   <Table.Cell>
                     <a href={e.args.pdf} target="_blank">
                       VIEW

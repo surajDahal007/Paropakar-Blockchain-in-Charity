@@ -20,7 +20,7 @@ const DonationLog = ({ campaignAddress }) => {
       const latestBlock = provider.getBlockNumber();
       const logs = await contract.queryFilter(
         "donorEvent",
-        latestBlock - 32527903,
+        latestBlock - 33108125,
         latestBlock
       );
       console.log("logs", logs);

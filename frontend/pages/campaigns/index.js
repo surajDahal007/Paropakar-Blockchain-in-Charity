@@ -19,7 +19,7 @@ const index = () => {
       const latestBlock = provider.getBlockNumber();
       const logs = await contract.queryFilter(
         "createdTender",
-        latestBlock - 33068904,
+        latestBlock - 33108125,
         latestBlock
       );
       setCampaigns(logs);
@@ -51,7 +51,7 @@ const index = () => {
           }}
         />
       ) : (
-        <Grid.Container gap={2} css={{ width: "70%" }} justify="flex-start">
+        <Grid.Container gap={2} css={{ width: "80%" }} justify="flex-start">
           {campaigns.map((item, index) => (
             <Grid xs={6} sm={3} key={index}>
               <Card
@@ -69,7 +69,7 @@ const index = () => {
                     src={item.args.image}
                     objectFit="cover"
                     width="100%"
-                    height={300}
+                    height={800}
                     alt="campaign"
                   />
                 </Card.Body>
