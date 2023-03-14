@@ -5,24 +5,45 @@ import { Table, Loading } from "@nextui-org/react";
 import styles from "./History.module.css";
 import { ethers, Contract } from "ethers";
 import { factoryAddress, factoryAbi } from "../../../constants";
+import { useFactory } from "../../../context/CampaignFactory";
+import { useAccount } from "wagmi";
 
 const History = () => {
   const { ethereum } = window;
+  const { address } = useAccount();
+  const { protocolsOf } = useFactory();
   const provider = new ethers.providers.Web3Provider(ethereum);
   const contract = new Contract(factoryAddress, factoryAbi, provider);
   const [campaignLog, setClog] = useState([]);
+  const [RegLog, setRlog] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function call() {
       const latestBlock = provider.getBlockNumber();
+
+      const filter = contract.filters.createdTender(
+        address,
+        null,
+        null,
+        null,
+        null
+      );
+
+      const filter2 = contract.filters.registeredProtocol(address, null, null);
       const logs = await contract.queryFilter(
-        "createdTender",
+        filter,
+        latestBlock - 32527903,
+        latestBlock
+      );
+      const logs2 = await contract.queryFilter(
+        filter2,
         latestBlock - 32527903,
         latestBlock
       );
 
       setClog(logs);
+      setRlog(logs2);
       setLoading(true);
     }
     call();
@@ -44,29 +65,33 @@ const History = () => {
           selectionMode="single"
         >
           <Table.Header>
-            <Table.Column>CATEGORY</Table.Column>
+            <Table.Column>APPLICATION NUMBER</Table.Column>
             <Table.Column>APPLICATION</Table.Column>
-            <Table.Column>DATE</Table.Column>
+            <Table.Column>REGISTERED DATE</Table.Column>
           </Table.Header>
-          <Table.Body>
-            <Table.Row key="1">
-              <Table.Cell>Tony Reichert</Table.Cell>
-              <Table.Cell>CEO</Table.Cell>
-              <Table.Cell>Active</Table.Cell>
-            </Table.Row>
 
-            <Table.Row key="2">
-              <Table.Cell>Zoey Lang</Table.Cell>
-              <Table.Cell>Technical Lead</Table.Cell>
-              <Table.Cell>Paused</Table.Cell>
-            </Table.Row>
+          {RegLog == undefined && loading == false ? (
+            <Loading type="points" size="xl" />
+          ) : (
+            <Table.Body>
+              {RegLog.map((e, index) => (
+                <Table.Row key={index}>
+                  <Table.Cell>0</Table.Cell>
+                  <Table.Cell>
+                    <a href={e.args.pdf} target="_blank">
+                      VIEW
+                    </a>
+                  </Table.Cell>
 
-            <Table.Row key="3">
-              <Table.Cell>Jane Fisher</Table.Cell>
-              <Table.Cell>Senior Developer</Table.Cell>
-              <Table.Cell>Active</Table.Cell>
-            </Table.Row>
-          </Table.Body>
+                  <Table.Cell>
+                    {new Date(
+                      parseInt(e.args.registeredTime * 1000)
+                    ).toString()}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          )}
         </Table>
       </div>
 
@@ -85,9 +110,8 @@ const History = () => {
           <Table.Header>
             <Table.Column>CATEGORY</Table.Column>
             <Table.Column>CONTRACT ADDRESS</Table.Column>
-            <Table.Column>TARGET</Table.Column>
+
             <Table.Column>CREATED TIME</Table.Column>
-            <Table.Column>DEADLINE</Table.Column>
           </Table.Header>
 
           <Table.Body>
@@ -104,17 +128,10 @@ const History = () => {
                     </Link>
                     {console.log("deployedTender", e.args.deployedTender)}
                   </Table.Cell>
+
                   <Table.Cell>
-                    <Loading
-                      type="spinner"
-                      color="currentColor"
-                      size="sm"
-                      title="Pending"
-                    />
-                    Pending
+                    {new Date(parseInt(e.args.createTime * 1000)).toString()}
                   </Table.Cell>
-                  <Table.Cell>padding</Table.Cell>
-                  <Table.Cell>padding</Table.Cell>
                 </Table.Row>
               ))
             )}

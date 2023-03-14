@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 import { getFactoryContract } from "../hooks/useContract";
 
 //external imports
-import { useAccount, useProvider, useSigner } from "wagmi";
+import { useProvider, useSigner } from "wagmi";
 import Swal from "sweetalert2";
 
 const factoryContext = createContext();
@@ -124,6 +124,11 @@ export const FactoryProvider = ({ children }) => {
     return datas;
   };
 
+  const protocolsOf = async (address) => {
+    const data = await providerContract.protocols(address);
+    return data;
+  };
+
   return (
     <factoryContext.Provider
       value={{
@@ -134,6 +139,7 @@ export const FactoryProvider = ({ children }) => {
         getDeployedCampaignsAddress,
         registerYourProtocol,
         getProtocols,
+        protocolsOf,
       }}
     >
       {children}

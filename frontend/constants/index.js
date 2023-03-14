@@ -1,10 +1,5 @@
 const factoryAbi = [
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -120,6 +115,12 @@ const factoryAbi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint256",
+        name: "regNumber",
+        type: "uint256",
+      },
+      {
         indexed: true,
         internalType: "address",
         name: "client",
@@ -142,30 +143,145 @@ const factoryAbi = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "AUTHORIZER_ROLE",
-    outputs: [
+    inputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
+        internalType: "address",
+        name: "_account",
+        type: "address",
       },
     ],
-    stateMutability: "view",
+    name: "grantAuthorityRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "grantRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_min",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_deadline",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_target",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_url",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_category",
+        type: "string",
+      },
+    ],
+    name: "registerProtocol",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "renounceRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_account",
+        type: "address",
+      },
+    ],
+    name: "revokeAuthorityRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "role",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "revokeRole",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_client",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "protocolNum",
+        type: "uint256",
+      },
+    ],
+    name: "validateProtocol",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [],
-    name: "DEFAULT_ADMIN_ROLE",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
     inputs: [],
@@ -175,6 +291,19 @@ const factoryAbi = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "AUTHORIZER_ROLE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
       },
     ],
     stateMutability: "view",
@@ -201,6 +330,19 @@ const factoryAbi = [
   },
   {
     inputs: [],
+    name: "DEFAULT_ADMIN_ROLE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getCurrentAuthorizers",
     outputs: [
       {
@@ -220,6 +362,66 @@ const factoryAbi = [
         internalType: "address[]",
         name: "",
         type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getProtocol",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "url",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "image",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "category",
+            type: "string",
+          },
+          {
+            internalType: "bool",
+            name: "validated",
+            type: "bool",
+          },
+          {
+            internalType: "address",
+            name: "beneficiary",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "deadline",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "minimumContribution",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "target",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "number",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct tenderFactory.protocol[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -320,37 +522,6 @@ const factoryAbi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_account",
-        type: "address",
-      },
-    ],
-    name: "grantAuthorityRole",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "role",
-        type: "bytes32",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "grantRole",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "bytes32",
         name: "role",
         type: "bytes32",
@@ -379,65 +550,6 @@ const factoryAbi = [
       {
         internalType: "uint256",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "protocolTrack",
-    outputs: [
-      {
-        internalType: "string",
-        name: "url",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "image",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "category",
-        type: "string",
-      },
-      {
-        internalType: "bool",
-        name: "validated",
-        type: "bool",
-      },
-      {
-        internalType: "address",
-        name: "beneficiary",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "deadline",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "minimumContribution",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "target",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "number",
         type: "uint256",
       },
     ],
@@ -512,87 +624,59 @@ const factoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_min",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "protocolTrack",
+    outputs: [
+      {
+        internalType: "string",
+        name: "url",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "category",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "validated",
+        type: "bool",
+      },
+      {
+        internalType: "address",
+        name: "beneficiary",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "deadline",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_deadline",
+        name: "minimumContribution",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_target",
+        name: "target",
         type: "uint256",
       },
       {
-        internalType: "string",
-        name: "_url",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_image",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_category",
-        type: "string",
+        internalType: "uint256",
+        name: "number",
+        type: "uint256",
       },
     ],
-    name: "registerProtocol",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "role",
-        type: "bytes32",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "renounceRole",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_account",
-        type: "address",
-      },
-    ],
-    name: "revokeAuthorityRole",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "role",
-        type: "bytes32",
-      },
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "revokeRole",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -631,24 +715,6 @@ const factoryAbi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_client",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "protocolNum",
-        type: "uint256",
-      },
-    ],
-    name: "validateProtocol",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
 ];
