@@ -26,16 +26,17 @@ const Request = ({ campaignAddress }) => {
 
   return (
     <div>
-      <h1 className={styles.heading}>Campaign RequestLog</h1>
-      <br />
-      <Card
-        css={{
-          mw: "400px",
-          marginLeft: "40%",
-          padding: "2%",
-          fontWeight: "bold",
-        }}
-      >
+        <h1 className={styles.heading}>Campaign RequestLog</h1>
+        <br />
+
+        <Card
+          css={{
+            mw: "400px",
+            marginLeft: "0%",
+            padding: "2%",
+            fontWeight: "bold",
+          }}
+        >
         <form name="create_form">
           <label>DESCRIPTION:</label>
           <br />

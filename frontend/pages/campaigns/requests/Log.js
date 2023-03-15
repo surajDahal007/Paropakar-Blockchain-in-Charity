@@ -58,7 +58,8 @@ const Log = () => {
       <div>
       <Collapse title="Activity Log"
         css={{
-          margin:"50px",
+          marginTop:"3%",
+          marginRight:"2%",
           background:'$blue100'
       }}
       bordered

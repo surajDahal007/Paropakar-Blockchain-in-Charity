@@ -3,13 +3,13 @@ import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
 import {
-  Card,
-  Row,
-  Col,
-  Button,
-  Text,
-  Loading,
-  Collapse,
+    Card,
+    Row,
+    Col,
+    Button,
+    Text,
+    Loading,
+    Collapse,
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
@@ -50,17 +50,14 @@ const campaign = () => {
     <div className={styles.main}>
       <Navbar />
 
-      {/* CAMPAIGN NAVBAR  */}
-
-      <br />
-
       <div className={styles.center}>
         {(details && campaign) != undefined && loading ? (
           <>
             <h1 className={styles.heading}>Campaign Details</h1>
 
             <div className={styles.sidediv}>
-              <Card css={{ w: "100%", h: "500px" }}>
+
+              <Card css={{ w: "100%", h: "420px" }}>
                 <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
                   <Col>
                     <Text
@@ -200,12 +197,12 @@ const campaign = () => {
             <br />
             <hr />
             <div className={styles.navbar}>
+            
               <span>
-                <Link href="#">
                   <Button
                     color="primary"
                     css={{
-                      marginTop: "10px",
+                      marginTop: "20px",
                       fontSize: "18px",
                     }}
                     auto
@@ -213,19 +210,22 @@ const campaign = () => {
                     onPress={() => {
                       setDonorComp(true);
                       setReqComp(false);
+                      window.scroll({
+                        top:500,
+                        behavior:"auto"
+                      })
                     }}
                   >
                     Campaign Donation Log
                   </Button>
-                </Link>
+                
               </span>
 
               <span>
-                <Link href="#">
                   <Button
                     color="primary"
                     css={{
-                      marginTop: "10px",
+                      marginTop: "20px",
                       fontSize: "18px",
                     }}
                     auto
@@ -233,11 +233,14 @@ const campaign = () => {
                     onPress={() => {
                       setReqComp(true);
                       setDonorComp(false);
+                      window.scroll({
+                        top:200,
+                        behavior:"auto"
+                      })
                     }}
                   >
                     Campaign RequestLog
                   </Button>
-                </Link>
               </span>
             </div>
 

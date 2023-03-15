@@ -56,7 +56,7 @@ const History = () => {
   return (
     <>
       <Navbar />
-      <h1 className={styles.heading}>Your History</h1>
+      <h1 className={styles.heading}>Application Status</h1>
 
       <div className={styles.table}>
         <h2>Your Pending Applications</h2>

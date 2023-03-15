@@ -1,9 +1,11 @@
 .navbar {
   border: 1px solid none;
   background: white;
-  height: 75px;
+  height: 80px;
   display: flex;
   justify-content: space-around;
+  margin-top: -3%;
+  margin-left: -8%;
 }
 
 .main {
@@ -60,9 +62,8 @@
 .sidediv {
   padding: 10px;
   top: 12px;
-
   height: 600px;
   width: 30%;
   margin-left: 55%;
-  /* margin-top: 20%; */
 }
+
