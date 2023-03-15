@@ -37,17 +37,17 @@ const index = () => {
   }
 
   
-  const filterCampaigns = campaigns.filter((campaign)=>{
-    // console.log( campaign.args.category==searchValue);
+  // const filterCampaigns = campaigns.filter((campaign)=>{
+  //   // console.log( campaign.args.category==searchValue);
 
-    if(campaign.args.category==searchValue){
-      console.log(campaign);
-      return campaign;
-    }
-    else if(campaign.args.category==searchValue){
-      return (campaign.args.category==searchValue);
-    }
-  })
+  //   if(campaign.args.category==searchValue){
+  //     console.log(campaign);
+  //     return campaign;
+  //   }
+  //   else if(campaign.args.category==searchValue){
+  //     return (campaign.args.category==searchValue);
+  //   }
+  // })
 
   // const filterCampaigns = campaigns.filter((campaign)=>{
   //   console.log( campaign.args.category==searchValue);
@@ -90,7 +90,7 @@ const index = () => {
       ) : (
        
         <Grid.Container gap={2} css={{ width: "70%" }} justify="flex-start">
-          {filterCampaigns.map((item, index) => (
+          {campaigns.map((item, index) => (
             <Grid xs={6} sm={3} key={index}>
               <Card
                 isPressable

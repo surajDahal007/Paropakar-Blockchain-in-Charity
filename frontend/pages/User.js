@@ -88,6 +88,8 @@ const User = () => {
 
         <br />
         <br />
+        
+        <hr className={styles.line}></hr>
         <br />
 
         <h3> 
@@ -108,9 +110,120 @@ const User = () => {
         <u><b>Pending Request</b></u> Table displays all the application that you have registered that which will be checked (and if everything is good) by the Authorizer.
         <br />
         <u><b>Your Campaign </b></u> Table displays all the application that that are verified by Authorizer. 
+        <br />
+        <br />
+
+        <hr className={styles.line}></hr>
+        <br />
+
+        <h3>
+          3. CAMPAIGN PAGE
+        </h3>
+        Campaign page is accessible by clicking <big>Campaign</big> option in Navabar.
+        <br />
+        <Image
+            src={"/campaignPage.png"}
+            height={700}
+            width={1300} 
+            quality={100}
+            className={styles.image}
+            alt="image"
+          ></Image>
+          <br />
+          In this page a number of verified campaigns are displayed. Campaigns can also searchable according to the categories from the search bar.
+          <br />
+          <br />
+
+          <hr className={styles.line}></hr>
+          <br />
+
+        <h3>
+          4. CAMPAIGN DETAILS
+        </h3>
+        This page is seen after you clicked on one of the donation campaign in Campaign Page.
+        <br />
+        It shows different details related to the campaign like :- <i>Authorizer address, Owner address, Target, Deadline, etc.</i>
+        <br />
+        <br />
+        {/* <hr className={styles.line}></hr> */}
+      
+
+        <b>4.1</b> How To Donate <b><i>?</i></b>
+        <br />
+        <br />
+        <div className={styles.donate}>
+      
+        <Image
+            src={"/howToDonate.png"}
+            height={500}
+            width={500} 
+            quality={100}
+            className={styles.image}
+            alt="image"
+          ></Image>
+      
+            <p className={styles.sideInfo}>
+              All the necessary information related to the campaign are present in Campaign Details card.
+              <br />
+              By clicking in <text style={{color:"blue"}}> View Protocol</text>, you can view pdf file related to donation request.
+              <br />
+              You can donate by filling <font style={{border:"1px solid grey", color:"grey", padding:"5px"}}>Amount</font> in input bar and clicking donate.
+              <br />
+              Once you click donate, your cryptoWallet account will pop up and ask to confirm the transaction.
+              <br />
+              After you click 'CONFIRM'. Transaction process takes place and if successfull details is shown. Details could alse be tracked in <a href="https://mumbai.polygonscan.com/" target="_blank">POLYGONSCAN</a>. 
+            </p>
+            
+        </div>
+  
+        <br />
+        <b>4.1</b> How to View Donation Details <b><i>?</i></b>
+        <br />
+        <br />
+        To view number of donors to a particular campaign (as well as your details), click <text style={{padding:"5px", color:"blue",border:"1px solid blue",borderRadius:"10px"}}> Campaign Donation Log</text>
+        <br />
+        You'll see a Table with information such as: Donor Address, Amount, Time.
+        It also contains search bar where search is done according to address.
+
+        <br />
+        <Image
+            src={"/campaignDonationLog.png"}
+            height={700}
+            width={1300} 
+            quality={100}
+            className={styles.image}
+            alt="image"
+          ></Image>
+          <br />
+          <br />
+          <hr className={styles.line}></hr>
+          <br />
 
 
+        <h3>
+          5. HOW TO ATTAIN REQUESTED FUND <i>?</i> 
+        </h3>
+        <Image
+            src={"/campaignRequestLog.png"}
+            height={700}
+            width={1300} 
+            quality={100}
+            className={styles.image}
+            alt="image"
+          ></Image>
+          <br />
+          <br />
 
+          As a Donor to attain donation from donor, click <text style={{padding:"5px", color:"blue",border:"1px solid blue",borderRadius:"10px"}}>Donation Request Log</text>
+          <br />
+          As shown in picture, a form and a table will be seen in the same page at the bottom.
+          <br />
+          Activity Log table displays information about donation received to a particular contract along with date.
+          <br />
+          Fill up the form and <text style={{padding:"5px", color:"white",background:"blue",border:"1px solid none",borderRadius:"10px"}}>CREATE REQUEST</text>
+
+          <br />
+          <br />
       </div>
     </>
   );
