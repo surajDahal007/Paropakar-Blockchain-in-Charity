@@ -7,6 +7,10 @@ import { useProvider, useSigner } from "wagmi";
 import Swal from "sweetalert2";
 
 const factoryContext = createContext();
+
+export const useWindow = () => {
+  return window.ethereum;
+};
 export const useFactory = () => {
   return useContext(factoryContext);
 };
