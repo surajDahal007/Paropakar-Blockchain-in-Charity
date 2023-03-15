@@ -31,10 +31,6 @@ const index = () => {
     call();
   }, []);
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
-
   return (
     <div>
       <Navbar />
@@ -56,31 +52,44 @@ const index = () => {
           }}
         >
           <h2>SEARCH BY CATEGORY</h2>
-          <input
-            type="text"
-            placeholder="CATEGORY"
-            onChange={handleSearchChange}
-            style={{
-              width: "350px",
-              height: "40px",
-              fontSize: "18px",
-              fontWeight: "bold",
+          <br />
+
+          <select
+            id="category"
+            defaultValue="all"
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              if (selectedValue === "all") {
+                setSearch(false);
+              } else {
+                setSearch(selectedValue);
+              }
             }}
-          />
+          >
+            <option value="miscellaneous">Miscellaneous</option>
+            <option value="Education">Education</option>
+            <option value="Health">Health</option>
+            <option value="Sports">Sports</option>
+            <option value="Community support">Community support</option>
+            <option value="Woman">Woman</option>
+            <option value="all">Show All</option>
+          </select>
+
+          <br />
 
           <br />
         </form>
       </div>
 
-      <Grid.Container gap={2} css={{ width: "70%" }} justify="flex-start">
+      <Grid.Container gap={4} css={{ width: "70%" }} justify="flex-start">
         {campaigns
           .filter((campaign) =>
             isSearch ? campaign.args.category === isSearch : true
           )
           .map((item, index) => (
             <Grid
-              xs={7}
-              sm={4}
+              xs={6}
+              sm={3}
               key={index}
               css={{
                 marginBottom: "5%",
