@@ -58,6 +58,7 @@ const campaign = () => {
         {(details && campaign) != undefined && loading ? (
           <>
             <h1 className={styles.heading}>Campaign Details</h1>
+            <br />
 
             <div className={styles.sidediv}>
               <Card css={{ w: "100%", h: "420px" }}>
@@ -215,7 +216,7 @@ const campaign = () => {
                   </Text>
                   <br />
                   <Text b>
-                    <i>Your Donation: {yourDonation} MATIC</i>
+                    <i>Your Contribution: {yourDonation} MATIC</i>
                   </Text>
                 </Card.Body>
 

@@ -5,7 +5,6 @@ import { Table, Button, Loading, Input } from "@nextui-org/react";
 import { ethers, Contract, utils } from "ethers";
 
 const DonationLog = ({ campaignAddress }) => {
-  console.log("camoiagnAddress", campaignAddress);
   const { ethereum } = window;
   const provider = new ethers.providers.Web3Provider(ethereum);
   const contract = new Contract(campaignAddress, campaignAbi, provider);
@@ -46,7 +45,7 @@ const DonationLog = ({ campaignAddress }) => {
           height: "auto",
           minWidth: "100%",
           padding: "$11",
-          backgroundColor: "Lavender",
+          // backgroundColor: "Lavender",
         }}
         selectionMode="single"
       >
