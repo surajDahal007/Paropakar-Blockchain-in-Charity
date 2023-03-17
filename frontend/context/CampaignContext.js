@@ -1,7 +1,8 @@
 import { createContext, useContext } from "react";
-import { useProvider, useSigner, useContract } from "wagmi";
+import { useProvider, useSigner, useContract, useAccount } from "wagmi";
 import { campaignAbi } from "../constants";
 import { Contract, Signer, utils } from "ethers";
+import campaign from "../pages/campaigns/[campaign]";
 
 const campaignContext = createContext();
 export const useCampaign = () => {
@@ -14,6 +15,7 @@ const generateContract = async (address, obj) => {
 };
 
 export const CampaignProvider = ({ children }) => {
+  const { address } = useAccount();
   const provider = useProvider();
   const { data: signer } = useSigner();
 
@@ -50,6 +52,15 @@ export const CampaignProvider = ({ children }) => {
       console.error(e);
     }
   };
+  const getYourDonation = async (campaignAddress) => {
+    try {
+      const contracts = await generateContract(campaignAddress, provider);
+      const amount = utils.formatEther(await contracts.donors(address));
+      return amount;
+    } catch (e) {
+      alert("unable to get your donation aount");
+    }
+  };
 
   const refund = async (contract) => {
     try {
@@ -84,11 +95,22 @@ export const CampaignProvider = ({ children }) => {
     }
   };
 
-  const getRequestStatus = async (contract, reqNum) => {};
+  const getRequestStatus = async (contract, reqNum) => {
+    try {
+    } catch (e) {
+      alert("Unable to get request state datas !");
+      console.error(e);
+    }
+  };
 
   return (
     <campaignContext.Provider
-      value={{ getTenderInfo, donateToCampaign, createRequestToCampaign }}
+      value={{
+        getTenderInfo,
+        donateToCampaign,
+        createRequestToCampaign,
+        getYourDonation,
+      }}
     >
       {children}
     </campaignContext.Provider>

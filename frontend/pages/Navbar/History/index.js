@@ -59,7 +59,7 @@ const History = () => {
       <h1 className={styles.heading}>Application Status</h1>
 
       <div className={styles.table}>
-        <h2>Your Pending Applications</h2>
+        <h2> Application History</h2>
         <Table
           aria-label="Example table with static content"
           css={{
@@ -101,7 +101,7 @@ const History = () => {
       </div>
 
       <div className={styles.table}>
-        <h2>Your Campaigns</h2>
+        <h2>Deployed Campaign</h2>
         <Table
           aria-label="Example table"
           css={{

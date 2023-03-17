@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { factoryAddress, factoryAbi } from "../../constants";
 import Link from "next/link";
 import { Table, Button, Loading } from "@nextui-org/react";
-import { ethers, Contract, utils } from "ethers";
+
 import { useFactory } from "../../context/CampaignFactory";
 
 const RegistrationLogs = ({ getDatas }) => {
@@ -14,7 +13,9 @@ const RegistrationLogs = ({ getDatas }) => {
 
   const authorize = async (address, protocolNum) => {
     await validateProtocolOf(address, protocolNum);
-    setLoading(!loading);
+    setTimeout(() => {
+      setLoading(false);
+    }, 9000);
   };
 
   useEffect(() => {

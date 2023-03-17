@@ -3,13 +3,13 @@ import Image from "next/image";
 import Navbar from "../Navbar/Navbar";
 import styles from "./campaign.module.css";
 import {
-    Card,
-    Row,
-    Col,
-    Button,
-    Text,
-    Loading,
-    Collapse,
+  Card,
+  Row,
+  Col,
+  Button,
+  Text,
+  Loading,
+  Collapse,
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
@@ -25,26 +25,22 @@ const campaign = () => {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState();
+  const [yourDonation, setYourDonation] = useState(0);
 
   const [donorComp, setDonorComp] = useState(false);
   const [reqComp, setReqComp] = useState(false);
 
-  const { getTenderInfo, donateToCampaign } = useCampaign();
-
-  // const [requestLog,setRequestLog]= useState(false);
+  const { getTenderInfo, donateToCampaign, getYourDonation } = useCampaign();
 
   useEffect(() => {
     async function getDetails() {
       console.log(await getTenderInfo(`${campaign}`));
       setDetails(await getTenderInfo(`${campaign}`));
+      setYourDonation(await getYourDonation(`${campaign}`));
       setLoading(true);
     }
     getDetails();
-  }, [campaign]);
-
-  const conRedering = () => {
-    console.log("inside function");
-  };
+  }, [loading]);
 
   return (
     <div className={styles.main}>
@@ -56,7 +52,6 @@ const campaign = () => {
             <h1 className={styles.heading}>Campaign Details</h1>
 
             <div className={styles.sidediv}>
-
               <Card css={{ w: "100%", h: "420px" }}>
                 <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
                   <Col>
@@ -148,6 +143,8 @@ const campaign = () => {
 
               <span className={styles.target}>
                 TARGET AMOUNT: {utils.formatEther(`${details[2]}`)} MATIC
+                <br />
+                <i>Your Donation: {yourDonation}MATIC</i>
               </span>
             </div>
 
@@ -183,8 +180,10 @@ const campaign = () => {
                 shadow
                 color="primary"
                 onPress={async () => {
-                  console.log("amount", amount);
                   await donateToCampaign(campaign, amount);
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 9000);
                 }}
                 auto
               >
@@ -197,50 +196,48 @@ const campaign = () => {
             <br />
             <hr />
             <div className={styles.navbar}>
-            
               <span>
-                  <Button
-                    color="primary"
-                    css={{
-                      marginTop: "20px",
-                      fontSize: "18px",
-                    }}
-                    auto
-                    ghost
-                    onPress={() => {
-                      setDonorComp(true);
-                      setReqComp(false);
-                      window.scroll({
-                        top:500,
-                        behavior:"auto"
-                      })
-                    }}
-                  >
-                    Campaign Donation Log
-                  </Button>
-                
+                <Button
+                  color="primary"
+                  css={{
+                    marginTop: "20px",
+                    fontSize: "18px",
+                  }}
+                  auto
+                  ghost
+                  onPress={() => {
+                    setDonorComp(true);
+                    setReqComp(false);
+                    window.scroll({
+                      top: 500,
+                      behavior: "auto",
+                    });
+                  }}
+                >
+                  Campaign Donation Log
+                </Button>
               </span>
 
               <span>
-                  <Button
-                    color="primary"
-                    css={{
-                      marginTop: "20px",
-                      fontSize: "18px",
-                    }}
-                    auto
-                    ghost
-                    onPress={() => {
-                      setReqComp(true);
-                      setDonorComp(false);
-                      window.scroll({
-                        top:200,
-                        behavior:"auto"
-                      })
-                    }}
-                  >
-                    Campaign RequestLog
-                  </Button>
+                <Button
+                  color="primary"
+                  css={{
+                    marginTop: "20px",
+                    fontSize: "18px",
+                  }}
+                  auto
+                  ghost
+                  onPress={() => {
+                    setReqComp(true);
+                    setDonorComp(false);
+                    window.scroll({
+                      top: 200,
+                      behavior: "auto",
+                    });
+                  }}
+                >
+                  Campaign RequestLog
+                </Button>
               </span>
             </div>
 

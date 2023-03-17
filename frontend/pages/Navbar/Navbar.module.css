@@ -1,5 +1,6 @@
 .main {
   height: 130px;
+  top: -20px;
   background: blue;
   border-radius: 12px;
   display: flex;
@@ -9,7 +10,7 @@
 .heading {
   font-size: 50px;
   font-weight: bold;
-  margin-top: 3%;
+  top: 30px;
 }
 
 .option {

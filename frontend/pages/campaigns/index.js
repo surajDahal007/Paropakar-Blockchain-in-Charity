@@ -81,14 +81,14 @@ const index = () => {
         </form>
       </div>
 
-      <Grid.Container gap={4} css={{ width: "70%" }} justify="flex-start">
+      <Grid.Container gap={4} css={{ width: "80%" }} justify="flex-start">
         {campaigns
           .filter((campaign) =>
             isSearch ? campaign.args.category === isSearch : true
           )
           .map((item, index) => (
             <Grid
-              xs={6}
+              xs={7}
               sm={3}
               key={index}
               css={{

@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import { campaignAbi } from "../../constants";
-import Link from "next/link";
 import { Table, Button, Loading, Input } from "@nextui-org/react";
 import { ethers, Contract, utils } from "ethers";
-import { useFactory } from "../../context/CampaignFactory";
 
 const DonationLog = ({ campaignAddress }) => {
   console.log("camoiagnAddress", campaignAddress);
   const { ethereum } = window;
-  const { validateProtocolOf } = useFactory();
   const provider = new ethers.providers.Web3Provider(ethereum);
   const contract = new Contract(campaignAddress, campaignAbi, provider);
   const [log, setLog] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isSearch, setSearch] = useState(false);
 
   useEffect(() => {
     async function call() {
@@ -25,14 +22,21 @@ const DonationLog = ({ campaignAddress }) => {
       );
       console.log("logs", logs);
       setLog(logs);
-      setLoading(true);
     }
     call();
-  }, [loading]);
+  }, []);
 
   return (
     <div style={{ backgroundColor: "lightblue" }}>
-      <Input clearable label="Search" type="search" placeholder="By Address" />
+      <Input
+        clearable
+        label="Search"
+        type="search"
+        placeholder="By Address"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
       <br />
       <br />
       <Table
@@ -46,7 +50,6 @@ const DonationLog = ({ campaignAddress }) => {
         }}
         selectionMode="single"
       >
-
         <Table.Header>
           <Table.Column>Donor Address</Table.Column>
           <Table.Column>Amount</Table.Column>
@@ -54,24 +57,26 @@ const DonationLog = ({ campaignAddress }) => {
         </Table.Header>
 
         <Table.Body>
-          {log == undefined && loading == false ? (
+          {log == undefined ? (
             <Loading type="points" size="xl" color="black" />
           ) : (
-            log.map((e, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>
-                  {e.args.donor}
-                </Table.Cell>
+            log
+              .filter((individualLog) =>
+                isSearch ? individualLog.args.donor === isSearch : true
+              )
+              .map((e, index) => (
+                <Table.Row key={index}>
+                  <Table.Cell>{e.args.donor}</Table.Cell>
 
-                <Table.Cell>
-                  {utils.formatEther(e.args.amount)} MATIC
-                </Table.Cell>
+                  <Table.Cell>
+                    {utils.formatEther(e.args.amount)} MATIC
+                  </Table.Cell>
 
-                <Table.Cell>
-                  {new Date(parseInt(e.args.time * 1000)).toString()}
-                </Table.Cell>
-             </Table.Row>
-            ))
+                  <Table.Cell>
+                    {new Date(parseInt(e.args.time * 1000)).toString()}
+                  </Table.Cell>
+                </Table.Row>
+              ))
           )}
         </Table.Body>
       </Table>
