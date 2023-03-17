@@ -10,12 +10,14 @@ const RegistrationLogs = ({ getDatas }) => {
 
   const [loading, setLoading] = useState(false);
   const [datas, setDatas] = useState([]);
+  const [reRender, setRender] = useState(false);
 
   const authorize = async (address, protocolNum) => {
     await validateProtocolOf(address, protocolNum);
     setTimeout(() => {
       setLoading(false);
-    }, 9000);
+      setRender(true);
+    }, 15000);
   };
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const RegistrationLogs = ({ getDatas }) => {
       setLoading(true);
     }
     call();
-  }, [loading]);
+  }, [loading, reRender]);
 
   return (
     <div>

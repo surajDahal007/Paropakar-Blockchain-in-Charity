@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { useProvider, useSigner, useContract, useAccount } from "wagmi";
 import { campaignAbi } from "../constants";
 import { Contract, Signer, utils } from "ethers";
-import campaign from "../pages/campaigns/[campaign]";
+import Swal from "sweetalert2";
 
 const campaignContext = createContext();
 export const useCampaign = () => {
@@ -35,8 +35,9 @@ export const CampaignProvider = ({ children }) => {
    * {@returns} balance of contract -> bignumber object
    */
   const getContractBalance = async (contract) => {
-    const balance = await contract.getContractBalance();
-    return utils.formaEther(balance);
+    const contracts = await generateContract(contract, provider);
+    const balance = await contracts.getContractBalance();
+    return utils.formatEther(balance);
   };
 
   //-----function to donate the campaign
@@ -46,7 +47,16 @@ export const CampaignProvider = ({ children }) => {
     try {
       const contract1 = await generateContract(contract, signer);
       const fund = utils.parseEther(`${amount}`);
-      await contract1.donate({ value: fund });
+      contract1.donate({ value: fund }).then(async (tx) => {
+        tx.wait(1).then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "SuccssFul Donation!",
+            showConfirmButton: false,
+            timer: 2500,
+          });
+        });
+      });
     } catch (e) {
       alert("unable to donate");
       console.error(e);
@@ -64,9 +74,10 @@ export const CampaignProvider = ({ children }) => {
 
   const refund = async (contract) => {
     try {
-      await contract.refund();
+      const contracts = await generateContract(contract, signer);
+      await contracts.refund();
     } catch {
-      alert("you weren't the donor of this campaign");
+      window.alert("Refund criteria didn't meet");
     }
   };
 
@@ -110,6 +121,8 @@ export const CampaignProvider = ({ children }) => {
         donateToCampaign,
         createRequestToCampaign,
         getYourDonation,
+        refund,
+        getContractBalance,
       }}
     >
       {children}

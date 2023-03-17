@@ -81,14 +81,14 @@ const index = () => {
         </form>
       </div>
 
-      <Grid.Container gap={4} css={{ width: "80%" }} justify="flex-start">
+      <Grid.Container gap={4} justify="flex-start">
         {campaigns
           .filter((campaign) =>
             isSearch ? campaign.args.category === isSearch : true
           )
           .map((item, index) => (
             <Grid
-              xs={7}
+              xs={10}
               sm={3}
               key={index}
               css={{
@@ -106,7 +106,7 @@ const index = () => {
                   });
                 }}
               >
-                <Card.Body css={{ p: 0, maxHeight: "20rem" }}>
+                <Card.Body css={{ p: 0 }}>
                   <Card.Image
                     src={item.args.image}
                     objectFit="cover"
@@ -127,13 +127,12 @@ const index = () => {
                           fontSize: "$sm",
                         }}
                       >
-                        &nbsp;
                         {item.args.category}
                         &nbsp;
                       </Text>
                     </Row>
                   </div>
-
+                  <Spacer x={6} />
                   <div>
                     <Row wrap="wrap" justify="space-between" align="center">
                       <Text b>Created Time:</Text>

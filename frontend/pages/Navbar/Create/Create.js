@@ -46,14 +46,6 @@ const Create = () => {
     </Link>
   );
 
-  const epochDateCoverter = (input) => {
-    console.log("input", input);
-    const date = new Date(input);
-    const epochTime = date.getTime();
-    const epochSeconds = epochTime / 1000;
-    return epochSeconds;
-  };
-
   const validation = async () => {
     var title = document.reg_form.title;
     var category = document.getElementById("category");
@@ -61,9 +53,32 @@ const Create = () => {
     var image = document.reg_form.image;
 
     var contribution = document.reg_form.mcontribution;
-    var deadline = document.reg_form.deadline;
+
+    const form = document.getElementById("time-form");
+    const timeValue = form.elements["time-value"].value;
+    const timeUnit = form.elements["time-unit"].value;
+
+    let minutes = 0;
+    switch (timeUnit) {
+      case "month":
+        minutes = timeValue * 30 * 24 * 60;
+        break;
+      case "week":
+        minutes = timeValue * 7 * 24 * 60;
+        break;
+      case "day":
+        minutes = timeValue * 24 * 60;
+        break;
+      case "hour":
+        minutes = timeValue * 60;
+        break;
+      default:
+        minutes = timeValue;
+    }
+    console.log(minutes);
+
     var file = document.reg_form.file;
-    var image= document.reg_form.image;   
+    var image = document.reg_form.image;
 
     if (title.value.length <= 0) {
       alert("title is required");
@@ -81,17 +96,11 @@ const Create = () => {
       alert("image is required");
       image.focus();
       return false;
-    } 
+    }
 
     if (contribution.value.length <= 0) {
       alert("Minimum Contribution is required");
       contribution.focus();
-      return false;
-    }
-
-    if (deadline.value.length <= 0) {
-      alert("Deadline is required");
-      deadline.focus();
       return false;
     }
 
@@ -103,10 +112,9 @@ const Create = () => {
 
     const formatedTarget = utils.parseEther(`${target.value}`);
     const formatedMC = utils.parseEther(`${contribution.value}`);
-    const formatedDeadline = epochDateCoverter(deadline.value);
 
     const data = {
-      deadline: formatedDeadline,
+      deadline: minutes,
       target: formatedTarget,
       contribution: formatedMC,
       pdf: pdf,
@@ -123,95 +131,148 @@ const Create = () => {
       <br />
       <br />
       {/* <div className={styles.main}> */}
-      <Card css={{ 
+      <Card
+        css={{
           width: "500px",
-          padding:"40px",
-          height:"80%",
-          fontWeight:"bold",
-          marginLeft:"35%" 
-        }}>
-          <h2>Campaign Registration</h2>
+          padding: "40px",
+          height: "80%",
+          fontWeight: "bold",
+          marginLeft: "35%",
+        }}
+      >
+        <h2>Campaign Registration</h2>
 
-          <form name="reg_form" onsubmit={validation}>
-              <label>CATEGORY*</label>
-              <br />
-              <select id="category" name="category" className={styles.box}>
-                <option value="miscellaneous">Miscellaneous</option>
-                <option value="Education">Education</option>
-                <option value="Health">Health</option>
-                <option value="Sports">Sports</option>
-                <option value="Community support">Community support</option>
-                <option value="Woman">Woman</option>
-              </select>
-              <br />
-              <br />
-              <label>TITLE*</label>
-              <br />
+        <form name="reg_form" onsubmit={validation}>
+          <label>CATEGORY*</label>
+          <br />
+          <select id="category" name="category" className={styles.box}>
+            <option value="miscellaneous">Miscellaneous</option>
+            <option value="Education">Education</option>
+            <option value="Health">Health</option>
+            <option value="Sports">Sports</option>
+            <option value="Community support">Community support</option>
+            <option value="Woman">Woman</option>
+          </select>
+          <br />
+          <br />
+          <label>TITLE*</label>
+          <br />
+          <input
+            type="text"
+            placeholder="ABOUT DONATION"
+            className={styles.box}
+            name="title"
+          ></input>
+          <br />
+          <br />
+          <label>Target(MATIC)*</label>
+          <br />
+          <input
+            type="number"
+            placeholder="AMOUNT(MATIC)"
+            className={styles.box}
+            name="target"
+          ></input>
+          <br />
+          <br />
+          <label>External Image Link*</label>
+          <br />
+          <input
+            type="text"
+            accept="image/*,.jpg,.jpeg,.png,"
+            className={styles.box}
+            name="image"
+            id="image"
+            placeholder="IMAGE LINK"
+          ></input>
+          <br />
+          <br />
+          <label>Minimum Contribution(MATIC)*</label>
+          <br />
+          <input
+            type="number"
+            placeholder="(MATIC)"
+            className={styles.box}
+            name="mcontribution"
+          ></input>
+          <br />
+          <br />
+          <label>Deadline*</label>
+          <form id="time-form" name="time-form">
+            <label>
               <input
-                type="text"
-                placeholder="ABOUT DONATION"
-                className={styles.box}
-                name="title"
-              ></input>
-              <br />
-              <br />
-              <label>Target(MATIC)*</label>
-              <br />
+                type="radio"
+                name="time-unit"
+                id="time-unit-month"
+                value="month"
+              />
+              Months
+            </label>
+            <label>
               <input
-                type="number"
-                placeholder="AMOUNT(MATIC)"
-                className={styles.box}
-                name="target"
-              ></input>
-              <br />
-              <br />
-              <label>External Image Link*</label>
-              <br />
+                type="radio"
+                name="time-unit"
+                id="time-unit-week"
+                value="week"
+              />
+              Weeks
+            </label>
+            <label>
               <input
-                type="text"
-                accept="image/*,.jpg,.jpeg,.png,"
-                className={styles.box}
-                name="image"
-                id="image"
-                placeholder="IMAGE LINK"
-              ></input>
-              <br />
-              <br />
-              <label>Minimum Contribution(MATIC)*</label>
-              <br />
+                type="radio"
+                name="time-unit"
+                id="time-unit-day"
+                value="day"
+              />
+              Days
+            </label>
+            <label>
               <input
-                type="number"
-                placeholder="(MATIC)"
-                className={styles.box}
-                name="mcontribution"
-              ></input>
-              <br />
-              <br />
-              <label>Deadline*</label>
-              <br />
-              <input type="date" className={styles.box} name="deadline"></input>
-              <br />
-              <br />
-              PDF UPLOAD*
-              <br />
-              <input type="file" accept=".pdf" name="file" id="pdf"></input>
-              <br />
-              <br />
-              {uploaded ? (
-                <ExternalLink href={pdf}>
-                  <p b>Preview</p>
-                </ExternalLink>
-              ) : (
-                <Button auto onPress={uploadToIpfs} rounded>
-                  Upload PDF
-                </Button>
-              )}
-              <br />
-              <Button shadow auto color="success" onClick={validation}>
-                Register
-              </Button>
-              <br />
+                type="radio"
+                name="time-unit"
+                id="time-unit-hour"
+                value="hour"
+              />
+              Hours
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="time-unit"
+                id="time-unit-minute"
+                value="minute"
+              />
+              Minutes
+            </label>
+
+            <br />
+            <label>
+              Time value:
+              <input type="number" name="time-value" required />
+            </label>
+            <br />
           </form>
+          <br />
+          PDF UPLOAD*
+          <br />
+          <input type="file" accept=".pdf" name="file" id="pdf"></input>
+          <br />
+          <br />
+          {uploaded ? (
+            <ExternalLink href={pdf}>
+              <p b>Preview</p>
+            </ExternalLink>
+          ) : (
+            <Button auto onPress={uploadToIpfs} rounded>
+              Upload PDF
+            </Button>
+          )}
+          <br />
+          <Button shadow auto color="success" onPress={validation}>
+            Register
+          </Button>
+          <br />
+        </form>
       </Card>
       <br />
       <br />

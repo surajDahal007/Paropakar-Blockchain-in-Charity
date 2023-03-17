@@ -67,3 +67,13 @@
   margin-left: 55%;
 }
 
+.donationdiv {
+  padding: 10px;
+  margin-left: 23%;
+  margin-top: -150px;
+}
+
+.donation {
+  padding: 8px;
+  font-weight: bold;
+}

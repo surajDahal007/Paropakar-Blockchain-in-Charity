@@ -26,17 +26,25 @@ const campaign = () => {
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState();
   const [yourDonation, setYourDonation] = useState(0);
+  const [campaignBalance, setBalance] = useState(0);
 
   const [donorComp, setDonorComp] = useState(false);
   const [reqComp, setReqComp] = useState(false);
 
-  const { getTenderInfo, donateToCampaign, getYourDonation } = useCampaign();
+  const {
+    getTenderInfo,
+    donateToCampaign,
+    getYourDonation,
+    refund,
+    getContractBalance,
+  } = useCampaign();
 
   useEffect(() => {
     async function getDetails() {
       console.log(await getTenderInfo(`${campaign}`));
       setDetails(await getTenderInfo(`${campaign}`));
       setYourDonation(await getYourDonation(`${campaign}`));
+      setBalance(await getContractBalance(`${campaign}`));
       setLoading(true);
     }
     getDetails();
@@ -144,7 +152,6 @@ const campaign = () => {
               <span className={styles.target}>
                 TARGET AMOUNT: {utils.formatEther(`${details[2]}`)} MATIC
                 <br />
-                <i>Your Donation: {yourDonation}MATIC</i>
               </span>
             </div>
 
@@ -162,7 +169,9 @@ const campaign = () => {
               <br />
               Application : <a href={details[1]}>View Protocol</a>
               <br />
-              Refundable Status: {details[9].toString()}
+              <b>
+                Refundable Status:<big> {details[9].toString()}</big>
+              </b>
             </font>
             <br />
             <br />
@@ -174,6 +183,7 @@ const campaign = () => {
                   setAmount(e.target.value);
                 }}
               ></input>
+
               <br />
               <br />
               <Button
@@ -183,13 +193,49 @@ const campaign = () => {
                   await donateToCampaign(campaign, amount);
                   setTimeout(() => {
                     setLoading(false);
-                  }, 9000);
+                  }, 15000);
                 }}
                 auto
               >
                 Donate
               </Button>
             </form>
+
+            {/* Your donation part here */}
+            <div className={styles.donationdiv}>
+              <Card
+                css={{
+                  width: "40%",
+                  height: "10%",
+                }}
+              >
+                <Card.Body>
+                  <Text b>
+                    <big>Campaign Current Balance: {campaignBalance} MATIC</big>
+                  </Text>
+                  <br />
+                  <Text b>
+                    <i>Your Donation: {yourDonation} MATIC</i>
+                  </Text>
+                </Card.Body>
+
+                <Button
+                  color="error"
+                  css={{
+                    width: "10%",
+                    marginLeft: "35%",
+                    marginBottom: "3%",
+                  }}
+                  shadow
+                  auto
+                  onPress={async () => {
+                    await refund(`${campaign}`);
+                  }}
+                >
+                  Refund
+                </Button>
+              </Card>
+            </div>
 
             <br />
             <br />
