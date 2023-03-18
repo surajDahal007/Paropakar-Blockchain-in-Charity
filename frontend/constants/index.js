@@ -719,7 +719,7 @@ const factoryAbi = [
   },
 ];
 
-const factoryAddress = "0x1415e9C8cd1294e1D9360BD26594B15201E8A30F";
+const factoryAddress = "0xEBfB28357F0176C4411864dcB2AC4F5Be7214EE2";
 
 const campaignAbi = [
   {
@@ -892,11 +892,6 @@ const campaignAbi = [
         internalType: "string",
         name: "",
         type: "string",
-      },
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
       },
       {
         internalType: "uint256",

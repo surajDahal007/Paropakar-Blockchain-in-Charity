@@ -58,6 +58,9 @@ const campaign = () => {
         {(details && campaign) != undefined && loading ? (
           <>
             <h1 className={styles.heading}>Campaign Details</h1>
+            <h4 className={styles.heading}>
+              Campaign Status: {details[9] == "false" ? "OPEN" : "CLOSED"}
+            </h4>
             <br />
 
             <div className={styles.sidediv}>
@@ -168,7 +171,10 @@ const campaign = () => {
               <br />
               No. of Requests: {details[7].toString()}
               <br />
-              Application : <a href={details[1]}>View Protocol</a>
+              Application :{" "}
+              <a href={details[1]} target="_blank">
+                View Protocol
+              </a>
               <br />
               <b>
                 Refundable Status:<big> {details[9].toString()}</big>
@@ -194,7 +200,7 @@ const campaign = () => {
                   await donateToCampaign(campaign, amount);
                   setTimeout(() => {
                     setLoading(false);
-                  }, 15000);
+                  }, 25000);
                 }}
                 auto
               >

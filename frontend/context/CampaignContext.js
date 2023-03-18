@@ -87,7 +87,6 @@ export const CampaignProvider = ({ children }) => {
     recipient,
     amount
   ) => {
-    console.log("address", contract);
     try {
       const contract1 = await generateContract(contract, signer);
       const payment = utils.parseEther(`${amount}`);
