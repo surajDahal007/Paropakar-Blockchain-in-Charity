@@ -59,7 +59,7 @@ const campaign = () => {
           <>
             <h1 className={styles.heading}>Campaign Details</h1>
             <h4 className={styles.heading}>
-              Campaign Status: {details[9] == "false" ? "OPEN" : "CLOSED"}
+              Campaign Status: {details[9] == false ? "OPEN" : "CLOSED"}
             </h4>
             <br />
 
@@ -284,7 +284,7 @@ const campaign = () => {
                     setReqComp(true);
                     setDonorComp(false);
                     window.scroll({
-                      top: 200,
+                      top: 800,
                       behavior: "auto",
                     });
                   }}
