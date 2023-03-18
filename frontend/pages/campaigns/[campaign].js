@@ -290,7 +290,9 @@ const campaign = () => {
 
             <div className={styles.log}>
               {donorComp && <DonationLog campaignAddress={campaign} />}
-              {reqComp && <Request campaignAddress={campaign} />}
+              {reqComp && (
+                <Request campaignAddress={campaign} owner={details[8]} />
+              )}
             </div>
           </>
         ) : (

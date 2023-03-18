@@ -100,14 +100,23 @@ export const CampaignProvider = ({ children }) => {
 
   const voteRequestToCampaign = async (contract, reqNum) => {
     try {
-      await contract.voteRequest(reqNum);
+      const contracts = await generateContract(contract, signer);
+      await contracts.voteRequest(reqNum);
     } catch {
       alert("unable to vote");
     }
   };
 
-  const getRequestStatus = async (contract, reqNum) => {
+  const getRequestStatus = async (contract) => {
     try {
+      const contracts = await generateContract(contract, provider);
+      const numberReq = await contracts.numRequests();
+      console.log("no. of requests", parseInt(numberReq));
+      let datas = [];
+      for (let i = 0; i < numberReq; i++) {
+        datas.push(await contracts.getRequeststatus(i));
+      }
+      return datas;
     } catch (e) {
       alert("Unable to get request state datas !");
       console.error(e);
@@ -123,6 +132,8 @@ export const CampaignProvider = ({ children }) => {
         getYourDonation,
         refund,
         getContractBalance,
+        getRequestStatus,
+        voteRequestToCampaign,
       }}
     >
       {children}

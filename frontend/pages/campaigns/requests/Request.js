@@ -4,7 +4,7 @@ import { Card, Button } from "@nextui-org/react";
 import styles from "./index.module.css";
 import { useCampaign } from "../../../context/CampaignContext";
 
-const Request = ({ campaignAddress }) => {
+const Request = ({ campaignAddress, owner }) => {
   const { createRequestToCampaign } = useCampaign();
   async function handleClick() {
     var description = document.create_form.dsc.value;
@@ -26,17 +26,17 @@ const Request = ({ campaignAddress }) => {
 
   return (
     <div>
-        <h1 className={styles.heading}>Campaign RequestLog</h1>
-        <br />
+      <h1 className={styles.heading}>Campaign RequestLog</h1>
+      <br />
 
-        <Card
-          css={{
-            mw: "400px",
-            marginLeft: "0%",
-            padding: "2%",
-            fontWeight: "bold",
-          }}
-        >
+      <Card
+        css={{
+          mw: "400px",
+          marginLeft: "0%",
+          padding: "2%",
+          fontWeight: "bold",
+        }}
+      >
         <form name="create_form">
           <label>DESCRIPTION:</label>
           <br />
@@ -61,7 +61,7 @@ const Request = ({ campaignAddress }) => {
       </Card>
       <br />
 
-      <Log />
+      <Log campaignAddress={campaignAddress} owner={owner} />
     </div>
   );
 };
