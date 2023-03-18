@@ -7,7 +7,8 @@ const Log = ({ campaignAddress, owner }) => {
   const { address } = useAccount();
   console.log("address", address, "owner", owner);
 
-  const { getRequestStatus, voteRequestToCampaign } = useCampaign();
+  const { getRequestStatus, voteRequestToCampaign, settleRequestOf } =
+    useCampaign();
 
   const [log, setLog] = useState([]);
 
@@ -53,7 +54,7 @@ const Log = ({ campaignAddress, owner }) => {
               <Table.Column>Amount</Table.Column>
               <Table.Column>Donors/Voters</Table.Column>
               <Table.Column>Complete Status</Table.Column>
-              <Table.Column>Action</Table.Column>
+              <Table.Column> Action</Table.Column>
               <Table.Column></Table.Column>
             </Table.Header>
             <Table.Body>
@@ -80,7 +81,6 @@ const Log = ({ campaignAddress, owner }) => {
             </Table.Body>
           </Table>
         </Collapse>
-        {/* <h2 style={{ marginLeft:"5%",marginBottom:"-2%"}}>Activity Log</h2> */}
       </div>
     </>
   );

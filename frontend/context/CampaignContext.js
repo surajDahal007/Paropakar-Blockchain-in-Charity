@@ -122,6 +122,23 @@ export const CampaignProvider = ({ children }) => {
       console.error(e);
     }
   };
+  const settleRequestOf = async (campaign, reqNumber) => {
+    try {
+      const contracts = await generateContract(campaign, signer);
+      contracts.settleRequest(reqNumber).then(async (tx) => {
+        await tx.wait();
+        Swal.fire({
+          icon: "success",
+          title: "Settled Payment Request!",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      });
+    } catch (e) {
+      alert("Unable to settle this request");
+      console.error(e);
+    }
+  };
 
   return (
     <campaignContext.Provider
@@ -134,6 +151,7 @@ export const CampaignProvider = ({ children }) => {
         getContractBalance,
         getRequestStatus,
         voteRequestToCampaign,
+        settleRequestOf,
       }}
     >
       {children}
