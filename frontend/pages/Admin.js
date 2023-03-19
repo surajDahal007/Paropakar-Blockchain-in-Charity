@@ -63,12 +63,11 @@ const Admin = () => {
             priority
           ></Image>
         </div>
-
         <font className={styles.heading}>ADMIN PAGE</font>
-
         <div className={styles.option}>
           <Web3Button />
         </div>
+        &nbsp;
       </div>
 
       <div
