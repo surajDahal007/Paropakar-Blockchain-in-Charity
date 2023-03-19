@@ -4,6 +4,8 @@ import {
   walletConnectProvider,
 } from "@web3modal/ethereum";
 
+import { SSRProvider } from "@react-aria/ssr";
+
 import { Web3Modal } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -55,7 +57,9 @@ function MyApp({ Component, pageProps }) {
         <NextUIProvider>
           <FactoryProvider>
             <CampaignProvider>
-              <Component {...pageProps} />
+              <SSRProvider>
+                <Component {...pageProps} />
+              </SSRProvider>
             </CampaignProvider>
           </FactoryProvider>
         </NextUIProvider>

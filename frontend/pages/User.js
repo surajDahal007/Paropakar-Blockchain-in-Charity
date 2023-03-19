@@ -25,28 +25,28 @@ const User = () => {
         <br />
         <br />
         <h3>1. ADMIN</h3>
-        <p className={styles.paragraph}>
+        <div className={styles.paragraph}>
           <b>Admin</b> is the one who deployed the entire system. Admin assigns
           or revokes different accounts as authorizer. As it is a decentralized
           system, Admin cannot modify/delete the details donation or donation
           request. The identity of Admin is anonymous.
-        </p>
+        </div>
         <br />
         <h3>2. AUTHORIZERS</h3>
-        <p className={styles.paragraph}>
+        <div className={styles.paragraph}>
           <b>Authorizers</b> are the accounts assigned by the Admin whose main
           task is to verify donation request. Only after verification of
           donation request by authorizer, it will be displayed to user for
           donation.
           <br />
           The identity of Authorizers are anonymous.
-        </p>
+        </div>
         <br />
         <h3>3. USERS</h3>
-        <p className={styles.paragraph}>
+        <div className={styles.paragraph}>
           <b>User</b> are the one who use this system to either ask for donation
           or request donation from other users.
-        </p>
+        </div>
         <br />
         <h2>
           How to use it{" "}
@@ -55,7 +55,7 @@ const User = () => {
           </big>
         </h2>
         <h3> 1. DONATION REQUEST</h3>
-        <p className={styles.paragraph}>
+        <div className={styles.paragraph}>
           <Image
             src={"/registration.png"}
             height={700}
@@ -67,7 +67,7 @@ const User = () => {
           <br />
           Donation request can be made by filling a form from <b>Create</b>{" "}
           option in Navbar. All the information must be filled.
-        </p>
+        </div>
         <u>
           After your campaign registration, you can check Registered campaign at{" "}
           <i>Application status</i>
@@ -158,7 +158,7 @@ const User = () => {
             alt="image"
           ></Image>
 
-          <p className={styles.sideInfo}>
+          <div className={styles.sideInfo}>
             All the necessary information related to the campaign are present in
             Campaign Details card.
             <br />
@@ -185,8 +185,7 @@ const User = () => {
             <a href="https://mumbai.polygonscan.com/" target="_blank">
               POLYGONSCAN
             </a>
-            .
-          </p>
+          </div>
         </div>
         <br />
         <b>4.1</b> How to View Donation Details{" "}
