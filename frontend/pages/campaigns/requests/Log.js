@@ -80,7 +80,7 @@ const Log = ({ campaignAddress, owner }) => {
                           await voteRequestToCampaign(campaignAddress, index);
                           setTimeout(() => {
                             setRefresh(true);
-                          }, 25000);
+                          }, 20000);
                         }}
                         rounded
                       >
@@ -96,7 +96,7 @@ const Log = ({ campaignAddress, owner }) => {
                             await settleRequestOf(campaignAddress, index);
                             setTimeout(() => {
                               setRefresh(true);
-                            }, 25000);
+                            }, 20000);
                           }}
                           rounded
                         >
