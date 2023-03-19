@@ -3,8 +3,7 @@ import {
   modalConnectors,
   walletConnectProvider,
 } from "@web3modal/ethereum";
-
-import { SSRProvider } from "@react-aria/ssr";
+import { useSSR } from "@nextui-org/react";
 
 import { Web3Modal } from "@web3modal/react";
 import { useRouter } from "next/router";
@@ -42,6 +41,7 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chainSupport);
 
 function MyApp({ Component, pageProps }) {
+  const { isBrowser } = useSSR();
   const router = useRouter();
 
   useEffect(() => {
@@ -52,24 +52,24 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
   return (
-    <>
-      <WagmiConfig client={wagmiClient}>
-        <NextUIProvider>
-          <FactoryProvider>
-            <CampaignProvider>
-              <SSRProvider>
+    isBrowser && (
+      <>
+        <WagmiConfig client={wagmiClient}>
+          <NextUIProvider>
+            <FactoryProvider>
+              <CampaignProvider>
                 <Component {...pageProps} />
-              </SSRProvider>
-            </CampaignProvider>
-          </FactoryProvider>
-        </NextUIProvider>
-      </WagmiConfig>
+              </CampaignProvider>
+            </FactoryProvider>
+          </NextUIProvider>
+        </WagmiConfig>
 
-      <Web3Modal
-        projectId={process.env.NEXT_PUBLIC_REACT_APP_PROJECT_ID}
-        ethereumClient={ethereumClient}
-      />
-    </>
+        <Web3Modal
+          projectId={process.env.NEXT_PUBLIC_REACT_APP_PROJECT_ID}
+          ethereumClient={ethereumClient}
+        />
+      </>
+    )
   );
 }
 
