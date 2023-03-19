@@ -5,8 +5,10 @@ import { Table, Button, Loading, Input } from "@nextui-org/react";
 import { ethers, Contract, utils } from "ethers";
 
 const DonationLog = ({ campaignAddress }) => {
-  const { ethereum } = window;
-  const provider = new ethers.providers.Web3Provider(ethereum);
+  const provider =
+    typeof window == "undefined"
+      ? ethers.getDefaultProvider()
+      : new ethers.providers.Web3Provider(window.ethereum);
   const contract = new Contract(campaignAddress, campaignAbi, provider);
   const [log, setLog] = useState([]);
   const [isSearch, setSearch] = useState(false);

@@ -4,7 +4,6 @@ import { factoryAddress, factoryAbi } from "../../constants";
 import { useState, useEffect } from "react";
 import { ethers, Contract } from "ethers";
 import { useRouter } from "next/router";
-import { AiFillFilter } from "react-icons/ai";
 
 const index = () => {
   const provider =

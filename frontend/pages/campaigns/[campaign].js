@@ -11,7 +11,6 @@ import {
   Loading,
   Collapse,
 } from "@nextui-org/react";
-import Link from "next/link";
 import { useCampaign } from "../../context/CampaignContext";
 import DonationLog from "../../components/logs/DonationLog";
 import { useRouter } from "next/router";

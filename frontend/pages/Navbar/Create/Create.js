@@ -54,7 +54,7 @@ const Create = () => {
 
     var contribution = document.reg_form.mcontribution;
 
-    const form = document.getElementById("time-form");
+    const form = document.getElementById("form");
     const timeValue = form.elements["time-value"].value;
     const timeUnit = form.elements["time-unit"].value;
 
@@ -142,7 +142,7 @@ const Create = () => {
       >
         <h2>Campaign Registration</h2>
 
-        <form name="reg_form" onsubmit={validation}>
+        <form name="reg_form" id="form" onSubmit={validation}>
           <label>CATEGORY*</label>
           <br />
           <select id="category" name="category" className={styles.box}>
@@ -198,60 +198,57 @@ const Create = () => {
           <br />
           <br />
           <label>Deadline*</label>
-          <form id="time-form" name="time-form">
-            <label>
-              <input
-                type="radio"
-                name="time-unit"
-                id="time-unit-month"
-                value="month"
-              />
-              Months
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="time-unit"
-                id="time-unit-week"
-                value="week"
-              />
-              Weeks
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="time-unit"
-                id="time-unit-day"
-                value="day"
-              />
-              Days
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="time-unit"
-                id="time-unit-hour"
-                value="hour"
-              />
-              Hours
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="time-unit"
-                id="time-unit-minute"
-                value="minute"
-              />
-              Minutes
-            </label>
-
-            <br />
-            <label>
-              Time value:
-              <input type="number" name="time-value" required />
-            </label>
-            <br />
-          </form>
+          <label>
+            <input
+              type="radio"
+              name="time-unit"
+              id="time-unit-month"
+              value="month"
+            />
+            Months
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="time-unit"
+              id="time-unit-week"
+              value="week"
+            />
+            Weeks
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="time-unit"
+              id="time-unit-day"
+              value="day"
+            />
+            Days
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="time-unit"
+              id="time-unit-hour"
+              value="hour"
+            />
+            Hours
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="time-unit"
+              id="time-unit-minute"
+              value="minute"
+            />
+            Minutes
+          </label>
+          <br />
+          <label>
+            Time value:
+            <input type="number" name="time-value" required />
+          </label>
+          <br />
           <br />
           PDF UPLOAD*
           <br />

@@ -5,14 +5,15 @@ import { Table, Loading } from "@nextui-org/react";
 import styles from "./History.module.css";
 import { ethers, Contract } from "ethers";
 import { factoryAddress, factoryAbi } from "../../../constants";
-import { useFactory } from "../../../context/CampaignFactory";
+
 import { useAccount } from "wagmi";
 
 const History = () => {
-  const { ethereum } = window;
   const { address } = useAccount();
-  const { protocolsOf } = useFactory();
-  const provider = new ethers.providers.Web3Provider(ethereum);
+  const provider =
+    typeof window == "undefined"
+      ? ethers.getDefaultProvider()
+      : new ethers.providers.Web3Provider(window.ethereum);
   const contract = new Contract(factoryAddress, factoryAbi, provider);
   const [campaignLog, setClog] = useState([]);
   const [RegLog, setRlog] = useState([]);

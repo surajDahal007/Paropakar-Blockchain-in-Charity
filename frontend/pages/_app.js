@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }) {
       </WagmiConfig>
 
       <Web3Modal
-        projectId={NEXT_PUBLIC_REACT_APP_PROJECT_ID}
+        projectId={process.env.NEXT_PUBLIC_REACT_APP_PROJECT_ID}
         ethereumClient={ethereumClient}
       />
     </>
