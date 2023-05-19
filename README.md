@@ -1,6 +1,6 @@
 # Decentralized Charity System(Paropakar)
 
-A crowfunding based charity system which uses underlying blockchain technology that targets for direct connection between beneficiaries and donors more securely.
+A crowfunding based charity system which uses underlying blockchain technology that targets for direct connection between beneficiaries and donors more securely
 
 ## Features
 
